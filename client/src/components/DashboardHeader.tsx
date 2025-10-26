@@ -1,4 +1,4 @@
-import { Bell, Menu, Settings, User } from 'lucide-react';
+import { Bell, Menu, Settings, User, LogOut } from 'lucide-react';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
@@ -13,8 +13,9 @@ import { Badge } from './ui/badge';
 
 export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
   return (
-    <header className="sticky top-0 z-40 border-b bg-white">
+    <header className="sticky top-0 z-40 bg-white shadow-md">
       <div className="flex h-16 items-center gap-4 px-6">
+        {/* Mobile Menu */}
         <Button
           variant="ghost"
           size="icon"
@@ -23,11 +24,12 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
         >
           <Menu className="h-5 w-5" />
         </Button>
-        
+
+        {/* Logo and Title */}
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-600">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-gray-200 shadow-sm">
             <svg
-              className="h-5 w-5 text-white"
+              className="h-5 w-5 text-green-600"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -41,17 +43,19 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
             </svg>
           </div>
           <div className="hidden md:block">
-            <h1>Smart Agriculture</h1>
+            <h1 className="font-semibold text-gray-800">Smart Agriculture</h1>
             <p className="text-sm text-gray-500">Monitoring System</p>
           </div>
         </div>
 
+        {/* Right Side */}
         <div className="ml-auto flex items-center gap-4">
+          {/* Notifications */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" className="relative">
                 <Bell className="h-5 w-5" />
-                <Badge className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                <Badge className="absolute -right-1 -top-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs shadow-sm">
                   3
                 </Badge>
               </Button>
@@ -83,17 +87,20 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* Profile Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-2">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="" />
+              <Button variant="ghost" className="gap-2 hover:shadow-sm transition-all">
+                <Avatar className="h-9 w-9 ring-2 ring-gray-200">
+                  <AvatarImage src="https://i.pinimg.com/736x/18/89/57/1889571bec55294b795af81c2b9e6359.jpg" alt="Profile" />
                   <AvatarFallback>AM</AvatarFallback>
                 </Avatar>
-                <span className="hidden md:inline">Abdullah Al Moneem</span>
+                <span className="hidden md:inline font-semibold text-gray-800 tracking-wide">
+                  হাজী বাদল মিয়া
+                </span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="shadow-lg">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
@@ -105,7 +112,10 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Log out</DropdownMenuItem>
+              <DropdownMenuItem>
+                <LogOut className="mr-2 h-4 w-4" />
+                Log out
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
