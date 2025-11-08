@@ -67,7 +67,7 @@ export function DashboardSidebar({ activeTab, onTabChange, isOpen, onClose }: Si
           {navigation.map((item, index) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
-            const isDisabled = index > 1; // Only first two are active
+            const isDisabled = index > 7; // Only first two are active
 
             return (
               <button
