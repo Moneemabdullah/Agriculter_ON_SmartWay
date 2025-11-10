@@ -3,50 +3,55 @@ const DailyAverage = require("../models/dailyAverage.model");
 
 
 
-exports.inputData = async (req, res) => {
+export const inputData = async (req, res) => {
   try {
-    const { sensorId, temperature, humidity, soilMoisture } = req.body;
+    const body = req.body;
 
-    if (!sensorId || temperature == null || humidity == null || soilMoisture == null) {
+    // 🧠 Normalize: if it's a single object, make it an array
+    const readings = Array.isArray(body) ? body : [body];
+
+    // 🧩 Validate
+    const validReadings = readings.filter(
+      (r) =>
+        r.sensorId &&
+        typeof r.temperature === "number" &&
+        typeof r.humidity === "number" &&
+        typeof r.soilMoisture === "number"
+    );
+
+    if (validReadings.length === 0)
       return res.status(400).json({ msg: "Missing required fields" });
-    }
 
-    const newSensorData = new SensorData({
-      sensorId,
-      temperature,
-      humidity,
-      soilMoisture,
-      timestamp: new Date(),
-    });
-
-    await newSensorData.save();
+    // 💾 Save all in one go
+    await SensorData.insertMany(validReadings);
 
     res.status(201).json({ msg: "✅ Sensor data recorded successfully" });
   } catch (err) {
-    console.error("Error saving sensor data:", err.message);
+    console.error("❌ Error saving sensor data:", err);
     res.status(500).json({ msg: "Server Error", error: err.message });
   }
 };
 
 
-exports.getData = async (req, res) => {
+export const getData = async (req, res) => {
   try {
     const { sensorId, startTime, endTime } = req.query;
 
     const query = {};
     if (sensorId) query.sensorId = sensorId;
-    if (startTime || endTime) query.timestamp = {};
-    if (startTime) query.timestamp.$gte = new Date(startTime);
-    if (endTime) query.timestamp.$lte = new Date(endTime);
+    if (startTime || endTime) query.createdAt = {};
+    if (startTime) query.createdAt.$gte = new Date(startTime);
+    if (endTime) query.createdAt.$lte = new Date(endTime);
 
-    const data = await SensorData.find(query).sort({ timestamp: -1 });
-
+    const data = await SensorData.find(query).sort({ createdAt: -1 });
     res.status(200).json(data);
   } catch (err) {
-    console.error("Error retrieving data:", err.message);
+    console.error("❌ Error fetching sensor data:", err);
     res.status(500).json({ msg: "Server Error", error: err.message });
   }
 };
+
+
 
 exports.calculateDailyAverage = async () => {
   try {
