@@ -10,7 +10,7 @@ Agriculter_ON_SmartWay is a comprehensive web application designed to revolution
   
   <p align="">
   <!-- 🔹 First Row (10 items) -->
-  <img src="https://skillicons.dev/icons?i=react,tailwind,js,nodejs,express,mongodb,typescript,docker" />
+  <img src="https://skillicons.dev/icons?i=react,tailwind,js,nodejs,express,mongodb,arduino,typescript,docker" />
 </p>
 
 ## Table of Contents
@@ -134,5 +134,6 @@ We welcome contributions from the community! To contribute:
 
     ```bash
     git push
+
 
 
