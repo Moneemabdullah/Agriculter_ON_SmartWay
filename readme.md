@@ -1,10 +1,17 @@
 
 
-# Agriculter_ON_SmartWay
+# Agriculture On Smart Way
 
 ## Description
 
 Agriculter_ON_SmartWay is a comprehensive web application designed to revolutionize agricultural practices by connecting farmers, suppliers, and consumers in a seamless ecosystem. Leveraging cutting-edge technologies such as TypeScript, React, and Node.js, this platform provides real-time data insights, streamlines supply chain management, and promotes sustainable farming practices. Our mission is to empower farmers with the tools they need to optimize their operations, reduce waste, and increase profitability while ensuring consumers have access to fresh, locally sourced produce.
+
+## Technologies Used
+  
+  <p align="">
+  <!-- 🔹 First Row (10 items) -->
+  <img src="https://skillicons.dev/icons?i=react,tailwind,js,nodejs,express,mongodb,typescript,docker" />
+</p>
 
 ## Table of Contents
 
@@ -18,14 +25,6 @@ Agriculter_ON_SmartWay is a comprehensive web application designed to revolution
 - [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
-
-## Badges
-
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/%3C%2F%3E-TypeScript-%23007ACC.svg)](http://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=%2361DAFB)](https://reactjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![GitHub Stars](https://img.shields.io/github/stars/Moneemabdullah/Agriculter_ON_SmartWay?style=social)](https://github.com/Moneemabdullah/Agriculter_ON_SmartWay/stargazers)
 
 ## Installation
 
@@ -135,4 +134,5 @@ We welcome contributions from the community! To contribute:
 
     ```bash
     git push
+
 
