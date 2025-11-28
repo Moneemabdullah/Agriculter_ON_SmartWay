@@ -1,0 +1,889 @@
+[
+    {
+        "disease_id": "tomato_leaf_curl_virus",
+        "crop_id": "tomato",
+        "name_bn": "লিফ কার্ল ভাইরাস",
+        "pathogen_bn": "ভাইরাস: TYLCV",
+        "symptoms_bn": [
+            "পাতা কুঁকড়ে যাওয়া",
+            "গাছ খাটো হওয়া",
+            "ফল বিকৃতি"
+        ],
+        "management_bn": [
+            "সাদা মাছি নিয়ন্ত্রণ",
+            "রোগমুক্ত চারা",
+            "পলি মালচ ব্যবহার"
+        ]
+    },
+    {
+        "disease_id": "tomato_late_blight",
+        "crop_id": "tomato",
+        "name_bn": "লেট ব্লাইট",
+        "pathogen_bn": "ফাংগাস: Phytophthora infestans",
+        "symptoms_bn": [
+            "পাতায় বাদামি দাগ",
+            "ফল পচন",
+            "দ্রুত ছড়িয়ে পড়া"
+        ],
+        "management_bn": [
+            "ম্যানকোজেব স্প্রে",
+            "ক্ষেতে পানি না জমানো",
+            "রোগ প্রতিরোধী জাত"
+        ]
+    },
+    {
+        "disease_id": "tomato_early_blight",
+        "crop_id": "tomato",
+        "name_bn": "আর্লি ব্লাইট",
+        "pathogen_bn": "ফাংগাস: Alternaria solani",
+        "symptoms_bn": [
+            "পাতায় বৃত্তাকার দাগ",
+            "পাতা ঝরে পড়া"
+        ],
+        "management_bn": [
+            "কপার অক্সিক্লোরাইড",
+            "ফসল পর্যায়ক্রম",
+            "বীজ শোধন"
+        ]
+    },
+    {
+        "disease_id": "tomato_bacterial_spot",
+        "crop_id": "tomato",
+        "name_bn": "ব্যাকটেরিয়াল স্পট",
+        "pathogen_bn": "ব্যাকটেরিয়া: Xanthomonas spp.",
+        "symptoms_bn": [
+            "পাতায় ছোট কালো দাগ",
+            "ফলে পিটিং"
+        ],
+        "management_bn": [
+            "কপার স্প্রে",
+            "পরিচ্ছন্ন চাষ",
+            "রোগমুক্ত বীজ"
+        ]
+    },
+    {
+        "disease_id": "tomato_fusarium_wilt",
+        "crop_id": "tomato",
+        "name_bn": "ফিউজারিয়াম উইল্ট",
+        "pathogen_bn": "ফাংগাস: Fusarium oxysporum",
+        "symptoms_bn": [
+            "পাতা ঢলে পড়া",
+            "নালীতে বাদামি রং"
+        ],
+        "management_bn": [
+            "মাটিতে ট্রাইকোডার্মা",
+            "প্রতিরোধী জাত"
+        ]
+    },
+    {
+        "disease_id": "potato_late_blight",
+        "crop_id": "potato",
+        "name_bn": "আলু লেট ব্লাইট",
+        "pathogen_bn": "ফাংগাস: Phytophthora infestans",
+        "symptoms_bn": [
+            "পাতায় পানিভেজা দাগ",
+            "কন্দে বাদামি শক্ত পচন"
+        ],
+        "management_bn": [
+            "ম্যানকোজেব",
+            "সিস্টেমিক ফাংগিসাইড",
+            "বাতাস চলাচল বৃদ্ধি"
+        ]
+    },
+    {
+        "disease_id": "potato_early_blight",
+        "crop_id": "potato",
+        "name_bn": "আর্লি ব্লাইট (আলু)",
+        "pathogen_bn": "ফাংগাস: Alternaria solani",
+        "symptoms_bn": [
+            "পাতায় কনসেন্ট্রিক দাগ"
+        ],
+        "management_bn": [
+            "কপার জাতীয় ফাংগিসাইড",
+            "রোগমুক্ত বীজ"
+        ]
+    },
+    {
+        "disease_id": "potato_black_scurf",
+        "crop_id": "potato",
+        "name_bn": "ব্ল্যাক স্কার্ফ",
+        "pathogen_bn": "ফাংগাস: Rhizoctonia solani",
+        "symptoms_bn": [
+            "কন্দে কালো শক্ত দাগ",
+            "চারা পচন"
+        ],
+        "management_bn": [
+            "বীজ শোধন",
+            "মাটিতে জৈবসার বাড়ানো"
+        ]
+    },
+    {
+        "disease_id": "potato_common_scab",
+        "crop_id": "potato",
+        "name_bn": "কমন স্ক্যাব",
+        "pathogen_bn": "ব্যাকটেরিয়া: Streptomyces scabies",
+        "symptoms_bn": [
+            "কন্দে খসখসে দাগ"
+        ],
+        "management_bn": [
+            "মাটির pH কমানো",
+            "পরিমিত সেচ"
+        ]
+    },
+    {
+        "disease_id": "potato_soft_rot",
+        "crop_id": "potato",
+        "name_bn": "সফট রট",
+        "pathogen_bn": "ব্যাকটেরিয়া: Erwinia spp.",
+        "symptoms_bn": [
+            "কন্দ নরম পচে যাওয়া"
+        ],
+        "management_bn": [
+            "শুকনা সংরক্ষণ",
+            "ক্ষত এড়ানো"
+        ]
+    },
+    {
+        "disease_id": "rice_blast",
+        "crop_id": "rice",
+        "name_bn": "ধান বøাস্ট রোগ",
+        "pathogen_bn": "ফাংগাস: Magnaporthe oryzae",
+        "symptoms_bn": [
+            "পাতায় হীরার মতো দাগ",
+            "শীষ পোড়া"
+        ],
+        "management_bn": [
+            "টিল্ট স্প্রে",
+            "সুষম সার"
+        ]
+    },
+    {
+        "disease_id": "rice_sheath_blight",
+        "crop_id": "rice",
+        "name_bn": "শিথ ব্লাইট",
+        "pathogen_bn": "ফাংগাস: Rhizoctonia solani",
+        "symptoms_bn": [
+            "গোড়ায় বাদামি দাগ",
+            "শীষ অর্ধভর্তি"
+        ],
+        "management_bn": [
+            "ট্রাইকোডার্মা",
+            "সুষম নাইট্রোজেন"
+        ]
+    },
+    {
+        "disease_id": "rice_bacterial_blight",
+        "crop_id": "rice",
+        "name_bn": "ব্যাকটেরিয়াল ব্লাইট",
+        "pathogen_bn": "ব্যাকটেরিয়া: Xanthomonas oryzae",
+        "symptoms_bn": [
+            "পাতা শুকিয়ে সাদা হওয়া"
+        ],
+        "management_bn": [
+            "রোগমুক্ত বীজ",
+            "রাসায়নিক নিয়ন্ত্রণ"
+        ]
+    },
+    {
+        "disease_id": "rice_tungro",
+        "crop_id": "rice",
+        "name_bn": "টুঙ্রো ভাইরাস",
+        "pathogen_bn": "ভাইরাস: RTSV + RTBV",
+        "symptoms_bn": [
+            "পাতা হলুদ",
+            "গাছ খাটো"
+        ],
+        "management_bn": [
+            "ফলস আর্মিওয়ার্ম নিয়ন্ত্রণ",
+            "প্রতিরোধী জাত"
+        ]
+    },
+    {
+        "disease_id": "rice_brown_spot",
+        "crop_id": "rice",
+        "name_bn": "ব্রাউন স্পট",
+        "pathogen_bn": "ফাংগাস: Bipolaris oryzae",
+        "symptoms_bn": [
+            "পাতায় বাদামি গোল দাগ"
+        ],
+        "management_bn": [
+            "কপার অক্সিক্লোরাইড",
+            "সুষম সার"
+        ]
+    },
+    {
+        "disease_id": "brinjal_fruit_borer",
+        "crop_id": "brinjal",
+        "name_bn": "ফল ছিদ্রকারী পোকা",
+        "pathogen_bn": "পোকা: Helicoverpa armigera",
+        "symptoms_bn": [
+            "ফলে ছিদ্র",
+            "লার্ভা ভেতরে"
+        ],
+        "management_bn": [
+            "ফেরোমন ট্র্যাপ",
+            "BT স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "brinjal_bacterial_wilt",
+        "crop_id": "brinjal",
+        "name_bn": "ব্যাকটেরিয়াল উইল্ট",
+        "pathogen_bn": "ব্যাকটেরিয়া: Ralstonia solanacearum",
+        "symptoms_bn": [
+            "হঠাৎ ঢলে পড়া"
+        ],
+        "management_bn": [
+            "মাটিতে লাইম",
+            "রোগমুক্ত চারা"
+        ]
+    },
+    {
+        "disease_id": "brinjal_phomopsis_blight",
+        "crop_id": "brinjal",
+        "name_bn": "ফোমপসিস ব্লাইট",
+        "pathogen_bn": "ফাংগাস: Phomopsis vexans",
+        "symptoms_bn": [
+            "পাতায় কালো দাগ",
+            "ফল পচন"
+        ],
+        "management_bn": [
+            "কপার ব্লাইট",
+            "বীজ শোধন"
+        ]
+    },
+    {
+        "disease_id": "brinjal_root_knot_nematode",
+        "crop_id": "brinjal",
+        "name_bn": "রুট নট নিমাটোড",
+        "pathogen_bn": "নিমাটোড: Meloidogyne spp.",
+        "symptoms_bn": [
+            "মূল ফুলে গল তৈরি"
+        ],
+        "management_bn": [
+            "নিম তেল",
+            "সূর্যতাপ sterilization"
+        ]
+    },
+    {
+        "disease_id": "brinjal_leaf_spot",
+        "crop_id": "brinjal",
+        "name_bn": "পাতা দাগ রোগ",
+        "pathogen_bn": "ফাংগাস: Cercospora melongenae",
+        "symptoms_bn": [
+            "পাতায় বাদামি দাগ"
+        ],
+        "management_bn": [
+            "ম্যানকোজেব",
+            "আগাছা দমন"
+        ]
+    },
+    {
+        "disease_id": "chili_anthracnose",
+        "crop_id": "chili",
+        "name_bn": "অ্যানথ্রাকনোজ",
+        "pathogen_bn": "ফাংগাস: Colletotrichum spp.",
+        "symptoms_bn": [
+            "ফলে কালো দাগ"
+        ],
+        "management_bn": [
+            "কপার অক্সিক্লোরাইড",
+            "সারিবদ্ধ চাষ"
+        ]
+    },
+    {
+        "disease_id": "chili_leaf_curl",
+        "crop_id": "chili",
+        "name_bn": "চিলি লিফ কার্ল",
+        "pathogen_bn": "ভাইরাস: ChiLCV",
+        "symptoms_bn": [
+            "পাতা কুঁকড়ে যাওয়া"
+        ],
+        "management_bn": [
+            "সাদা মাছি দমন",
+            "রোগমুক্ত বীজ"
+        ]
+    },
+    {
+        "disease_id": "chili_powdery_mildew",
+        "crop_id": "chili",
+        "name_bn": "পাউডারি মিলডিউ",
+        "pathogen_bn": "ফাংগাস: Leveillula taurica",
+        "symptoms_bn": [
+            "পাতায় সাদা ছত্রাক"
+        ],
+        "management_bn": [
+            "সালফার স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "chili_damping_off",
+        "crop_id": "chili",
+        "name_bn": "ড্যাম্পিং অফ",
+        "pathogen_bn": "ফাংগাস: Pythium spp.",
+        "symptoms_bn": [
+            "চারা পরে যাওয়া"
+        ],
+        "management_bn": [
+            "বীজ শোধন",
+            "সোলারাইজেশন"
+        ]
+    },
+    {
+        "disease_id": "chili_bacterial_spot",
+        "crop_id": "chili",
+        "name_bn": "ব্যাকটেরিয়াল স্পট",
+        "pathogen_bn": "Xanthomonas spp.",
+        "symptoms_bn": [
+            "পাতায় ছোট দাগ"
+        ],
+        "management_bn": [
+            "কপার স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "cucumber_downy_mildew",
+        "crop_id": "cucumber",
+        "name_bn": "ডাউনি মিলডিউ",
+        "pathogen_bn": "Pseudoperonospora cubensis",
+        "symptoms_bn": [
+            "পাতা হলুদ",
+            "কালো ছত্রাক"
+        ],
+        "management_bn": [
+            "ম্যানকোজেব",
+            "প্রতিরোধী জাত"
+        ]
+    },
+    {
+        "disease_id": "cucumber_powdery_mildew",
+        "crop_id": "cucumber",
+        "name_bn": "পাউডারি মিলডিউ",
+        "pathogen_bn": "Erysiphe cichoracearum",
+        "symptoms_bn": [
+            "সাদা গুঁড়া"
+        ],
+        "management_bn": [
+            "সালফার স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "cucumber_anthracnose",
+        "crop_id": "cucumber",
+        "name_bn": "অ্যানথ্রাকনোজ",
+        "pathogen_bn": "Colletotrichum lagenarium",
+        "symptoms_bn": [
+            "পাতা ও ফলে দাগ"
+        ],
+        "management_bn": [
+            "কপার অক্সিক্লোরাইড"
+        ]
+    },
+    {
+        "disease_id": "cucumber_fusarium_wilt",
+        "crop_id": "cucumber",
+        "name_bn": "ফিউজারিয়াম উইল্ট",
+        "pathogen_bn": "Fusarium oxysporum",
+        "symptoms_bn": [
+            "পাতা ঝুলে যাওয়া"
+        ],
+        "management_bn": [
+            "ট্রাইকোডার্মা"
+        ]
+    },
+    {
+        "disease_id": "cucumber_bacterial_wilt",
+        "crop_id": "cucumber",
+        "name_bn": "ব্যাকটেরিয়াল উইল্ট",
+        "pathogen_bn": "Erwinia tracheiphila",
+        "symptoms_bn": [
+            "গাছ ঢলে পড়া"
+        ],
+        "management_bn": [
+            "কিউকরবিট বিটল দমন"
+        ]
+    },
+    {
+        "disease_id": "bean_rust",
+        "crop_id": "bean",
+        "name_bn": "রস্ট রোগ",
+        "pathogen_bn": "Uromyces appendiculatus",
+        "symptoms_bn": [
+            "পাতায় মরিচা দাগ"
+        ],
+        "management_bn": [
+            "ম্যানকোজেব"
+        ]
+    },
+    {
+        "disease_id": "bean_mosaic_virus",
+        "crop_id": "bean",
+        "name_bn": "মোজাইক ভাইরাস",
+        "pathogen_bn": "BCMV",
+        "symptoms_bn": [
+            "পাতায় মোজাইক দাগ"
+        ],
+        "management_bn": [
+            "এফিড দমন"
+        ]
+    },
+    {
+        "disease_id": "bean_anthracnose",
+        "crop_id": "bean",
+        "name_bn": "অ্যানথ্রাকনোজ",
+        "pathogen_bn": "Colletotrichum lindemuthianum",
+        "symptoms_bn": [
+            "ডাঁটিতে কালো দাগ"
+        ],
+        "management_bn": [
+            "বীজ শোধন"
+        ]
+    },
+    {
+        "disease_id": "bean_powdery_mildew",
+        "crop_id": "bean",
+        "name_bn": "পাউডারি মিলডিউ",
+        "pathogen_bn": "Erysiphe polygoni",
+        "symptoms_bn": [
+            "সাদা গুঁড়া"
+        ],
+        "management_bn": [
+            "সালফার"
+        ]
+    },
+    {
+        "disease_id": "bean_root_rot",
+        "crop_id": "bean",
+        "name_bn": "রুট রট",
+        "pathogen_bn": "Rhizoctonia solani",
+        "symptoms_bn": [
+            "মূল পচন"
+        ],
+        "management_bn": [
+            "জৈবসার"
+        ]
+    },
+    {
+        "disease_id": "papaya_ring_spot",
+        "crop_id": "papaya",
+        "name_bn": "রিং স্পট ভাইরাস",
+        "pathogen_bn": "PRSV",
+        "symptoms_bn": [
+            "পাতায় দাগ",
+            "ফলে রিং"
+        ],
+        "management_bn": [
+            "রোগমুক্ত চারা"
+        ]
+    },
+    {
+        "disease_id": "papaya_anthracnose",
+        "crop_id": "papaya",
+        "name_bn": "অ্যানথ্রাকনোজ",
+        "pathogen_bn": "Colletotrichum gloeosporioides",
+        "symptoms_bn": [
+            "ফলে কালো দাগ"
+        ],
+        "management_bn": [
+            "কপার স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "papaya_powdery_mildew",
+        "crop_id": "papaya",
+        "name_bn": "পাউডারি মিলডিউ",
+        "pathogen_bn": "Oidium caricae",
+        "symptoms_bn": [
+            "সাদা গুঁড়া"
+        ],
+        "management_bn": [
+            "সালফার"
+        ]
+    },
+    {
+        "disease_id": "papaya_root_rot",
+        "crop_id": "papaya",
+        "name_bn": "রুট রট",
+        "pathogen_bn": "Phytophthora palmivora",
+        "symptoms_bn": [
+            "মূল পচন"
+        ],
+        "management_bn": [
+            "ড্রেনেজ উন্নত"
+        ]
+    },
+    {
+        "disease_id": "papaya_leaf_spot",
+        "crop_id": "papaya",
+        "name_bn": "পাতা দাগ",
+        "pathogen_bn": "Cercospora spp.",
+        "symptoms_bn": [
+            "পাতায় দাগ"
+        ],
+        "management_bn": [
+            "ফাংগিসাইড স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "banana_sigatoka",
+        "crop_id": "banana",
+        "name_bn": "সিগাটোকা পাতাদাগ",
+        "pathogen_bn": "Mycosphaerella fijiensis",
+        "symptoms_bn": [
+            "পাতায় কালো দাগ"
+        ],
+        "management_bn": [
+            "কপার ফাংগিসাইড"
+        ]
+    },
+    {
+        "disease_id": "banana_bunchy_top",
+        "crop_id": "banana",
+        "name_bn": "বানানা বাঞ্চি টপ",
+        "pathogen_bn": "BBTV",
+        "symptoms_bn": [
+            "পাতা ছোট",
+            "বাঞ্চি আকার"
+        ],
+        "management_bn": [
+            "এফিড দমন"
+        ]
+    },
+    {
+        "disease_id": "banana_panama_wilt",
+        "crop_id": "banana",
+        "name_bn": "পানামা উইল্ট",
+        "pathogen_bn": "Fusarium oxysporum",
+        "symptoms_bn": [
+            "গাছ ঢলে পড়া"
+        ],
+        "management_bn": [
+            "মাটিতে চুন প্রয়োগ"
+        ]
+    },
+    {
+        "disease_id": "banana_anthracnose",
+        "crop_id": "banana",
+        "name_bn": "অ্যানথ্রাকনোজ",
+        "pathogen_bn": "Colletotrichum spp.",
+        "symptoms_bn": [
+            "ফল দাগ"
+        ],
+        "management_bn": [
+            "সংরক্ষণে যত্ন"
+        ]
+    },
+    {
+        "disease_id": "banana_black_rot",
+        "crop_id": "banana",
+        "name_bn": "ব্ল্যাক রট",
+        "pathogen_bn": "Thielaviopsis paradoxa",
+        "symptoms_bn": [
+            "কাণ্ড কালো"
+        ],
+        "management_bn": [
+            "ক্ষত এড়ানো"
+        ]
+    },
+    {
+        "disease_id": "mango_anthracnose",
+        "crop_id": "mango",
+        "name_bn": "ম্যাংগো অ্যানথ্রাকনোজ",
+        "pathogen_bn": "Colletotrichum gloeosporioides",
+        "symptoms_bn": [
+            "পাতা দাগ",
+            "ফল পচন"
+        ],
+        "management_bn": [
+            "কপার অক্সিক্লোরাইড"
+        ]
+    },
+    {
+        "disease_id": "mango_powdery_mildew",
+        "crop_id": "mango",
+        "name_bn": "পাউডারি মিলডিউ",
+        "pathogen_bn": "Oidium mangiferae",
+        "symptoms_bn": [
+            "ফুলে সাদা ছত্রাক"
+        ],
+        "management_bn": [
+            "সালফার"
+        ]
+    },
+    {
+        "disease_id": "mango_dieback",
+        "crop_id": "mango",
+        "name_bn": "ডাইব্যাক",
+        "pathogen_bn": "Botryodiplodia theobromae",
+        "symptoms_bn": [
+            "ডাল শুকানো"
+        ],
+        "management_bn": [
+            "প্রুনিং"
+        ]
+    },
+    {
+        "disease_id": "mango_sooty_mold",
+        "crop_id": "mango",
+        "name_bn": "সুটি মোল্ড",
+        "pathogen_bn": "কালো ছত্রাক",
+        "symptoms_bn": [
+            "পাতা কালো"
+        ],
+        "management_bn": [
+            "মেহ পোকা দমন"
+        ]
+    },
+    {
+        "disease_id": "mango_bacterial_canker",
+        "crop_id": "mango",
+        "name_bn": "ব্যাকটেরিয়াল ক্যানকার",
+        "pathogen_bn": "Xanthomonas campestris",
+        "symptoms_bn": [
+            "কাণ্ডে ক্ষত"
+        ],
+        "management_bn": [
+            "কপার স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "wheat_rust",
+        "crop_id": "wheat",
+        "name_bn": "গম রস্ট রোগ",
+        "pathogen_bn": "Puccinia spp.",
+        "symptoms_bn": [
+            "পাতায় মরিচা দাগ"
+        ],
+        "management_bn": [
+            "প্রতিরোধী জাত"
+        ]
+    },
+    {
+        "disease_id": "wheat_smut",
+        "crop_id": "wheat",
+        "name_bn": "স্মাট রোগ",
+        "pathogen_bn": "Tilletia spp.",
+        "symptoms_bn": [
+            "শীষ কালো হওয়া"
+        ],
+        "management_bn": [
+            "বীজ শোধন"
+        ]
+    },
+    {
+        "disease_id": "wheat_septoria",
+        "crop_id": "wheat",
+        "name_bn": "সেপ্টোরিয়া দাগ",
+        "pathogen_bn": "Septoria tritici",
+        "symptoms_bn": [
+            "পাতা দাগ"
+        ],
+        "management_bn": [
+            "ফাংগিসাইড"
+        ]
+    },
+    {
+        "disease_id": "wheat_powdery_mildew",
+        "crop_id": "wheat",
+        "name_bn": "পাউডারি মিলডিউ",
+        "pathogen_bn": "Blumeria graminis",
+        "symptoms_bn": [
+            "সাদা গুঁড়া"
+        ],
+        "management_bn": [
+            "সালফার"
+        ]
+    },
+    {
+        "disease_id": "wheat_foot_rot",
+        "crop_id": "wheat",
+        "name_bn": "ফুট রট",
+        "pathogen_bn": "Fusarium culmorum",
+        "symptoms_bn": [
+            "গোড়া পচন"
+        ],
+        "management_bn": [
+            "রোগমুক্ত বীজ"
+        ]
+    },
+    {
+        "disease_id": "maize_downy_mildew",
+        "crop_id": "maize",
+        "name_bn": "মাইজ ডাউনি মিলডিউ",
+        "pathogen_bn": "Peronosclerospora spp.",
+        "symptoms_bn": [
+            "পাতা হলুদ"
+        ],
+        "management_bn": [
+            "হাইব্রিড জাত"
+        ]
+    },
+    {
+        "disease_id": "maize_blight",
+        "crop_id": "maize",
+        "name_bn": "বøাইট",
+        "pathogen_bn": "Helminthosporium spp.",
+        "symptoms_bn": [
+            "পাতা দাগ"
+        ],
+        "management_bn": [
+            "পরিচ্ছন্নতা"
+        ]
+    },
+    {
+        "disease_id": "maize_rust",
+        "crop_id": "maize",
+        "name_bn": "মাইজ রস্ট",
+        "pathogen_bn": "Puccinia sorghi",
+        "symptoms_bn": [
+            "মরিচা দাগ"
+        ],
+        "management_bn": [
+            "ফাংগিসাইড"
+        ]
+    },
+    {
+        "disease_id": "maize_mosaic",
+        "crop_id": "maize",
+        "name_bn": "মোজাইক ভাইরাস",
+        "pathogen_bn": "MMV",
+        "symptoms_bn": [
+            "পাতা মোজাইক"
+        ],
+        "management_bn": [
+            "এফিড দমন"
+        ]
+    },
+    {
+        "disease_id": "maize_stalk_rot",
+        "crop_id": "maize",
+        "name_bn": "স্টল্ক রট",
+        "pathogen_bn": "Fusarium spp.",
+        "symptoms_bn": [
+            "কাণ্ড পচন"
+        ],
+        "management_bn": [
+            "ড্রেনেজ উন্নত"
+        ]
+    },
+    {
+        "disease_id": "mustard_white_rust",
+        "crop_id": "mustard",
+        "name_bn": "হোয়াইট রস্ট",
+        "pathogen_bn": "Albugo candida",
+        "symptoms_bn": [
+            "পাতা ফোস্কা"
+        ],
+        "management_bn": [
+            "ম্যানকোজেব"
+        ]
+    },
+    {
+        "disease_id": "mustard_downy_mildew",
+        "crop_id": "mustard",
+        "name_bn": "ডাউনি মিলডিউ",
+        "pathogen_bn": "Peronospora parasitica",
+        "symptoms_bn": [
+            "পাতায় সাদা ছত্রাক"
+        ],
+        "management_bn": [
+            "সালফার"
+        ]
+    },
+    {
+        "disease_id": "mustard_alternaria",
+        "crop_id": "mustard",
+        "name_bn": "অ্যালটারনারিয়া",
+        "pathogen_bn": "Alternaria brassicae",
+        "symptoms_bn": [
+            "পাতা কালো দাগ"
+        ],
+        "management_bn": [
+            "কপার স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "mustard_powdery_mildew",
+        "crop_id": "mustard",
+        "name_bn": "পাউডারি মিলডিউ",
+        "pathogen_bn": "Erysiphe cruciferarum",
+        "symptoms_bn": [
+            "পাতায় সাদা গুঁড়া"
+        ],
+        "management_bn": [
+            "সালফার স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "mustard_sclerotinia",
+        "crop_id": "mustard",
+        "name_bn": "স্ক্লোরোটিনিয়া স্টেম রট",
+        "pathogen_bn": "Sclerotinia sclerotiorum",
+        "symptoms_bn": [
+            "কাণ্ডে সাদা ছত্রাক"
+        ],
+        "management_bn": [
+            "ফসল পর্যায়ক্রম"
+        ]
+    },
+    {
+        "disease_id": "jute_stem_rot",
+        "crop_id": "jute",
+        "name_bn": "স্টেম রট",
+        "pathogen_bn": "Macrophomina phaseolina",
+        "symptoms_bn": [
+            "কাণ্ড পচন"
+        ],
+        "management_bn": [
+            "ড্রেনেজ উন্নত"
+        ]
+    },
+    {
+        "disease_id": "jute_soft_rot",
+        "crop_id": "jute",
+        "name_bn": "সফট রট",
+        "pathogen_bn": "Sclerotium rolfsii",
+        "symptoms_bn": [
+            "কাণ্ড নরম"
+        ],
+        "management_bn": [
+            "ট্রাইকোডার্মা"
+        ]
+    },
+    {
+        "disease_id": "jute_leaf_mosaic",
+        "crop_id": "jute",
+        "name_bn": "লিফ মোজাইক ভাইরাস",
+        "pathogen_bn": "JMV",
+        "symptoms_bn": [
+            "পাতা মোজাইক"
+        ],
+        "management_bn": [
+            "এফিড দমন"
+        ]
+    },
+    {
+        "disease_id": "jute_anthracnose",
+        "crop_id": "jute",
+        "name_bn": "অ্যানথ্রাকনোজ",
+        "pathogen_bn": "Colletotrichum corchori",
+        "symptoms_bn": [
+            "পাতায় দাগ"
+        ],
+        "management_bn": [
+            "কপার স্প্রে"
+        ]
+    },
+    {
+        "disease_id": "jute_root_rot",
+        "crop_id": "jute",
+        "name_bn": "রুট রট",
+        "pathogen_bn": "Fusarium spp.",
+        "symptoms_bn": [
+            "মূল পচন"
+        ],
+        "management_bn": [
+            "মাটিতে জৈবসার"
+        ]
+    }
+]

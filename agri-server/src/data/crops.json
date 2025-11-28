@@ -1,0 +1,3236 @@
+[
+  {
+    "crop_id": "rice_aman",
+    "name_bn": "ধান (আমন)",
+    "category": "শস্য",
+    "season": "খরিফ",
+    "sowing_time": {
+      "start": "জুন",
+      "end": "আগস্ট"
+    },
+    "harvesting_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 60
+      },
+      "soil_type": "দোআঁশ, পলি দোআঁশ",
+      "rainfall_mm": {
+        "min": 1500,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "potato",
+    "name_bn": "আলু",
+    "category": "ডাল/মূল সবজি",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 15,
+        "max": 22
+      },
+      "humidity_percent": {
+        "min": 65,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_type": "দোআঁশ, বেলে দোআঁশ",
+      "rainfall_mm": {
+        "min": 850,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "tomato",
+    "name_bn": "টমেটো",
+    "category": "সবজি",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, পলি দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "maize",
+    "name_bn": "ভুট্টা",
+    "category": "শস্য",
+    "season": "বর্ষা/খরিফ",
+    "sowing_time": {
+      "start": "জুন",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "নভেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 65
+      },
+      "soil_type": "দোআঁশ, পলি দোআঁশ",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "wheat",
+    "name_bn": "গম",
+    "category": "শস্য",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 60
+      },
+      "soil_type": "দোআঁশ, মাটির বজ্র",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 600
+      }
+    }
+  },
+  {
+    "crop_id": "jute",
+    "name_bn": "পাট",
+    "category": "ফাইবার ফসল",
+    "season": "খরিফ",
+    "sowing_time": {
+      "start": "মার্চ",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "জুলাই",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 24,
+        "max": 35
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_type": "নালিচারা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 1000,
+        "max": 2000
+      }
+    }
+  },
+  {
+    "crop_id": "sugarcane",
+    "name_bn": "আখ",
+    "category": "শস্য",
+    "season": "বর্ষা/খরিফ",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "নভেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 35
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_type": "নমনীয় দোআঁশ, উর্বর মাটি",
+      "rainfall_mm": {
+        "min": 1200,
+        "max": 2000
+      }
+    }
+  },
+  {
+    "crop_id": "mustard",
+    "name_bn": "সরিষা",
+    "category": "তেলবীজ",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 60
+      },
+      "soil_type": "দোআঁশ, বেলে দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "sesame",
+    "name_bn": "তিল",
+    "category": "তেলবীজ",
+    "season": "বর্ষা/খরিফ",
+    "sowing_time": {
+      "start": "জুন",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 50
+      },
+      "soil_type": "বেলে দোআঁশ, পলি দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 1000
+      }
+    }
+  },
+  {
+    "crop_id": "groundnut",
+    "name_bn": "চালকুমড়ো / বাদাম",
+    "category": "ডাল/মূল সবজি",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুন"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 60
+      },
+      "soil_type": "বেলে দোআঁশ, দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "mungbean",
+    "name_bn": "মুগ ডাল",
+    "category": "ডাল",
+    "season": "বর্ষা/খরিফ",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুন"
+    },
+    "harvesting_time": {
+      "start": "অগাস্ট",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 55,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 50
+      },
+      "soil_type": "দোআঁশ, বেলে দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "lentil",
+    "name_bn": "মসুর ডাল",
+    "category": "ডাল",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 35,
+        "max": 55
+      },
+      "soil_type": "দোআঁশ, কাদামাটি",
+      "rainfall_mm": {
+        "min": 200,
+        "max": 600
+      }
+    }
+  },
+  {
+    "crop_id": "chickpea",
+    "name_bn": "ছোলা",
+    "category": "ডাল",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 65
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 50
+      },
+      "soil_type": "বেলে দোআঁশ, কাদা দোআঁশ",
+      "rainfall_mm": {
+        "min": 250,
+        "max": 600
+      }
+    }
+  },
+  {
+    "crop_id": "soybean",
+    "name_bn": "সয়াবিন",
+    "category": "শস্য",
+    "season": "বর্ষা/খরিফ",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুন"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 60
+      },
+      "soil_type": "দোআঁশ, পলি দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "brinjal",
+    "name_bn": "বেগুন",
+    "category": "সবজি",
+    "season": "বর্ষা/রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "harvesting_time": {
+      "start": "ডিসেম্বর",
+      "end": "মে"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 65,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, উর্বর কাদা",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "chili",
+    "name_bn": "কাঁচা মরিচ / লাল মরিচ",
+    "category": "স্পাইস/সবজি",
+    "season": "বর্ষা/রবি",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "মে",
+      "end": "নভেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 65
+      },
+      "soil_type": "দোআঁশ, উর্বর কাদা",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "onion",
+    "name_bn": "পেঁয়াজ",
+    "category": "সবজি",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "জানুয়ারি"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 12,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 55,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 35,
+        "max": 55
+      },
+      "soil_type": "বেলে দোআঁশ, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "garlic",
+    "name_bn": "রসুন",
+    "category": "সবজি",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 24
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 35,
+        "max": 55
+      },
+      "soil_type": "উর্বর দোআঁশ, কাদা",
+      "rainfall_mm": {
+        "min": 250,
+        "max": 600
+      }
+    }
+  },
+  {
+    "crop_id": "cauliflower",
+    "name_bn": "ফুলকপি",
+    "category": "সবজি",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 20
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "cabbage",
+    "name_bn": "বাঁধাকপি",
+    "category": "সবজি",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 20
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "কাদা, উর্বর দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "carrot",
+    "name_bn": "গাজর",
+    "category": "মূল সবজি",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 12,
+        "max": 22
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, বেলে দোআঁশ",
+      "rainfall_mm": {
+        "min": 350,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "radish",
+    "name_bn": "মূলা",
+    "category": "মূল সবজি",
+    "season": "রবি/বর্ষা",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "harvesting_time": {
+      "start": "ডিসেম্বর",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 22
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "spinach",
+    "name_bn": "পালং শাক",
+    "category": "শাক",
+    "season": "বর্ষা/রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "নভেম্বর",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 1000
+      }
+    }
+  },
+  {
+    "crop_id": "coriander",
+    "name_bn": "ধনেপাতা",
+    "category": "মশলা/শাক",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "harvesting_time": {
+      "start": "ডিসেম্বর",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 65
+      },
+      "soil_type": "দোআঁশ, কাদা",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 700
+      }
+    }
+  },
+  {
+    "crop_id": "mango",
+    "name_bn": "আম",
+    "category": "ফল",
+    "season": "গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "এপ্রিল",
+      "end": "জুন"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 24,
+        "max": 35
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 60
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1500
+      }
+    }
+  },
+  {
+    "crop_id": "banana",
+    "name_bn": "কলা",
+    "category": "ফল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "জুলাই",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 65,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 1200,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "papaya",
+    "name_bn": "পেঁপে",
+    "category": "ফল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 2000
+      }
+    }
+  },
+  {
+    "crop_id": "jackfruit",
+    "name_bn": "কাঁঠাল",
+    "category": "ফল",
+    "season": "গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "মে",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 35
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 1000,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "lychee",
+    "name_bn": "লিচু",
+    "category": "ফল",
+    "season": "গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "জুন",
+      "end": "জুলাই"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 33
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_type": "উর্বর কাদা, পলি কাদা",
+      "rainfall_mm": {
+        "min": 1200,
+        "max": 2200
+      }
+    }
+  },
+  {
+    "crop_id": "guava",
+    "name_bn": "জাম",
+    "category": "ফল",
+    "season": "শীতান্তর/বর্ষা",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "মে",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, কাদা দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1500
+      }
+    }
+  },
+  {
+    "crop_id": "orange",
+    "name_bn": "কমলা",
+    "category": "ফল",
+    "season": "শীত",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "নভেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 15,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, কাদা",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 1400
+      }
+    }
+  },
+  {
+    "crop_id": "pineapple",
+    "name_bn": "আনারস",
+    "category": "ফল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_type": "বেলে দোআঁশ, দোআঁশ",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 1800
+      }
+    }
+  },
+  {
+    "crop_id": "watermelon",
+    "name_bn": "তরমুজ",
+    "category": "ফল",
+    "season": "গরম/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 55,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "বেলে দোআঁশ, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "muskmelon",
+    "name_bn": "খরবুজ",
+    "category": "ফল",
+    "season": "গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 65
+      },
+      "soil_type": "বেলে দোআঁশ, পলি দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "pumpkin",
+    "name_bn": "কুমড়া",
+    "category": "সবজি",
+    "season": "বর্ষা/শীতান্তর",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 700,
+        "max": 1600
+      }
+    }
+  },
+  {
+    "crop_id": "bottle_gourd",
+    "name_bn": "লাউ",
+    "category": "সবজি",
+    "season": "বর্ষা/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "জুলাই",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 1800
+      }
+    }
+  },
+  {
+    "crop_id": "bitter_gourd",
+    "name_bn": "করলা",
+    "category": "সবজি",
+    "season": "বর্ষা/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "জুলাই",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 900,
+        "max": 2000
+      }
+    }
+  },
+  {
+    "crop_id": "cucumber",
+    "name_bn": "শশা",
+    "category": "সবজি",
+    "season": "বর্ষা/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "জুন",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 65,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 1800
+      }
+    }
+  },
+  {
+    "crop_id": "okra",
+    "name_bn": "ঢেঁড়স / ভেন্ডি",
+    "category": "সবজি",
+    "season": "বর্ষা/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "মার্চ",
+      "end": "নভেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 700,
+        "max": 1600
+      }
+    }
+  },
+  {
+    "crop_id": "sweet_potato",
+    "name_bn": "মিষ্টি আলু",
+    "category": "মূল সবজি",
+    "season": "বর্ষা/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_type": "বেলে দোআঁশ, দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1500
+      }
+    }
+  },
+  {
+    "crop_id": "yam",
+    "name_bn": "রূপা / জিমিকা",
+    "category": "মূল সবজি",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুন"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 1000,
+        "max": 2200
+      }
+    }
+  },
+  {
+    "crop_id": "turmeric",
+    "name_bn": "হলুদ",
+    "category": "মসলা",
+    "season": "বর্ষা/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 1000,
+        "max": 2200
+      }
+    }
+  },
+  {
+    "crop_id": "ginger",
+    "name_bn": "আদা",
+    "category": "মসলা",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_type": "উর্বর কাদা, পলি কাদা",
+      "rainfall_mm": {
+        "min": 1200,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "betel_leaf",
+    "name_bn": "পান পাতার গাছ",
+    "category": "ফসল/পাতা",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 1500,
+        "max": 3000
+      }
+    }
+  },
+  {
+    "crop_id": "tea",
+    "name_bn": "চা",
+    "category": "পানীয় ফসল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 15,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 95
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 90
+      },
+      "soil_type": "অম্লীয় কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 2000,
+        "max": 3500
+      }
+    }
+  },
+  {
+    "crop_id": "coffee",
+    "name_bn": "কফি (ছোট পরিসরে)",
+    "category": "ফসল/পানীয়",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_type": "অম্লীয় কাদা, পলি কাদা",
+      "rainfall_mm": {
+        "min": 1500,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "areca_nut",
+    "name_bn": "পান সুটা (বেত)",
+    "category": "ফসল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "মার্চ",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 95
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 90
+      },
+      "soil_type": "উর্বর কাদা, পলি কাদা",
+      "rainfall_mm": {
+        "min": 1500,
+        "max": 3000
+      }
+    }
+  },
+  {
+    "crop_id": "coconut",
+    "name_bn": "নারকেল",
+    "category": "ফসল/তেলবীজ",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 24,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 95
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 90
+      },
+      "soil_type": "বেলে দোআঁশ, নালিচারা",
+      "rainfall_mm": {
+        "min": 1500,
+        "max": 3000
+      }
+    }
+  },
+  {
+    "crop_id": "rubber",
+    "name_bn": "রাবার",
+    "category": "ফসল/গাছ",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 95
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 90
+      },
+      "soil_type": "উর্বর কাদা, পলি কাদা",
+      "rainfall_mm": {
+        "min": 2000,
+        "max": 3500
+      }
+    }
+  },
+  {
+    "crop_id": "flower_marigold",
+    "name_bn": "গেওয়া / গেণ্ডা",
+    "category": "ফুল",
+    "season": "বর্ষা/শীত",
+    "sowing_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "harvesting_time": {
+      "start": "নভেম্বর",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 65
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 1000
+      }
+    }
+  },
+  {
+    "crop_id": "flower_jasmine",
+    "name_bn": "জুঁই",
+    "category": "ফুল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "মার্চ",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 2000
+      }
+    }
+  },
+  {
+    "crop_id": "flower_rose",
+    "name_bn": "গোলাপ",
+    "category": "ফুল",
+    "season": "শীত/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "spinach_malabar",
+    "name_bn": "লাউ শাক / পলং (বিধ)",
+    "category": "শাক",
+    "season": "বর্ষা/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "জুন",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 65,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 900,
+        "max": 2200
+      }
+    }
+  },
+  {
+    "crop_id": "palmyra",
+    "name_bn": "তেঁতুল / তাল",
+    "category": "ফল/গাছ",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 34
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_type": "বেলে দোআঁশ, উর্বর কাদা",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 1800
+      }
+    }
+  },
+  {
+    "crop_id": "sugar_beet",
+    "name_bn": "চিনি বীট (সামান্য)",
+    "category": "শস্য",
+    "season": "শীত",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 5,
+        "max": 20
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 65
+      },
+      "soil_type": "উর্বর কাদা, মাটি",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "flax",
+    "name_bn": "তুলা বীজ (ছোট পরিসরে)",
+    "category": "তন্তু/শস্য",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 22
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 60
+      },
+      "soil_type": "বেলে দোআঁশ, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "buckwheat",
+    "name_bn": "কলাই / বকুইট (ছোট পরিসরে)",
+    "category": "শস্য",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 24
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 60
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "pine_tree",
+    "name_bn": "শুকনো বনচারা (পাইন বৃক্ষ)",
+    "category": "বনজ ফসল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 60
+      },
+      "soil_type": "বেলে দোআঁশ, পলি দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "alfalfa",
+    "name_bn": "আলফালফা (চারা)",
+    "category": "চারণফসল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "harvesting_time": {
+      "start": "জুন",
+      "end": "নভেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "fenugreek",
+    "name_bn": "মেথি",
+    "category": "মশলা/শাক",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ডিসেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 60
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "spinach_indian",
+    "name_bn": "শণ শাক (পানির শাক জাত)",
+    "category": "শাক",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "জুন",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_type": "নালিচারা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 1000,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "kapok",
+    "name_bn": "কাঁকড়া / কপক",
+    "category": "বনজ/বাণিজ্যিক",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 34
+      },
+      "humidity_percent": {
+        "min": 65,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_type": "পলি কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 1000,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "hemp",
+    "name_bn": "কাঠের দল (হেম্প, সীমিত)",
+    "category": "বাণিজ্যিক ফসল",
+    "season": "বর্ষা/শীত",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "জুন",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 15,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, বেলে দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "olive",
+    "name_bn": "জৈব জলবায়ু (জলবায়ু অঞ্চলভিত্তিক)",
+    "category": "ফল (আইডিয়াল নয়)",
+    "season": "শীত/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 60
+      },
+      "soil_type": "বেলে দোআঁশ, পাথুরে মাটি",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "almond",
+    "name_bn": "বাদাম (চাষ সীমিত)",
+    "category": "ফসল",
+    "season": "শীত/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "আগস্ট",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 30,
+        "max": 65
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 60
+      },
+      "soil_type": "বেলে দোআঁশ, পাথুরে মাটি",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "sesbania",
+    "name_bn": "সরসপতা (হর্টিকালচার / হরবা)",
+    "category": "ফসল/চারা",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 34
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 85
+      },
+      "soil_type": "নালিচারা, কাদা",
+      "rainfall_mm": {
+        "min": 1000,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "papaya_mountain",
+    "name_bn": "বাগান পেঁপে (উত্তর অঞ্চল)",
+    "category": "ফল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "মার্চ",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 55,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_type": "কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 2000
+      }
+    }
+  },
+  {
+    "crop_id": "date_palm",
+    "name_bn": "খেজুর",
+    "category": "ফল/গাছ",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 38
+      },
+      "humidity_percent": {
+        "min": 30,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 60
+      },
+      "soil_type": "বেলে দোআঁশ, পাথুরে মাটি",
+      "rainfall_mm": {
+        "min": 200,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "strawberry",
+    "name_bn": "স্ট্রবেরি",
+    "category": "ফল/বাগান",
+    "season": "শীত",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 5,
+        "max": 24
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "grapes",
+    "name_bn": "আঙুর (ছোট পরিসরে)",
+    "category": "ফল",
+    "season": "গ্রীষ্ম/শীত",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 15,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 65
+      },
+      "soil_type": "বেলে দোআঁশ, পাথুরে মাটি",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "pine_seed",
+    "name_bn": "পাইন সিরি (বনজ বপন)",
+    "category": "বনজ",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 5,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 60
+      },
+      "soil_type": "পাথুরে, বেলে দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "sorghum",
+    "name_bn": "জোয়ারা / সর্গাম",
+    "category": "শস্য",
+    "season": "বর্ষা/খরিফ",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "নভেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 35
+      },
+      "humidity_percent": {
+        "min": 45,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 35,
+        "max": 65
+      },
+      "soil_type": "বেলে দোআঁশ, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "buckthorn",
+    "name_bn": "বাকথর্ন (স্থানীয় বিক্ষিপ্ত ফসল)",
+    "category": "বনজ",
+    "season": "বর্ষা/শীত",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "জুলাই",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 12,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 75
+      },
+      "soil_type": "কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1600
+      }
+    }
+  },
+  {
+    "crop_id": "hemp_fodder",
+    "name_bn": "চাষাবাদি তৃণ (হেম্প ফিড)",
+    "category": "চারণফসল",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুন"
+    },
+    "harvesting_time": {
+      "start": "জুলাই",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 75
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1400
+      }
+    }
+  },
+  {
+    "crop_id": "barley",
+    "name_bn": "বার্লি (ছোট পরিসরে)",
+    "category": "শস্য",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 5,
+        "max": 20
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 55
+      },
+      "soil_type": "কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 200,
+        "max": 600
+      }
+    }
+  },
+  {
+    "crop_id": "rye",
+    "name_bn": "রাই (অল্প পরিমাণে)",
+    "category": "শস্য",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "জানুয়ারি"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 5,
+        "max": 22
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 60
+      },
+      "soil_type": "কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 250,
+        "max": 700
+      }
+    }
+  },
+  {
+    "crop_id": "buckwheat2",
+    "name_bn": "বকুইট (উৎসাহিত)",
+    "category": "শস্য",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ডিসেম্বর",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 8,
+        "max": 22
+      },
+      "humidity_percent": {
+        "min": 45,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 35,
+        "max": 60
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "aquatic_rice",
+    "name_bn": "জলচারা ধান (খাস)",
+    "category": "শস্য",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "অগাস্ট",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 22,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 75,
+        "max": 95
+      },
+      "soil_moisture_percent": {
+        "min": 70,
+        "max": 95
+      },
+      "soil_type": "লাল নালিচারা, কাদা",
+      "rainfall_mm": {
+        "min": 1500,
+        "max": 3000
+      }
+    }
+  },
+  {
+    "crop_id": "field_bean",
+    "name_bn": "ফিল্ড বিন (বিভিন্ন বিন)",
+    "category": "ডাল",
+    "season": "বর্ষা/রবি",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুন"
+    },
+    "harvesting_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "নভেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, কাদা",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1500
+      }
+    }
+  },
+  {
+    "crop_id": "lemon",
+    "name_bn": "কলা লেবু / নিম্বু",
+    "category": "ফল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "harvesting_time": {
+      "start": "নভেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 15,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, কাদা",
+      "rainfall_mm": {
+        "min": 500,
+        "max": 1400
+      }
+    }
+  },
+  {
+    "crop_id": "olive2",
+    "name_bn": "জৈব জলবায়ু (স্থানীয়)",
+    "category": "ফল",
+    "season": "শীত/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 60
+      },
+      "soil_type": "বেলে দোআঁশ, পাথুরে মাটি",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "okra2",
+    "name_bn": "ভেন্ডি (দ্বিতীয় জাত)",
+    "category": "সবজি",
+    "season": "বর্ষা/রবি",
+    "sowing_time": {
+      "start": "মার্চ",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "এপ্রিল",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 32
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1600
+      }
+    }
+  },
+  {
+    "crop_id": "spinach3",
+    "name_bn": "শাক (গ্রীষ্মি)",
+    "category": "শাক",
+    "season": "গ্রীষ্ম",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "এপ্রিল",
+      "end": "জুলাই"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_type": "দোআঁশ, কাদা",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1600
+      }
+    }
+  },
+  {
+    "crop_id": "radish2",
+    "name_bn": "মূলা (বর্ষা জাত)",
+    "category": "মূল সবজি",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "জুলাই",
+      "end": "আগস্ট"
+    },
+    "harvesting_time": {
+      "start": "আগস্ট",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 65,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 800,
+        "max": 2000
+      }
+    }
+  },
+  {
+    "crop_id": "basil",
+    "name_bn": "তুলসি (বসিল)",
+    "category": "মসলা/মেডিসিনাল",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "harvesting_time": {
+      "start": "মার্চ",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 18,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 400,
+        "max": 1200
+      }
+    }
+  },
+  {
+    "crop_id": "mint",
+    "name_bn": "পুদিনা",
+    "category": "মসলা/পুদিনা",
+    "season": "বর্ষা/রবি",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "harvesting_time": {
+      "start": "মার্চ",
+      "end": "ডিসেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 15,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 55,
+        "max": 80
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1800
+      }
+    }
+  },
+  {
+    "crop_id": "leek",
+    "name_bn": "লিক",
+    "category": "সবজি",
+    "season": "শীত",
+    "sowing_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "জানুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 8,
+        "max": 20
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "কাদা, উর্বর দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "asparagus",
+    "name_bn": "স্প্যরাগাস (বিশেষ চাষ)",
+    "category": "সবজি",
+    "season": "বার্ষিক",
+    "sowing_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "harvesting_time": {
+      "start": "মে",
+      "end": "সেপ্টেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 75
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 1000
+      }
+    }
+  },
+  {
+    "crop_id": "artichoke",
+    "name_bn": "আর্টিচোক (গৃহায়িত চাষ)",
+    "category": "সবজি",
+    "season": "শীত/গ্রীষ্ম",
+    "sowing_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মে"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 24
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "উর্বর কাদা, পলি কাদা",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "spinach4",
+    "name_bn": "চিংড়ি শাক (লোকাল)",
+    "category": "শাক",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "জুন",
+      "end": "আগস্ট"
+    },
+    "harvesting_time": {
+      "start": "জুলাই",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 70,
+        "max": 90
+      },
+      "soil_moisture_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_type": "নালিচারা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 900,
+        "max": 2500
+      }
+    }
+  },
+  {
+    "crop_id": "kohlrabi",
+    "name_bn": "কোলরাবি (স্থানীয় স্মল)",
+    "category": "সবজি",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "নভেম্বর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 8,
+        "max": 20
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 50,
+        "max": 70
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 900
+      }
+    }
+  },
+  {
+    "crop_id": "turnip",
+    "name_bn": "শালগম",
+    "category": "মূল সবজি",
+    "season": "শীত",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ডিসেম্বর",
+      "end": "ফেব্রুয়ারি"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 5,
+        "max": 18
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "soybean2",
+    "name_bn": "সয়াবিন (গ্রীষ্মি জাত)",
+    "category": "শস্য",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 30
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 80
+      },
+      "soil_moisture_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, কাদা",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1400
+      }
+    }
+  },
+  {
+    "crop_id": "cowpea",
+    "name_bn": "লাবড়া (কব পি)",
+    "category": "ডাল/শস্য",
+    "season": "বর্ষা",
+    "sowing_time": {
+      "start": "মে",
+      "end": "জুলাই"
+    },
+    "harvesting_time": {
+      "start": "আগস্ট",
+      "end": "অক্টোবর"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 20,
+        "max": 35
+      },
+      "humidity_percent": {
+        "min": 60,
+        "max": 85
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_type": "দোআঁশ, বেলে দোআঁশ",
+      "rainfall_mm": {
+        "min": 600,
+        "max": 1600
+      }
+    }
+  },
+  {
+    "crop_id": "safflower",
+    "name_bn": "সফ্লাওয়ার (ছোট পরিসরে)",
+    "category": "ফুল/তেলবীজ",
+    "season": "রবি/শীত",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 28
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 35,
+        "max": 60
+      },
+      "soil_type": "বেলে দোআঁশ, পলি দোআঁশ",
+      "rainfall_mm": {
+        "min": 250,
+        "max": 700
+      }
+    }
+  },
+  {
+    "crop_id": "saffron",
+    "name_bn": "জাফরান (বিশেষ)",
+    "category": "মসলা/ফুল",
+    "season": "শীত",
+    "sowing_time": {
+      "start": "সেপ্টেম্বর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "মার্চ"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 5,
+        "max": 20
+      },
+      "humidity_percent": {
+        "min": 40,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 30,
+        "max": 55
+      },
+      "soil_type": "বেলে দোআঁশ, পাথুরে মাটি",
+      "rainfall_mm": {
+        "min": 200,
+        "max": 600
+      }
+    }
+  },
+  {
+    "crop_id": "mustard2",
+    "name_bn": "সরিষা (তেল বীজ)",
+    "category": "তেলবীজ",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "নভেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 10,
+        "max": 25
+      },
+      "humidity_percent": {
+        "min": 45,
+        "max": 70
+      },
+      "soil_moisture_percent": {
+        "min": 35,
+        "max": 60
+      },
+      "soil_type": "দোআঁশ, কাদা",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 800
+      }
+    }
+  },
+  {
+    "crop_id": "rape_seed",
+    "name_bn": "ক্যানোলা / রেপসিড",
+    "category": "তেলবীজ",
+    "season": "রবি",
+    "sowing_time": {
+      "start": "অক্টোবর",
+      "end": "ডিসেম্বর"
+    },
+    "harvesting_time": {
+      "start": "ফেব্রুয়ারি",
+      "end": "এপ্রিল"
+    },
+    "ideal_conditions": {
+      "temperature_c": {
+        "min": 5,
+        "max": 22
+      },
+      "humidity_percent": {
+        "min": 50,
+        "max": 75
+      },
+      "soil_moisture_percent": {
+        "min": 40,
+        "max": 65
+      },
+      "soil_type": "উর্বর কাদা, দোআঁশ",
+      "rainfall_mm": {
+        "min": 300,
+        "max": 900
+      }
+    }
+  }
+]

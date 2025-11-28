@@ -1,0 +1,627 @@
+[
+    {
+        "crop_id": "rice_aus",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 25,
+            "potassium_K": 35,
+            "sulfur_S": 10,
+            "zinc_Zn": 2
+        }
+    },
+    {
+        "crop_id": "rice_aman",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 100,
+            "phosphorus_P": 20,
+            "potassium_K": 40,
+            "sulfur_S": 10,
+            "zinc_Zn": 2
+        }
+    },
+    {
+        "crop_id": "rice_boro",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 140,
+            "phosphorus_P": 25,
+            "potassium_K": 70,
+            "sulfur_S": 20,
+            "zinc_Zn": 3
+        }
+    },
+    {
+        "crop_id": "wheat",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 100,
+            "phosphorus_P": 30,
+            "potassium_K": 20,
+            "sulfur_S": 10,
+            "zinc_Zn": 1
+        }
+    },
+    {
+        "crop_id": "maize",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 250,
+            "phosphorus_P": 60,
+            "potassium_K": 120,
+            "sulfur_S": 20,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "potato",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 180,
+            "phosphorus_P": 90,
+            "potassium_K": 120,
+            "sulfur_S": 15,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "sweet_potato",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 60,
+            "phosphorus_P": 40,
+            "potassium_K": 90,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "tomato",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 140,
+            "phosphorus_P": 70,
+            "potassium_K": 120,
+            "sulfur_S": 15,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "eggplant",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 120,
+            "phosphorus_P": 60,
+            "potassium_K": 100,
+            "sulfur_S": 15
+        }
+    },
+    {
+        "crop_id": "chili",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 100,
+            "phosphorus_P": 50,
+            "potassium_K": 90,
+            "sulfur_S": 15
+        }
+    },
+    {
+        "crop_id": "onion",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 130,
+            "phosphorus_P": 60,
+            "potassium_K": 120,
+            "sulfur_S": 20,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "garlic",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 100,
+            "phosphorus_P": 40,
+            "potassium_K": 70,
+            "sulfur_S": 20
+        }
+    },
+    {
+        "crop_id": "ginger",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 80,
+            "phosphorus_P": 50,
+            "potassium_K": 120,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "turmeric",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 40,
+            "potassium_K": 120,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "cabbage",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 160,
+            "phosphorus_P": 70,
+            "potassium_K": 120,
+            "sulfur_S": 20,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "cauliflower",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 180,
+            "phosphorus_P": 80,
+            "potassium_K": 150,
+            "sulfur_S": 20,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "cucumber",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 40,
+            "potassium_K": 80,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "bottle_gourd",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 40,
+            "potassium_K": 90,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "pumpkin",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 80,
+            "phosphorus_P": 40,
+            "potassium_K": 100,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "ridge_gourd",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 70,
+            "phosphorus_P": 35,
+            "potassium_K": 80,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "okras",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 40,
+            "potassium_K": 70,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "spinach",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 60,
+            "phosphorus_P": 25,
+            "potassium_K": 40
+        }
+    },
+    {
+        "crop_id": "radish",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 80,
+            "phosphorus_P": 30,
+            "potassium_K": 60,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "carrot",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 40,
+            "potassium_K": 80,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "bean",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 25,
+            "phosphorus_P": 60,
+            "potassium_K": 40,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "yard_long_bean",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 30,
+            "phosphorus_P": 60,
+            "potassium_K": 50,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "lentil",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 20,
+            "phosphorus_P": 40,
+            "potassium_K": 20,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "mung_bean",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 20,
+            "phosphorus_P": 40,
+            "potassium_K": 20,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "black_gram",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 20,
+            "phosphorus_P": 40,
+            "potassium_K": 20
+        }
+    },
+    {
+        "crop_id": "chickpea",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 20,
+            "phosphorus_P": 50,
+            "potassium_K": 20
+        }
+    },
+    {
+        "crop_id": "soybean",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 30,
+            "phosphorus_P": 60,
+            "potassium_K": 30,
+            "sulfur_S": 20
+        }
+    },
+    {
+        "crop_id": "mustard",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 100,
+            "phosphorus_P": 35,
+            "potassium_K": 40,
+            "sulfur_S": 30,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "sunflower",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 120,
+            "phosphorus_P": 60,
+            "potassium_K": 80,
+            "sulfur_S": 20,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "groundnut",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 25,
+            "phosphorus_P": 40,
+            "potassium_K": 40,
+            "sulfur_S": 15,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "sesame",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 60,
+            "phosphorus_P": 35,
+            "potassium_K": 40,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "sugarcane",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 300,
+            "phosphorus_P": 80,
+            "potassium_K": 150,
+            "sulfur_S": 40
+        }
+    },
+    {
+        "crop_id": "jute",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 120,
+            "phosphorus_P": 30,
+            "potassium_K": 60,
+            "sulfur_S": 20
+        }
+    },
+    {
+        "crop_id": "tea",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 200,
+            "phosphorus_P": 60,
+            "potassium_K": 120,
+            "sulfur_S": 40
+        }
+    },
+    {
+        "crop_id": "tobacco",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 80,
+            "phosphorus_P": 60,
+            "potassium_K": 120,
+            "sulfur_S": 20
+        }
+    },
+    {
+        "crop_id": "banana",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 200,
+            "phosphorus_P": 60,
+            "potassium_K": 250,
+            "sulfur_S": 20,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "papaya",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 150,
+            "phosphorus_P": 60,
+            "potassium_K": 200,
+            "sulfur_S": 15,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "mango",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 400,
+            "phosphorus_P": 200,
+            "potassium_K": 300,
+            "sulfur_S": 40,
+            "zinc_Zn": 1
+        }
+    },
+    {
+        "crop_id": "guava",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 150,
+            "phosphorus_P": 50,
+            "potassium_K": 150,
+            "sulfur_S": 20
+        }
+    },
+    {
+        "crop_id": "jackfruit",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 300,
+            "phosphorus_P": 150,
+            "potassium_K": 250
+        }
+    },
+    {
+        "crop_id": "litchi",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 250,
+            "phosphorus_P": 120,
+            "potassium_K": 200,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "lemon",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 200,
+            "phosphorus_P": 80,
+            "potassium_K": 150,
+            "sulfur_S": 20
+        }
+    },
+    {
+        "crop_id": "orange",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 250,
+            "phosphorus_P": 100,
+            "potassium_K": 200
+        }
+    },
+    {
+        "crop_id": "pineapple",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 160,
+            "phosphorus_P": 60,
+            "potassium_K": 200,
+            "sulfur_S": 15
+        }
+    },
+    {
+        "crop_id": "watermelon",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 100,
+            "phosphorus_P": 50,
+            "potassium_K": 120,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "muskmelon",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 40,
+            "potassium_K": 110,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "coriander",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 50,
+            "phosphorus_P": 25,
+            "potassium_K": 25
+        }
+    },
+    {
+        "crop_id": "mint",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 80,
+            "phosphorus_P": 30,
+            "potassium_K": 40
+        }
+    },
+    {
+        "crop_id": "fenugreek",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 20,
+            "phosphorus_P": 40,
+            "potassium_K": 20
+        }
+    },
+    {
+        "crop_id": "lettuce",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 40,
+            "potassium_K": 60
+        }
+    },
+    {
+        "crop_id": "broccoli",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 180,
+            "phosphorus_P": 70,
+            "potassium_K": 130,
+            "sulfur_S": 20,
+            "boron_B": 1
+        }
+    },
+    {
+        "crop_id": "beetroot",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 70,
+            "phosphorus_P": 40,
+            "potassium_K": 90
+        }
+    },
+    {
+        "crop_id": "turnip",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 80,
+            "phosphorus_P": 35,
+            "potassium_K": 60
+        }
+    },
+    {
+        "crop_id": "peas",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 20,
+            "phosphorus_P": 40,
+            "potassium_K": 20
+        }
+    },
+    {
+        "crop_id": "coconut",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 500,
+            "phosphorus_P": 320,
+            "potassium_K": 1200
+        }
+    },
+    {
+        "crop_id": "areca_nut",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 100,
+            "phosphorus_P": 40,
+            "potassium_K": 140
+        }
+    },
+    {
+        "crop_id": "coffee",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 120,
+            "phosphorus_P": 60,
+            "potassium_K": 140
+        }
+    },
+    {
+        "crop_id": "rubber",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 200,
+            "phosphorus_P": 120,
+            "potassium_K": 200
+        }
+    },
+    {
+        "crop_id": "cotton",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 150,
+            "phosphorus_P": 60,
+            "potassium_K": 90
+        }
+    },
+    {
+        "crop_id": "flax",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 80,
+            "phosphorus_P": 30,
+            "potassium_K": 60
+        }
+    },
+    {
+        "crop_id": "barley",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 70,
+            "phosphorus_P": 30,
+            "potassium_K": 30
+        }
+    },
+    {
+        "crop_id": "sorghum",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 120,
+            "phosphorus_P": 40,
+            "potassium_K": 60
+        }
+    },
+    {
+        "crop_id": "millet",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 80,
+            "phosphorus_P": 30,
+            "potassium_K": 40
+        }
+    },
+    {
+        "crop_id": "quinoa",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 90,
+            "phosphorus_P": 40,
+            "potassium_K": 50
+        }
+    },
+    {
+        "crop_id": "strawberry",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 120,
+            "phosphorus_P": 40,
+            "potassium_K": 100,
+            "sulfur_S": 10
+        }
+    },
+    {
+        "crop_id": "grape",
+        "fertilizer_kg_per_hectare": {
+            "nitrogen_N": 200,
+            "phosphorus_P": 100,
+            "potassium_K": 200,
+            "boron_B": 1
+        }
+    }
+]
