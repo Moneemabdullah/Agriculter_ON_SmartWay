@@ -4,11 +4,11 @@
 #include "Adafruit_HTU21DF.h"
 
 // 🌐 WiFi Credentials
-const char* ssid = "MONEEM";
-const char* password = "777moneem77";
+const char *ssid = "";     //! your wifi SSID
+const char *password = ""; //! your wifi password
 
 // 🌍 API Endpoint
-const char* serverUrl = "https://agriculter-on-smartway.onrender.com/api/sensor/input";
+const char *serverUrl = ""; //! your server URL with endpoint
 
 // 🧠 Sensor setup
 Adafruit_HTU21DF htu = Adafruit_HTU21DF();
@@ -19,29 +19,36 @@ unsigned long lastCheck = 0;
 const unsigned long wifiCheckInterval = 10000; // check WiFi every 10 sec
 
 // 🔗 Connect to WiFi
-void connectWiFi() {
-  if (WiFi.status() == WL_CONNECTED) return;
+void connectWiFi()
+{
+  if (WiFi.status() == WL_CONNECTED)
+    return;
 
   Serial.print("📶 Connecting to WiFi");
   WiFi.begin(ssid, password);
 
   int attempt = 0;
-  while (WiFi.status() != WL_CONNECTED && attempt < 20) {
+  while (WiFi.status() != WL_CONNECTED && attempt < 20)
+  {
     delay(1000);
     Serial.print(".");
     attempt++;
   }
 
-  if (WiFi.status() == WL_CONNECTED) {
+  if (WiFi.status() == WL_CONNECTED)
+  {
     Serial.println("\n✅ WiFi connected!");
     Serial.print("📡 IP: ");
     Serial.println(WiFi.localIP());
-  } else {
+  }
+  else
+  {
     Serial.println("\n❌ Failed to connect to WiFi!");
   }
 }
 
-void setup() {
+void setup()
+{
   Serial.begin(115200);
   delay(1000);
 
@@ -49,9 +56,11 @@ void setup() {
   Wire.begin(21, 22);
   Serial.println("🌱 Initializing Sensors...");
 
-  if (!htu.begin()) {
+  if (!htu.begin())
+  {
     Serial.println("❌ HTU21D/SHT21 not found! Check wiring.");
-    while (1);
+    while (1)
+      ;
   }
 
   Serial.println("✅ HTU21D/SHT21 sensor detected!");
@@ -60,10 +69,13 @@ void setup() {
   connectWiFi();
 }
 
-void loop() {
+void loop()
+{
   // 🔄 Check WiFi connection
-  if (millis() - lastCheck > wifiCheckInterval) {
-    if (WiFi.status() != WL_CONNECTED) {
+  if (millis() - lastCheck > wifiCheckInterval)
+  {
+    if (WiFi.status() != WL_CONNECTED)
+    {
       Serial.println("⚠️ WiFi disconnected, trying to reconnect...");
       connectWiFi();
     }
@@ -86,21 +98,27 @@ void loop() {
   Serial.println(jsonData);
 
   // 🌍 Send to server
-  if (WiFi.status() == WL_CONNECTED) {
+  if (WiFi.status() == WL_CONNECTED)
+  {
     HTTPClient http;
     http.begin(serverUrl);
     http.addHeader("Content-Type", "application/json");
 
     int code = http.POST(jsonData);
 
-    if (code == 200 || code == 201) {
+    if (code == 200 || code == 201)
+    {
       Serial.println("✅ Data sent successfully!");
-    } else {
+    }
+    else
+    {
       Serial.printf("❌ Server error (%d)\n", code);
     }
 
     http.end();
-  } else {
+  }
+  else
+  {
     Serial.println("⚠️ WiFi not connected, skipping send.");
   }
 
