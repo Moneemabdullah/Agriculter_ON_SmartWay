@@ -1,6 +1,6 @@
 # Agriculture On Smart Way
 
-## Project Structure
+https://sam-smart-agriculture2.netlify.app/
 
 ---
 
