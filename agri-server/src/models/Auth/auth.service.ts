@@ -53,7 +53,6 @@ export const signInService = async (phone: string, password: string) => {
         token,
         user: {
             id: user._id.toString(),
-            ...safeUser,
         },
     };
 };
