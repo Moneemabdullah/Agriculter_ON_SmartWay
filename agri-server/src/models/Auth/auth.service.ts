@@ -18,11 +18,11 @@ export const signUpService = async (user: CreateUser): Promise<PublicUser> => {
     });
 
     // remove password before returning
-    const { password, ...safeUser } = createdUser.toObject();
+    const { password, _id, ...safeUser } = createdUser.toObject();
 
     return {
-        id: safeUser._id.toString(),
         ...safeUser,
+        id: _id.toString(),
     };
 };
 
