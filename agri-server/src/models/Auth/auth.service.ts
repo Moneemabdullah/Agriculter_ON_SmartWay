@@ -26,12 +26,13 @@ export const signUpService = async (user: CreateUser): Promise<PublicUser> => {
     };
 };
 
-export const signInService = async (phone: string, password: string) => {
-    if (!phone || !password) {
-        throw new Error("Phone and password are required");
+export const signInService = async (identifier: string, password: string) => {
+    if (!identifier || !password) {
+        throw new Error("Identifier and password are required");
     }
 
-    const user = await UserModel.findOne({ phone }).lean();
+    // allow login by phone OR email
+    const user = await UserModel.findOne({ $or: [{ phone: identifier }, { email: identifier }] }).lean();
 
     if (!user) {
         throw new Error("User not found");
@@ -47,12 +48,18 @@ export const signInService = async (phone: string, password: string) => {
         expiresIn: "1d",
     });
 
-    const { password: _, ...safeUser } = user;
-
+    // Return token and id
     return {
         token,
         user: {
             id: user._id.toString(),
         },
     };
+};
+
+export const getUserById = async (id: string) => {
+    const user = await UserModel.findById(id).select('-password').lean();
+    if (!user) return null;
+    const { _id, ...rest } = user as any;
+    return { id: _id.toString(), ...rest };
 };

@@ -1,4 +1,6 @@
+import React from 'react';
 import { Bell, Menu, Settings, User, LogOut } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import {
@@ -63,63 +65,174 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
             <DropdownMenuContent align="end" className="w-80">
               <DropdownMenuLabel>Notifications</DropdownMenuLabel>
               <DropdownMenuSeparator />
+
               <DropdownMenuItem className="flex flex-col items-start gap-1 p-3">
                 <div className="flex w-full items-center gap-2">
                   <div className="h-2 w-2 rounded-full bg-red-500" />
                   <span>Low Soil Moisture Alert</span>
                 </div>
-                <p className="text-sm text-gray-500">Field A requires irrigation</p>
+                <p className="text-sm text-gray-500">
+                  Field A requires irrigation
+                </p>
               </DropdownMenuItem>
+
               <DropdownMenuItem className="flex flex-col items-start gap-1 p-3">
                 <div className="flex w-full items-center gap-2">
                   <div className="h-2 w-2 rounded-full bg-yellow-500" />
                   <span>High Temperature Warning</span>
                 </div>
-                <p className="text-sm text-gray-500">Temperature reached 35°C</p>
+                <p className="text-sm text-gray-500">
+                  Temperature reached 35°C
+                </p>
               </DropdownMenuItem>
+
               <DropdownMenuItem className="flex flex-col items-start gap-1 p-3">
                 <div className="flex w-full items-center gap-2">
                   <div className="h-2 w-2 rounded-full bg-green-500" />
                   <span>Irrigation Completed</span>
                 </div>
-                <p className="text-sm text-gray-500">Field B watered successfully</p>
+                <p className="text-sm text-gray-500">
+                  Field B watered successfully
+                </p>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 
           {/* Profile Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-2 hover:shadow-sm transition-all">
-                <Avatar className="h-9 w-9 ring-2 ring-gray-200">
-                  <AvatarImage src="https://i.pinimg.com/736x/18/89/57/1889571bec55294b795af81c2b9e6359.jpg" alt="Profile" />
-                  <AvatarFallback>AM</AvatarFallback>
-                </Avatar>
-                <span className="hidden md:inline font-semibold text-gray-800 tracking-wide">
-                  হাজী বাদল মিয়া
-                </span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="shadow-lg">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <User className="mr-2 h-4 w-4" />
-                Profile
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Settings className="mr-2 h-4 w-4" />
-                Settings
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <LogOut className="mr-2 h-4 w-4" />
-                Log out
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <ProfileMenu />
         </div>
       </div>
     </header>
+  );
+}
+
+function ProfileMenu() {
+  const [open, setOpen] = React.useState(false);
+  const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+  const [userName, setUserName] = React.useState<string | null>(null);
+  const [avatar, setAvatar] = React.useState<string | null>(null);
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setIsAuthenticated(false);
+        setUserName(null);
+        setAvatar(null);
+        return;
+      }
+
+      setIsAuthenticated(true);
+
+      // Prefer cached user info from localStorage
+      const storedName = localStorage.getItem('userName');
+      if (storedName) {
+        setUserName(storedName);
+        return;
+      }
+
+      // Fallback: try to fetch by stored userId (if available)
+      const userId = localStorage.getItem('userId');
+      if (userId) {
+        try {
+          const api = (await import('../utils/axios')).default;
+          const res = await api.get(`/users/${encodeURIComponent(userId)}`);
+          const data = res.data?.data || res.data;
+          if (data) {
+            setUserName(data.name || data.email || `User ${userId}`);
+            return;
+          }
+        } catch (err) {
+          console.warn('Could not fetch user by id', err);
+        }
+      }
+
+      // Final fallback
+      setUserName('User');
+    };
+
+    checkAuth();
+
+    const onAuthChanged = () => checkAuth();
+    window.addEventListener('auth-changed', onAuthChanged);
+
+    return () =>
+      window.removeEventListener('auth-changed', onAuthChanged);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    window.dispatchEvent(new Event('auth-changed'));
+    window.location.href = '/';
+  };
+
+  if (!isAuthenticated) return null;
+
+  return (
+    <DropdownMenu open={open} onOpenChange={setOpen}>
+      <div
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
+        <DropdownMenuTrigger asChild>
+          <Button
+            variant="ghost"
+            className="gap-2 hover:shadow-sm transition-all"
+          >
+            <Avatar className="h-9 w-9 ring-2 ring-gray-200">
+              <AvatarImage
+                src={
+                  avatar ||
+                  'https://i.pinimg.com/736x/18/89/57/1889571bec55294b795af81c2b9e6359.jpg'
+                }
+                alt="Profile"
+              />
+              <AvatarFallback>
+                {(userName || 'U').slice(0, 2).toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+
+            <span className="hidden md:inline font-semibold text-gray-800 tracking-wide">
+              {userName || 'User'}
+            </span>
+          </Button>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="end" className="shadow-lg">
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem
+            onSelect={() => {
+              setOpen(false);
+              navigate('/dashboard');
+            }}
+          >
+            <User className="mr-2 h-4 w-4" />
+            Dashboard
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            onSelect={() => {
+              setOpen(false);
+              navigate('/settings');
+            }}
+          >
+            <Settings className="mr-2 h-4 w-4" />
+            Settings
+          </DropdownMenuItem>
+
+          <DropdownMenuSeparator />
+
+          <DropdownMenuItem onSelect={handleLogout}>
+            <LogOut className="mr-2 h-4 w-4" />
+            Log out
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </div>
+    </DropdownMenu>
   );
 }
