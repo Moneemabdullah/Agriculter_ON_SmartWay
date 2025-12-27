@@ -1,93 +1,33 @@
-// import { useState } from 'react';
-// import { DashboardHeader } from './components/DashboardHeader';
-// import { DashboardSidebar } from './components/DashboardSidebar';
-// import { DashboardOverview } from './components/DashboardOverview';
-// import { IrrigationControl } from './components/IrrigationControl';
-// import { CropManagement } from './components/CropManagement';
-// import { AnalyticsCharts } from './components/AnalyticsCharts';
-// import { AlertsPanel } from './components/AlertsPanel';
-// import { TeamManagement } from './components/TeamManagement';
-// import { PaymentsPanel } from './components/PaymentsPanel';
-// import { SettingsPanel } from './components/SettingsPanel';
-
-// export default function App() {
-//   const [activeTab, setActiveTab] = useState('dashboard');
-//   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-//   const renderContent = () => {
-//     switch (activeTab) {
-//       case 'dashboard':
-//         return <DashboardOverview />;
-//       case 'irrigation':
-//         return (
-//           <div className="space-y-6">
-//             <h2>Irrigation Control</h2>
-//             <IrrigationControl />
-//           </div>
-//         );
-//       case 'crops':
-//         return <CropManagement />;
-//       case 'analytics':
-//         return (
-//           <div className="space-y-6">
-//             <h2>Analytics & Reports</h2>
-//             <AnalyticsCharts />
-//           </div>
-//         );
-//       case 'alerts':
-//         return <AlertsPanel />;
-//       case 'team':
-//         return <TeamManagement />;
-//       case 'payments':
-//         return <PaymentsPanel />;
-//       case 'settings':
-//         return <SettingsPanel />;
-//       default:
-//         return <DashboardOverview />;
-//     }
-//   };
-
-//   return (
-//     <div className="flex h-screen overflow-hidden bg-gray-50">
-//       <DashboardSidebar
-//         activeTab={activeTab}
-//         onTabChange={setActiveTab}
-//         isOpen={sidebarOpen}
-//         onClose={() => setSidebarOpen(false)}
-//       />
-      
-//       <div className="flex flex-1 flex-col overflow-hidden">
-//         <DashboardHeader onMenuClick={() => setSidebarOpen(true)} />
-        
-//         <main className="flex-1 overflow-y-auto">
-//           <div className="container mx-auto p-6">
-//             {renderContent()}
-//           </div>
-//         </main>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandPage from "./LandPage";
 import Logs from "./Landing page/Logs";
 import MainBlog from "./Landing page/MainBlog";
 import MainService from "./Landing page/MainService";
+import Dashboard from "./components/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandPage />} />
-        <Route path="/logs" element={<Logs /> }/>
+        <Route path="/logs" element={<Logs />} />
         <Route path="/blogs" element={<MainBlog />} />
         <Route path="/services" element={<MainService />} />
+
+        {/* Protected dashboard */}
+        <Route
+          path="/dashboard/:userId"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
 };
 
 export default App;
-

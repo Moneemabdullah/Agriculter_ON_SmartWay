@@ -32,14 +32,6 @@ const teamMembers: TeamMember[] = [
     status: "active",
   },
   {
-    id: "3",
-    name: "Mustafizur Rahman",
-    role: "Software Engineer",
-    email: "mustafiz@smartagri.com",
-    responsibility: "Frontend & Codebase Lead",
-    status: "active",
-  },
-  {
     id: "4",
     name: "Rayhan Islam Prome",
     role: "Software Engineer",
@@ -163,7 +155,7 @@ export function TeamManagement() {
               time: "5 hours ago",
             },
             {
-              name: "Mustafiz",
+              name: "Rayhan",
               action: "resolved critical alert in Field A",
               time: "8 hours ago",
             },

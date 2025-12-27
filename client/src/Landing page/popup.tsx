@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import api from '../utils/axios';
 import { X, User, Mail, Lock, Phone, MapPin, Hash, Calendar } from 'lucide-react';
 
 interface AuthModalProps {
@@ -37,45 +38,50 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setSuccess('');
   };
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess('');
+const handleLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true);
+  setError('');
+  setSuccess('');
 
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+  try {
+    const identifier = formData.email || formData.Phone;
 
-      const data = await response.json();
+    const response = await api.post('/auth/signin', {
+      identifier,
+      password: formData.password,
+    });
 
-      if (!response.ok) {
-        throw new Error(data.msg || 'Login failed');
-      }
+    const result = response.data?.data;
 
-      // Store token in localStorage
-      localStorage.setItem('token', data.token);
-      setSuccess('Login successful!');
-      
-      // Close modal after success
-      setTimeout(() => {
-        onClose();
-        resetForm();
-      }, 1500);
-    } catch (err: any) {
-      setError(err.message || 'Login failed. Please try again.');
-    } finally {
-      setLoading(false);
+    if (!response.data?.success) {
+      throw new Error(response.data?.message || 'Login failed');
     }
-  };
+
+    localStorage.setItem('token', result.token);
+    localStorage.setItem('userId', result.user?.id);
+
+    window.dispatchEvent(new Event('auth-changed'));
+
+    setSuccess('Login successful!');
+
+    // 1.2 second pore modal close
+    setTimeout(() => {
+      onClose();
+      resetForm();
+
+      // 2. modal close howar sathe sathe page reload
+      window.location.reload();
+      // jodi ektu delay chai, tahole:
+      // setTimeout(() => window.location.reload(), 300);
+    }, 1200);
+  } catch (err: any) {
+    setError(err.message || 'Login failed. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -83,7 +89,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setError('');
     setSuccess('');
 
-    // Validate password confirmation
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       setLoading(false);
@@ -91,35 +96,28 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     }
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          age: formData.age,
-          address: formData.address,
-          nID: formData.nID,
-          Phone: formData.Phone,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+      const payload = {
+        name: formData.name,
+        age: formData.age,
+        address: formData.address,
+        nID: formData.nID,
+        phone: formData.Phone,
+        email: formData.email,
+        password: formData.password,
+      };
 
-      const data = await response.json();
+      const response = await api.post('/auth/signup', payload);
 
-      if (!response.ok) {
-        throw new Error(data.msg || 'Registration failed');
+      if (!response.data?.success) {
+        throw new Error(response.data?.message || 'Registration failed');
       }
 
-      setSuccess('Registration successful! Please login.');
-      
-      // Switch to login mode after success
+      setSuccess('Registered successfully!');
+
       setTimeout(() => {
-        setMode('login');
+        onClose();
         resetForm();
-      }, 2000);
+      }, 1400);
     } catch (err: any) {
       setError(err.message || 'Registration failed. Please try again.');
     } finally {
@@ -133,7 +131,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setError('');
     setSuccess('');
 
-    // Validate new password confirmation
     if (formData.newPassword !== formData.confirmPassword) {
       setError('New passwords do not match');
       setLoading(false);
@@ -141,27 +138,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     }
 
     try {
-      const response = await fetch('/api/auth/change-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          oldPassword: formData.oldPassword,
-          newPassword: formData.newPassword,
-        }),
+      const response = await api.post('/auth/change-password', {
+        email: formData.email,
+        oldPassword: formData.oldPassword,
+        newPassword: formData.newPassword,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.msg || 'Password change failed');
+      if (!response.data?.success) {
+        throw new Error(response.data?.message || 'Password change failed');
       }
 
       setSuccess('Password changed successfully!');
-      
-      // Switch to login mode after success
+
       setTimeout(() => {
         setMode('login');
         resetForm();
@@ -195,6 +183,17 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     setMode('login');
     onClose();
   };
+
+  // common input classes with visible text + placeholder
+  const inputClass =
+    'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg ' +
+    'focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent ' +
+    'text-gray-900 placeholder-gray-400';
+
+  const textareaClass =
+    'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg ' +
+    'focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent ' +
+    'resize-none text-gray-900 placeholder-gray-400';
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -275,17 +274,21 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
           {mode === 'login' && (
             <form onSubmit={handleLogin} className="space-y-4">
               <div>
-                <label className="block text-sm text-gray-700 mb-2">Email</label>
+                <label className="block text-sm text-gray-700 mb-2">Email or Phone</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Mail
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
-                    type="email"
+                    type="text"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
-                    placeholder="Enter your email"
+                    aria-label="Email or phone"
+                    className={inputClass}
+                    placeholder="Enter your email or phone"
                   />
                 </div>
               </div>
@@ -293,14 +296,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Lock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="password"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                    aria-label="Password"
+                    className={inputClass}
                     placeholder="Enter your password"
                   />
                 </div>
@@ -322,14 +329,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Full Name</label>
                 <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <User
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                    aria-label="Full name"
+                    className={inputClass}
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -339,14 +350,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">Age</label>
                   <div className="relative">
-                    <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                    <Calendar
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      size={20}
+                    />
                     <input
                       type="number"
                       name="age"
                       value={formData.age}
                       onChange={handleChange}
                       required
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                      aria-label="Age"
+                      className={inputClass}
                       placeholder="Age"
                     />
                   </div>
@@ -355,14 +370,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 <div>
                   <label className="block text-sm text-gray-700 mb-2">National ID</label>
                   <div className="relative">
-                    <Hash className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                    <Hash
+                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                      size={20}
+                    />
                     <input
                       type="text"
                       name="nID"
                       value={formData.nID}
                       onChange={handleChange}
                       required
-                      className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                      aria-label="National ID"
+                      className={inputClass}
                       placeholder="National ID"
                     />
                   </div>
@@ -379,7 +398,8 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
                     onChange={handleChange}
                     required
                     rows={2}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent resize-none"
+                    aria-label="Address"
+                    className={textareaClass}
                     placeholder="Enter your address"
                   />
                 </div>
@@ -388,15 +408,19 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Phone Number</label>
                 <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Phone
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="tel"
                     name="Phone"
                     value={formData.Phone}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
-                    placeholder="Enter your phone number"
+                    aria-label="Phone number"
+                    className={inputClass}
+                    placeholder="Enter your phone number (e.g., +1234567890)"
                   />
                 </div>
               </div>
@@ -404,15 +428,19 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Email</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Mail
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
-                    placeholder="Enter your email"
+                    aria-label="Email"
+                    className={inputClass}
+                    placeholder="Enter your email (name@example.com)"
                   />
                 </div>
               </div>
@@ -420,15 +448,19 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Lock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="password"
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
-                    placeholder="Create a password"
+                    aria-label="Password"
+                    className={inputClass}
+                    placeholder="Create a password (min 8 characters)"
                   />
                 </div>
               </div>
@@ -436,14 +468,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Confirm Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Lock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="password"
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                    aria-label="Confirm password"
+                    className={inputClass}
                     placeholder="Confirm your password"
                   />
                 </div>
@@ -465,14 +501,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Email</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Mail
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                    aria-label="Email"
+                    className={inputClass}
                     placeholder="Enter your email"
                   />
                 </div>
@@ -481,14 +521,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Old Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Lock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="password"
                     name="oldPassword"
                     value={formData.oldPassword}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                    aria-label="Old password"
+                    className={inputClass}
                     placeholder="Enter your old password"
                   />
                 </div>
@@ -497,14 +541,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">New Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Lock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="password"
                     name="newPassword"
                     value={formData.newPassword}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                    aria-label="New password"
+                    className={inputClass}
                     placeholder="Enter new password"
                   />
                 </div>
@@ -513,14 +561,18 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
               <div>
                 <label className="block text-sm text-gray-700 mb-2">Confirm New Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                  <Lock
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={20}
+                  />
                   <input
                     type="password"
                     name="confirmPassword"
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent"
+                    aria-label="Confirm new password"
+                    className={inputClass}
                     placeholder="Confirm new password"
                   />
                 </div>
