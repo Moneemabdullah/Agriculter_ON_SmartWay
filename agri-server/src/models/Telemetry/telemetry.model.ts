@@ -4,7 +4,8 @@ import { ITelemetry } from "./telemetry.types";
 const TelemetrySchema = new Schema<ITelemetry>(
     {
         sensorId: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Sensor",
             required: true,
             index: true,
         },

@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import connectDb from "./config/db";
+import connectDb from "./config/db.config";
 import { mainRouter } from "./Route";
 import path from "path";
 

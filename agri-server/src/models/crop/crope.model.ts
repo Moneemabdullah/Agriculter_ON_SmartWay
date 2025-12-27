@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Crop } from "./crop.types";
+import { Crop } from "./crop.@types";
 const { Schema, model } = mongoose;
 
 export const CropSchema = new Schema<Crop>(

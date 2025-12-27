@@ -5,6 +5,8 @@ export interface User {
     email: string;
     phone: string;
     password: string;
+    photo?: string;
+    role: "admin" | "farmer" | "viewer";
     address?: {
         village: string;
         city: string;

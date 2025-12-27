@@ -1,5 +1,5 @@
-import { CropModel } from "./crope.modesl";
-import { Crop } from "./crop.types";
+import { CropModel } from "./crope.model";
+import { Crop } from "./crop.@types";
 
 export const addCrop = async (cropData: any) => {
     const newCrop = new CropModel(cropData);

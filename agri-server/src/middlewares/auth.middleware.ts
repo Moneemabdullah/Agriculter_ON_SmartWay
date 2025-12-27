@@ -1,6 +1,6 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import config from "../config";
+import config from "../config/env.config.ts";
 
 declare global {
     namespace Express {

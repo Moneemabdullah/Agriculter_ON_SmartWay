@@ -7,6 +7,12 @@ const userSchema: Schema<User> = new mongoose.Schema<User>(
         email: { type: String, required: true, unique: true },
         phone: { type: String, required: true, unique: true },
         password: { type: String, required: true },
+        role: {
+            type: String,
+            enum: ["admin", "farmer", "viewer"],
+            required: true,
+        },
+        photo: { type: String, required: false },
         address: {
             village: { type: String },
             city: { type: String },

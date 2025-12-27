@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import config from "../../config";
+import config from "../../config/env.config.ts";
 import jwt from "jsonwebtoken";
 import UserModel from "../User/user.models";
 import { CreateUser, PublicUser } from "../User/User.types";

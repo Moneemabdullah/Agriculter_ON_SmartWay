@@ -2,7 +2,9 @@ import {
     deleteUserByIdService,
     getAllUsersService,
     getUserByIdService,
+    updatedUserByIdService,
 } from "./user.service";
+
 import { Request, Response, NextFunction } from "express";
 import { User } from "./User.types";
 
@@ -37,6 +39,28 @@ export const getUserById = async (
         res.status(200).json({
             success: true,
             message: "User retrieved successfully",
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+//* Update user by id
+export const updateUserByIdcontroller = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const id = req.params.id;
+        const updateData = req.body;
+        const result: User = (await updatedUserByIdService(
+            id as string,
+            updateData as Partial<User>
+        )) as User;
+        res.status(200).json({
+            success: true,
+            message: "User updated successfully",
             data: result,
         });
     } catch (error) {
