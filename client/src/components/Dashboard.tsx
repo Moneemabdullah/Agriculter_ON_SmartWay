@@ -23,7 +23,7 @@ export default function App() {
       case 'irrigation':
         return (
           <div className="space-y-6">
-            <h2>Irrigation Control</h2>
+            {/* <h2>Irrigation Control</h2> */}
             <IrrigationControl />
           </div>
         );

@@ -126,31 +126,20 @@ function ProfileMenu() {
 
       setIsAuthenticated(true);
 
-      // Prefer cached user info from localStorage
-      const storedName = localStorage.getItem('userName');
-      if (storedName) {
-        setUserName(storedName);
-        return;
-      }
+      try {
+        const api = (await import('../utils/axios')).default;
+        const res = await api.get('/auth/me');
 
-      // Fallback: try to fetch by stored userId (if available)
-      const userId = localStorage.getItem('userId');
-      if (userId) {
-        try {
-          const api = (await import('../utils/axios')).default;
-          const res = await api.get(`/users/${encodeURIComponent(userId)}`);
-          const data = res.data?.data || res.data;
-          if (data) {
-            setUserName(data.name || data.email || `User ${userId}`);
-            return;
-          }
-        } catch (err) {
-          console.warn('Could not fetch user by id', err);
+        if (res.data?.success) {
+          setUserName(
+            res.data.data.name ||
+              res.data.data.email ||
+              'User'
+          );
         }
+      } catch (err) {
+        console.warn('Could not fetch user', err);
       }
-
-      // Final fallback
-      setUserName('User');
     };
 
     checkAuth();

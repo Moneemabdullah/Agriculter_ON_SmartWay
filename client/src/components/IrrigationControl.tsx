@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 import { Switch } from "./ui/switch";
 import { Label } from "./ui/label";
 import { Slider } from "./ui/slider";
-import { Droplets, Power, Clock, Zap, PauseCircle } from "lucide-react";
+import { Power, Clock, Zap, Waves } from "lucide-react";
 
 interface Field {
   id: string;
@@ -17,9 +17,9 @@ interface Field {
 
 export function IrrigationControl() {
   const [fields, setFields] = useState<Field[]>([
-    { id: "1", name: "Field A", autoMode: true, isRunning: false, moistureLevel: 45, duration: 30 },
-    { id: "2", name: "Field B", autoMode: false, isRunning: true, moistureLevel: 70, duration: 45 },
-    { id: "3", name: "Field C", autoMode: true, isRunning: false, moistureLevel: 52, duration: 30 },
+    { id: "1", name: "North Vineyard", autoMode: true, isRunning: false, moistureLevel: 45, duration: 30 },
+    { id: "2", name: "East Orchard", autoMode: false, isRunning: true, moistureLevel: 72, duration: 45 },
+    { id: "3", name: "Wheat Field", autoMode: true, isRunning: false, moistureLevel: 32, duration: 30 },
   ]);
 
   const toggleAutoMode = (id: string) => {
@@ -34,121 +34,130 @@ export function IrrigationControl() {
     ));
   };
 
-  const updateDuration = (id: string, value: number[]) => {
+  const handleDurationChange = (id: string, value: number[]) => {
     setFields(fields.map(field =>
       field.id === id ? { ...field, duration: value[0] } : field
     ));
   };
 
-  const getMoistureColor = (level: number) => {
-    if (level < 40) return "bg-orange-500";
-    if (level < 70) return "bg-yellow-500";
-    return "bg-green-600";
-  };
-
-  const getMoistureTextColor = (level: number) => {
-    if (level < 40) return "text-orange-500";
-    if (level < 70) return "text-yellow-500";
-    return "text-green-600";
-  };
-
   return (
-    <div className="p-4 md:p-6">
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {fields.map(field => (
-          <Card
-            key={field.id}
-            className="rounded-2xl border-none shadow-lg bg-white/80 backdrop-blur-md transition hover:shadow-xl w-full max-w-xs mx-auto"
-          >
-            <CardHeader className="p-4 pb-1">
-              <CardTitle className="flex items-center justify-between">
-                <span className="text-base font-semibold text-gray-700">{field.name}</span>
-                {field.autoMode ? (
-                  <Zap className="h-5 w-5 text-green-500" />
-                ) : field.isRunning ? (
-                  <Droplets className="h-5 w-5 text-blue-500 animate-pulse" />
-                ) : (
-                  <PauseCircle className="h-5 w-5 text-gray-400" />
-                )}
-              </CardTitle>
-            </CardHeader>
+    <div className="p-6 bg-[#f8fafc] min-h-screen">
+      <div className="max-w-6xl mx-auto">
 
-            <CardContent className="p-4 space-y-4">
-              {/* Moisture Display */}
-              <div className="flex items-end justify-between">
-                <div className="flex items-baseline gap-1">
-                  <span className={`text-4xl font-bold ${getMoistureTextColor(field.moistureLevel)}`}>
-                    {field.moistureLevel}
-                  </span>
-                  <span className="text-sm text-gray-500 font-medium">%</span>
-                </div>
-                <div className="flex gap-0.5 h-6 items-end">
-                  <div className={`w-1.5 rounded-full ${field.moistureLevel > 20 ? getMoistureColor(field.moistureLevel) : 'bg-gray-300'} h-2`}></div>
-                  <div className={`w-1.5 rounded-full ${field.moistureLevel > 40 ? getMoistureColor(field.moistureLevel) : 'bg-gray-300'} h-3`}></div>
-                  <div className={`w-1.5 rounded-full ${field.moistureLevel > 60 ? getMoistureColor(field.moistureLevel) : 'bg-gray-300'} h-4`}></div>
-                  <div className={`w-1.5 rounded-full ${field.moistureLevel > 80 ? getMoistureColor(field.moistureLevel) : 'bg-gray-300'} h-5`}></div>
-                </div>
-              </div>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {fields.map(field => (
+            <Card
+              key={field.id}
+              className="relative overflow-hidden border-none shadow-xl bg-white rounded-[2rem] transition-all duration-300 hover:shadow-2xl border border-gray-100"
+            >
+              {/* Active Status Glow */}
+              {field.isRunning && (
+                <div className="absolute top-0 left-0 w-full h-1 bg-[#7ab42c] shadow-[0_0_15px_rgba(122,180,44,0.8)] animate-pulse" />
+              )}
 
-              {/* Moisture Bar */}
-              <div className="relative w-full h-8 flex items-center bg-gray-200/50 rounded-lg overflow-hidden p-0.5">
-                <div
-                  className={`absolute left-0 h-7 rounded-lg transition-all duration-300 ease-out ${getMoistureColor(field.moistureLevel)}`}
-                  style={{ width: `${Math.max(20, field.moistureLevel)}%` }}
-                />
-                <span className="absolute left-2 text-xs text-gray-500">Dry</span>
-                <span className="absolute right-2 text-xs text-gray-500">Wet</span>
-              </div>
-
-              {/* Auto Mode */}
-              <div className="flex items-center justify-between pt-2 border-t border-gray-200">
-                <Label htmlFor={`auto-${field.id}`} className="flex items-center gap-1.5 text-sm font-medium text-gray-800 cursor-pointer">
-                  <Zap className="h-4 w-4 text-green-600" />
-                  Auto
-                </Label>
-                <Switch
-                  id={`auto-${field.id}`}
-                  checked={field.autoMode}
-                  onCheckedChange={() => toggleAutoMode(field.id)}
-                  className="data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-gray-300"
-                />
-              </div>
-
-              {/* Duration Control */}
-              <div className={`space-y-1 transition-opacity duration-300 ${field.autoMode ? 'opacity-40 pointer-events-none' : ''}`}>
-                <Label className="flex items-center justify-between text-sm font-medium text-gray-700">
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="h-4 w-4 text-gray-500" />
-                    Duration
+              <CardHeader className="p-8 pb-2">
+                <div className="flex justify-between items-center">
+                  <div>
+                    <span className="text-[10px] font-black text-[#7ab42c] uppercase tracking-[0.2em] bg-[#7ab42c]/10 px-2 py-1 rounded-md">
+                      Zone {field.id}
+                    </span>
+                    <CardTitle className="text-2xl font-bold text-[#1a4d3c] mt-2">{field.name}</CardTitle>
                   </div>
-                  <span className="font-semibold text-blue-600 text-sm">{field.duration} min</span>
-                </Label>
-                <Slider
-                  value={[field.duration]}
-                  onValueChange={(value) => updateDuration(field.id, value)}
-                  min={10}
-                  max={120}
-                  step={5}
-                  className="w-full [&>span:first-child]:h-1.5 [&>span:first-child]:bg-gray-300 [&>span:first-child>span]:bg-blue-600 [&>span:last-child]:h-4 [&>span:last-child]:w-4 [&>span:last-child]:bg-blue-600 [&>span:last-child]:border-2 [&>span:last-child]:border-white"
-                />
-              </div>
+                  <div className={`p-4 rounded-2xl transition-all duration-500 ${field.isRunning ? 'bg-[#7ab42c] text-white rotate-12' : 'bg-gray-100 text-gray-400'}`}>
+                    <Waves className={`h-6 w-6 ${field.isRunning ? 'animate-pulse' : ''}`} />
+                  </div>
+                </div>
+              </CardHeader>
 
-              {/* Start / Stop Button */}
-              <Button
-                onClick={() => toggleIrrigation(field.id)}
-                className={`w-full text-sm font-semibold flex items-center justify-center py-2 rounded-lg transition-colors duration-200 ${
-                  field.isRunning
-                    ? "bg-red-500 hover:bg-red-600"
-                    : "bg-green-600 hover:bg-green-700"
-                } ${field.autoMode ? "opacity-40 cursor-not-allowed" : ""}`}
-                disabled={field.autoMode}
-              >
-                <Power className="mr-1 h-4 w-4" />
-                {field.isRunning ? "Stop" : "Start"}
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
+              <CardContent className="p-8 space-y-8">
+                {/* Moisture Card - FarmHub Green Style */}
+                <div className="bg-[#1a4d3c] rounded-[1.5rem] p-6 text-white relative overflow-hidden group">
+                  <div className="relative z-10 flex justify-between items-center">
+                    <div>
+                      <p className="text-xs font-bold opacity-60 uppercase tracking-widest">Moisture</p>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-5xl font-black italic">{field.moistureLevel}</span>
+                        <span className="text-xl font-bold opacity-40">%</span>
+                      </div>
+                    </div>
+                    {/* Visual Moisture Bars */}
+                    <div className="flex items-end gap-2 h-14">
+                      {[20, 40, 60, 80, 100].map((v) => (
+                        <div 
+                          key={v}
+                          className={`w-2.5 rounded-full transition-all duration-700 ${field.moistureLevel >= v ? 'bg-[#7ab42c]' : 'bg-white/10'}`} 
+                          style={{ height: `${v}%` }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  {/* Subtle background decoration */}
+                  <div className="absolute -right-4 -bottom-4 text-white/5 rotate-12">
+                    <Waves size={100} />
+                  </div>
+                </div>
+
+                <div className="space-y-6">
+                  {/* Smart Auto Mode - Gray BG Fix */}
+                  <div className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
+                    field.autoMode 
+                    ? 'border-[#7ab42c]/40 bg-[#7ab42c]/5' 
+                    : 'border-gray-200 bg-gray-100/80' 
+                  }`}>
+                    <div className="flex items-center gap-3">
+                      <Zap size={20} className={field.autoMode ? 'text-[#7ab42c]' : 'text-gray-500'} />
+                      <Label className="font-bold text-[#1a4d3c] text-sm cursor-pointer">Smart Auto-Mode</Label>
+                    </div>
+                    <Switch
+                      checked={field.autoMode}
+                      onCheckedChange={() => toggleAutoMode(field.id)}
+                      className="data-[state=checked]:bg-[#7ab42c] data-[state=unchecked]:bg-gray-400"
+                    />
+                  </div>
+
+                  {/* Slider Section - Gray Background Track Fix */}
+                  <div className={`space-y-5 transition-all ${field.autoMode ? 'opacity-20 grayscale pointer-events-none' : 'opacity-100'}`}>
+                    <div className="flex justify-between items-center px-1">
+                      <span className="flex items-center gap-2 text-[#1a4d3c] font-bold text-xs uppercase tracking-tighter">
+                        <Clock size={16} className="text-[#7ab42c]" /> Manual Duration
+                      </span>
+                      <span className="px-4 py-1.5 bg-gray-200 text-[#1a4d3c] text-xs font-black rounded-lg">
+                        {field.duration} MIN
+                      </span>
+                    </div>
+                    
+                    {/* CUSTOM SLIDER STYLING */}
+                    <Slider
+                      value={[field.duration]}
+                      onValueChange={(val) => handleDurationChange(field.id, val)}
+                      max={120}
+                      min={5}
+                      step={5}
+                      className={`cursor-pointer rounded-full h-3 bg-gray-200 border border-gray-300 [&_[role=slider]]:bg-[#1a4d3c] [&_[role=slider]]:border-[#7ab42c] [&_[role=slider]]:border-4`}
+                    />
+                  </div>
+                </div>
+
+                {/* Main Action Button */}
+                <Button
+                  onClick={() => toggleIrrigation(field.id)}
+                  disabled={field.autoMode}
+                  className={`w-full h-16 rounded-2xl font-black text-xs tracking-[0.2em] uppercase transition-all shadow-xl active:scale-95 ${
+                    field.isRunning
+                      ? "bg-red-500 hover:bg-red-600 text-white shadow-red-100"
+                      : "bg-[#1a4d3c] hover:bg-[#1a4d3c] text-white shadow-[#1a4d3c]/20"
+                  } ${field.autoMode ? 'bg-gray-100 text-gray-300 shadow-none border border-gray-200' : ''}`}
+                >
+                  {field.isRunning ? (
+                    <><Power size={18} className="mr-2" /> Stop System</>
+                  ) : (
+                    <><Power size={18} className="mr-2 text-[#7ab42c]" /> Run Field</>
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
