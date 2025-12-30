@@ -5,19 +5,20 @@ import {
     getSensorByIdController,
     getSensorsByOwnerController,
 } from "./sensor.controller";
+import auth from "../../middlewares/auth.middleware";
 
 const router = express.Router();
 
 // create sensor
-router.post("/", addSensorcontroller);
+router.post("/", auth("user"), addSensorcontroller);
 
 // get sensor by sensorId
-router.get("/id/:sensorId", getSensorByIdController);
+router.get("/id/:sensorId", auth("user"), getSensorByIdController);
 
 // get sensors by ownerId
-router.get("/owner/:ownerId", getSensorsByOwnerController);
+router.get("/owner/:ownerId", auth("user"), getSensorsByOwnerController);
 
 // delete sensor
-router.delete("/id/:sensorId", deleteSensorByIdController);
+router.delete("/id/:sensorId", auth("user"), deleteSensorByIdController);
 
-export default router;
+export const SensorRouter = router;

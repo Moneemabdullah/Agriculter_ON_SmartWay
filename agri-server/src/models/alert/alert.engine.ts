@@ -5,7 +5,7 @@ export const evaluateAlerts = async (data: {
     temperature: number;
     humidity: number;
     soilMoisture: number;
-}) => {                                                                                                              
+}) => {
     const alerts = await AlertModel.find({ sensorId: data.sensorId });
 
     alerts.forEach((alert) => {
@@ -15,7 +15,7 @@ export const evaluateAlerts = async (data: {
             (alert.min !== undefined && value < alert.min) ||
             (alert.max !== undefined && value > alert.max)
         ) {
-            console.log(
+            logger.error(
                 `⚠ ALERT: ${alert.type} out of range for sensor ${data.sensorId}`
             );
         }

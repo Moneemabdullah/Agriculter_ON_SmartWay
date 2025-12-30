@@ -8,13 +8,14 @@ import {
     getCropByNameController,
     updateCropByIdController,
 } from "./crop.controller";
+import auth from "../../middlewares/auth.middleware";
 
 const Router = express.Router();
 
 Router.post("/", addCropController);
 Router.get("/", getAllCropsController);
 Router.get("/:name", getCropByNameController);
-Router.delete("/:id", deleteCropByIdController);
-Router.put("/:id", updateCropByIdController);
+Router.delete("/:id", auth("admin"), deleteCropByIdController);
+Router.put("/:id", auth("user"), updateCropByIdController);
 
-export default Router;
+export const CropRouter = Router;
