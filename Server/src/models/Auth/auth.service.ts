@@ -8,16 +8,20 @@ import { CreateUser, PublicUser } from "../User/User.types";
 const SALT_ROUNDS = 10;
 
 export const signUpService = async (user: CreateUser): Promise<PublicUser> => {
-    // hash password
+    // 🔐 hash password
     const hashedPassword = await bcrypt.hash(user.password, SALT_ROUNDS);
 
-    // save to DB
+    // 🧠 default role
+    const role = user.role ?? "farmer";
+
+    // 💾 save to DB
     const createdUser = await UserModel.create({
         ...user,
+        role, // ✅ THIS is the missing line
         password: hashedPassword,
     });
 
-    // remove password before returning
+    // 🧼 remove password before returning
     const { password, _id, ...safeUser } = createdUser.toObject();
 
     return {
@@ -46,15 +50,25 @@ export const signInService = async (identifier: string, password: string) => {
         throw new Error("Invalid password");
     }
 
-    const token = jwt.sign({ userId: user._id }, config.jwtSecret as string, {
-        expiresIn: "1d",
-    });
+    const token = jwt.sign(
+        { userId: user._id, role: user.role },
+        config.jwtSecret as string,
+        {
+            expiresIn: "1d",
+        }
+    );
 
     // Return token and id
     return {
         token,
         user: {
             id: user._id.toString(),
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            role: user.role,
+            address: user.address,
+            photo: user.photo,
         },
     };
 };

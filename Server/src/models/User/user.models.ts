@@ -1,5 +1,5 @@
+import mongoose, { Model, Schema } from "mongoose";
 import { User } from "./User.types.js";
-import mongoose, { Schema, Model } from "mongoose";
 
 const userSchema: Schema<User> = new mongoose.Schema<User>(
     {
@@ -10,7 +10,6 @@ const userSchema: Schema<User> = new mongoose.Schema<User>(
         role: {
             type: String,
             enum: ["admin", "farmer", "viewer"],
-            required: true,
         },
         photo: { type: String, required: false },
         address: {

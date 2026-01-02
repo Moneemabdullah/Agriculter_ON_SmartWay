@@ -1,5 +1,7 @@
 import { Types } from "mongoose";
 export interface ISensor {
-    owner: Types.ObjectId;
     sensorId: string;
+    firmId: Types.ObjectId;
+    createdAt: Date;
+    updatedAt: Date;
 }

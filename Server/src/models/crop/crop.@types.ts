@@ -1,6 +1,6 @@
 export interface Crop {
     name: string;
-    caregory: string;
+    category: string;
     season: string;
     showingPeriod: {
         startMonth: number;

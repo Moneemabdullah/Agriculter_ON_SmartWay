@@ -10,15 +10,15 @@ import auth from "../../middlewares/auth.middleware";
 const router = express.Router();
 
 // create sensor
-router.post("/", auth("user"), addSensorcontroller);
+router.post("/", auth("farmer"), addSensorcontroller);
 
 // get sensor by sensorId
-router.get("/id/:sensorId", auth("user"), getSensorByIdController);
+router.get("/id/:sensorId", auth("farmer"), getSensorByIdController);
 
 // get sensors by ownerId
-router.get("/owner/:ownerId", auth("user"), getSensorsByOwnerController);
+router.get("/owner/:ownerId", auth("farmer"), getSensorsByOwnerController);
 
 // delete sensor
-router.delete("/id/:sensorId", auth("user"), deleteSensorByIdController);
+router.delete("/id/:sensorId", auth("farmer"), deleteSensorByIdController);
 
 export const SensorRouter = router;

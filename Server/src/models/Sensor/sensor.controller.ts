@@ -1,18 +1,23 @@
+import logger from "../../utils/logger.utils";
 import * as sensorService from "./sensor.service";
 import { Request, Response } from "express";
 
 export const addSensorcontroller = async (req: Request, res: Response) => {
     try {
-        const ownerId = req.body.ownerId;
+        const ownerId = req.userId;
+        const sensorId = req.body.sensorId;
+        logger.info(`Owner ID: ${ownerId}, Sensor ID: ${sensorId}`);
         const newSensor = await sensorService.addSensorService(
-            ownerId as string
+            ownerId as string,
+            sensorId as string
         );
         res.status(200).json({
             success: true,
-            message: "User deleted successfully",
+            message: "Sensor added successfully",
             data: newSensor,
         });
     } catch (error) {
+        logger.error("Error in addSensorcontroller:", error);
         res.status(500).json({ message: "Error adding sensor", error });
     }
 };
@@ -23,7 +28,9 @@ export const getSensorsByOwnerController = async (
 ) => {
     try {
         const ownerId = req.params.ownerId;
-        const sensors = await sensorService.getSensorsByOwnerService(ownerId as string);
+        const sensors = await sensorService.getSensorsByOwnerService(
+            ownerId as string
+        );
         res.status(200).json({
             success: true,
             message: "User deleted successfully",
@@ -37,7 +44,9 @@ export const getSensorsByOwnerController = async (
 export const getSensorByIdController = async (req: Request, res: Response) => {
     try {
         const sensorId = req.params.sensorId;
-        const sensor = await sensorService.getSensorByIdService(sensorId as string);
+        const sensor = await sensorService.getSensorByIdService(
+            sensorId as string
+        );
         res.status(200).json({
             success: true,
             message: "User deleted successfully",

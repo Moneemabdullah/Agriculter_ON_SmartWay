@@ -2,10 +2,12 @@ import express, { Request, Response } from "express";
 import connectDb from "./config/db.config";
 import { mainRouter } from "./Route";
 import path from "path";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
 
+app.use(cors());
 connectDb();
 
 // test route

@@ -1,8 +1,7 @@
 import { ISensor } from "./sensor.types";
 import { SensorModel } from "./sensor.models";
 
-export const addSensorService = async (ownerId: string): Promise<ISensor> => {
-    const sensorId = `sensor-${Date.now()}`;
+export const addSensorService = async (ownerId: string, sensorId: string): Promise<ISensor> => {
     const newSensor = new SensorModel({ owner: ownerId, sensorId });
     return await newSensor.save();
 };
