@@ -1,15 +1,18 @@
 import { ISensor } from "./sensor.types";
 import { SensorModel } from "./sensor.models";
 
-export const addSensorService = async (ownerId: string, sensorId: string): Promise<ISensor> => {
-    const newSensor = new SensorModel({ owner: ownerId, sensorId });
+export const addSensorService = async (
+    firmId: string,
+    sensorId: string
+): Promise<ISensor> => {
+    const newSensor = new SensorModel({ firmId: firmId, sensorId });
     return await newSensor.save();
 };
 
-export const getSensorsByOwnerService = async (
-    ownerId: string
+export const getSensorsByFirmService = async (
+    firmId: string
 ): Promise<ISensor[]> => {
-    return await SensorModel.find({ owner: ownerId });
+    return await SensorModel.find({ firmId: firmId });
 };
 
 export const getSensorByIdService = async (

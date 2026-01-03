@@ -1,3 +1,4 @@
+import logger from "../../utils/logger.utils";
 import { AlertModel } from "./alert.model";
 
 export const evaluateAlerts = async (data: {
@@ -11,10 +12,13 @@ export const evaluateAlerts = async (data: {
     alerts.forEach((alert) => {
         const value = data[alert.type as keyof typeof data];
 
-        if (
-            (alert.min !== undefined && value < alert.min) ||
-            (alert.max !== undefined && value > alert.max)
-        ) {
+        // ensure value is a number
+        if (typeof value !== "number") return;
+
+        const min = alert.min ?? Number.NEGATIVE_INFINITY;
+        const max = alert.max ?? Number.POSITIVE_INFINITY;
+
+        if (value < min || value > max) {
             logger.error(
                 `⚠ ALERT: ${alert.type} out of range for sensor ${data.sensorId}`
             );

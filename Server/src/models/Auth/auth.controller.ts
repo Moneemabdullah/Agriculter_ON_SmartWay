@@ -1,7 +1,12 @@
+import { NextFunction, Request, Response } from "express";
+import { AppError } from "../../utils/appError.utils";
 import * as authservice from "./auth.service";
-import { Request, Response } from "express";
 
-export const signUpController = async (req: Request, res: Response) => {
+export const signUpController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const user = req.body;
         const createdUser = await authservice.signUpService(user);
@@ -11,14 +16,15 @@ export const signUpController = async (req: Request, res: Response) => {
             data: createdUser,
         });
     } catch (error) {
-        res.status(400).json({
-            success: false,
-            message: (error as Error).message,
-        });
+        next(error);
     }
 };
 
-export const signInController = async (req: Request, res: Response) => {
+export const signInController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         // Accept either phone or email as identifier
         const { identifier, password } = req.body;
@@ -29,28 +35,29 @@ export const signInController = async (req: Request, res: Response) => {
             data: result,
         });
     } catch (error) {
-        res.status(400).json({
-            success: false,
-            message: (error as Error).message,
-        });
+        next(error);
     }
 };
 
-export const meController = async (req: Request, res: Response) => {
+export const meController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const userId = req.user?.userId;
         if (!userId) {
-            return res.status(400).json({ success: false, message: 'User id missing' });
+            throw new AppError("User id missing", 400);
         }
 
         const user = await authservice.getUserById(userId);
 
         if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
+            throw new AppError("User not found", 404);
         }
 
         res.status(200).json({ success: true, data: user });
     } catch (error) {
-        res.status(400).json({ success: false, message: (error as Error).message });
+        next(error);
     }
 };

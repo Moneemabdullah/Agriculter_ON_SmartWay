@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 export const CropSchema = new Schema<Crop>(
     {
         name: { type: String, required: true },
-        caregory: { type: String, required: true },
+        category: { type: String, required: true },
         season: { type: String, required: true },
         showingPeriod: {
             startMonth: { type: Number, required: true },

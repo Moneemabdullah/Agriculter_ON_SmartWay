@@ -3,6 +3,8 @@ import { ingestTelemetry } from "./telemetry.controller";
 
 const router = Router();
 
-router.post("/ingest", ingestTelemetry);
+router.post("/ingest", (req, res, next) => {
+    ingestTelemetry(req, res, next);
+});
 
-export default router;
+export const TelemetryRouter = router;

@@ -3,12 +3,12 @@ import { Ifirm } from "./firm.type";
 
 export const firmModelFields = new mongoose.Schema<Ifirm>(
     {
-        location: { type: String, required: true },
+        location: {
+            latitude: { type: Number, required: true },
+            longitude: { type: Number, required: true },
+        },
         crops: { type: mongoose.Types.ObjectId, ref: "Crop", required: true },
-        sensors: [
-            { type: mongoose.Types.ObjectId, ref: "Sensor", required: true },
-        ],
-        user: { type: mongoose.Types.ObjectId, ref: "User", required: true },
+        owner: { type: mongoose.Types.ObjectId, ref: "User", required: true },
         plantationDate: { type: Date, required: true },
     },
     {

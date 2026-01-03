@@ -13,7 +13,7 @@ const char *serverUrl = ""; //! your server URL with endpoint
 // 🧠 Sensor setup
 Adafruit_HTU21DF htu = Adafruit_HTU21DF();
 #define SOIL_PIN 34
-#define SENSOR_ID "SENSOR_001"
+#define SENSOR_ID "01"
 
 unsigned long lastCheck = 0;
 const unsigned long wifiCheckInterval = 10000; // check WiFi every 10 sec

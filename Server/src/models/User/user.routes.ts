@@ -1,23 +1,31 @@
 import { Router } from "express";
+import auth from "../../middlewares/auth.middleware";
+import { uploadMiddleware } from "../../middlewares/upload.middleware";
 import {
+    deleteUserById,
     getAllUsers,
     getUserById,
-    deleteUserById,
     updateUserByIdcontroller,
 } from "./user.controller";
-import { uploadMiddleware } from "../../middlewares/upload.middleware";
-import auth from "../../middlewares/auth.middleware";
 
 const router = Router();
 
-router.get("/", getAllUsers);
-router.get("/:id", getUserById);
+router.get("/", (req, res, next) => {
+    getAllUsers(req, res, next);
+});
+router.get("/:id", (req, res, next) => {
+    getUserById(req, res, next);
+});
 router.put(
     "/id",
-    auth("user"),
+    auth("farmer"),
     uploadMiddleware.single("image"),
-    updateUserByIdcontroller
+    (req, res, next) => {
+        updateUserByIdcontroller(req, res, next);
+    }
 );
-router.delete("/:id", auth("admin", "user"), deleteUserById);
+router.delete("/:id", auth("admin", "farmer"), (req, res, next) => {
+    deleteUserById(req, res, next);
+});
 
 export const UserRoutes = router;

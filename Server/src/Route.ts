@@ -4,6 +4,8 @@ import { FirmRouter } from "./models/Firm/firm.route";
 import { SensorRouter } from "./models/Sensor/sensor.route";
 import { UserRoutes } from "./models/User/user.routes";
 import { CropRouter } from "./models/crop/crop.routes";
+import { TelemetryRouter } from "./models/Telemetry/telemetry.route";
+import { BlogRouter } from "./models/blog/blog.route";
 
 const router = Router();
 
@@ -12,5 +14,7 @@ router.use("/firms", FirmRouter);
 router.use("/sensors", SensorRouter);
 router.use("/users", UserRoutes);
 router.use("/crops", CropRouter);
+router.use("/telemetry", TelemetryRouter);
+router.use("/blogs", BlogRouter);
 
 export const mainRouter = router;

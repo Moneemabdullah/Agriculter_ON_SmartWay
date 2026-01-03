@@ -5,7 +5,7 @@ const { Schema, model } = mongoose;
 
 const SensorSchema = new Schema<ISensor>(
     {
-        owner: {
+        firmId: {
             type: Types.ObjectId,
             ref: "User",
             required: true,

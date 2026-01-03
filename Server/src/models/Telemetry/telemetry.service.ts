@@ -1,4 +1,5 @@
 import { TelemetryModel } from "./telemetry.model";
+import { processAlerts } from "../alert/alert.service";
 
 interface TelemetryPayload {
     sensorId: string;
@@ -7,11 +8,10 @@ interface TelemetryPayload {
     soilMoisture: number;
 }
 
-export const insertTelemetry = async (
-    payload: TelemetryPayload | TelemetryPayload[]
-) => {
-    if (Array.isArray(payload)) {
-        return TelemetryModel.insertMany(payload, { ordered: false });
-    }
-    return TelemetryModel.create(payload);
+export const insertTelemetry = async (payload: any) => {
+    const data = await TelemetryModel.create(payload);
+
+    await processAlerts(payload); // includes crop alerts
+
+    return data;
 };

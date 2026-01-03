@@ -1,14 +1,24 @@
+import { NextFunction, Request, Response } from "express";
+import { AppError } from "../../utils/appError.utils";
 import logger from "../../utils/logger.utils";
 import * as sensorService from "./sensor.service";
-import { Request, Response } from "express";
 
-export const addSensorcontroller = async (req: Request, res: Response) => {
+export const addSensorcontroller = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
-        const ownerId = req.userId;
+        const firmId = req.body.firmId;
         const sensorId = req.body.sensorId;
-        logger.info(`Owner ID: ${ownerId}, Sensor ID: ${sensorId}`);
+
+        if (!sensorId) {
+            throw new AppError("Sensor ID is required", 400);
+        }
+
+        logger.info(`Owner ID: ${firmId}, Sensor ID: ${sensorId}`);
         const newSensor = await sensorService.addSensorService(
-            ownerId as string,
+            firmId as string,
             sensorId as string
         );
         res.status(200).json({
@@ -17,61 +27,54 @@ export const addSensorcontroller = async (req: Request, res: Response) => {
             data: newSensor,
         });
     } catch (error) {
-        logger.error("Error in addSensorcontroller:", error);
-        res.status(500).json({ message: "Error adding sensor", error });
+        next(error);
     }
 };
 
-export const getSensorsByOwnerController = async (
+export const getSensorByIdController = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ) => {
     try {
-        const ownerId = req.params.ownerId;
-        const sensors = await sensorService.getSensorsByOwnerService(
-            ownerId as string
-        );
-        res.status(200).json({
-            success: true,
-            message: "User deleted successfully",
-            data: sensors,
-        });
-    } catch (error) {
-        res.status(500).json({ message: "Error retrieving sensors", error });
-    }
-};
-
-export const getSensorByIdController = async (req: Request, res: Response) => {
-    try {
         const sensorId = req.params.sensorId;
+        if (!sensorId) {
+            throw new AppError("Sensor ID is required", 400);
+        }
+
         const sensor = await sensorService.getSensorByIdService(
             sensorId as string
         );
         res.status(200).json({
             success: true,
-            message: "User deleted successfully",
+            message: "Sensor retrieved successfully",
             data: sensor,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error retrieving sensor", error });
+        next(error);
     }
 };
 
 export const deleteSensorByIdController = async (
     req: Request,
-    res: Response
+    res: Response,
+    next: NextFunction
 ) => {
     try {
         const sensorId = req.params.sensorId;
+        if (!sensorId) {
+            throw new AppError("Sensor ID is required", 400);
+        }
+
         const deletedSensor = await sensorService.deleteSensorByIdService(
             sensorId as string
         );
         res.status(200).json({
             success: true,
-            message: "User deleted successfully",
+            message: "Sensor deleted successfully",
             data: deletedSensor,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error deleting sensor", error });
+        next(error);
     }
 };

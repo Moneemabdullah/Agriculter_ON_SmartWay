@@ -1,9 +1,20 @@
+import { NextFunction, Request, Response } from "express";
+import { AppError } from "../../utils/appError.utils";
+import logger from "../../utils/logger.utils";
 import * as cropservice from "./crop.service";
-import { Request, Response } from "express";
 
-export const addCropController = async (req: Request, res: Response) => {
+export const addCropController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const cropData = req.body;
+        if (!cropData || Object.keys(cropData).length === 0) {
+            throw new AppError("Crop data is required", 400);
+        }
+
+        logger.info("Crop Data:", cropData);
         const newCrop = await cropservice.addCrop(cropData);
         res.status(200).json({
             success: true,
@@ -11,11 +22,15 @@ export const addCropController = async (req: Request, res: Response) => {
             data: newCrop,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error adding crop", error });
+        next(error);
     }
 };
 
-export const getAllCropsController = async (req: Request, res: Response) => {
+export const getAllCropsController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const crops = await cropservice.getAllCrops();
         res.status(200).json({
@@ -24,12 +39,21 @@ export const getAllCropsController = async (req: Request, res: Response) => {
             data: crops,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error retrieving crops", error });
+        next(error);
     }
 };
-export const getCropByNameController = async (req: Request, res: Response) => {
+
+export const getCropByNameController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const name = req.params.name;
+        if (!name) {
+            throw new AppError("Crop name is required", 400);
+        }
+
         const crop = await cropservice.getCropByName(name as string);
         res.status(200).json({
             success: true,
@@ -37,12 +61,21 @@ export const getCropByNameController = async (req: Request, res: Response) => {
             data: crop,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error retrieving crop", error });
+        next(error);
     }
 };
-export const deleteCropByIdController = async (req: Request, res: Response) => {
+
+export const deleteCropByIdController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const id = req.params.id;
+        if (!id) {
+            throw new AppError("Crop ID is required", 400);
+        }
+
         const deletedCrop = await cropservice.deleteCropById(id as string);
         res.status(200).json({
             success: true,
@@ -50,14 +83,26 @@ export const deleteCropByIdController = async (req: Request, res: Response) => {
             data: deletedCrop,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error deleting crop", error });
+        next(error);
     }
 };
 
-export const updateCropByIdController = async (req: Request, res: Response) => {
+export const updateCropByIdController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     try {
         const id = req.params.id;
         const updateData = req.body;
+
+        if (!id) {
+            throw new AppError("Crop ID is required", 400);
+        }
+        if (!updateData || Object.keys(updateData).length === 0) {
+            throw new AppError("Update data is required", 400);
+        }
+
         const updatedCrop = await cropservice.updateCropById(
             id as string,
             updateData
@@ -68,6 +113,6 @@ export const updateCropByIdController = async (req: Request, res: Response) => {
             data: updatedCrop,
         });
     } catch (error) {
-        res.status(500).json({ message: "Error updating crop", error });
+        next(error);
     }
 };
