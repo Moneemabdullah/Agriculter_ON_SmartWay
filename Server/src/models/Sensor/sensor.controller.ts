@@ -27,15 +27,20 @@ export const getSensorsByOwnerController = async (
     res: Response
 ) => {
     try {
-        const ownerId = req.params.ownerId;
-        const sensors = await sensorService.getSensorsByOwnerService(
-            ownerId as string
-        );
-        res.status(200).json({
-            success: true,
-            message: "User deleted successfully",
-            data: sensors,
-        });
+        const ownerIdParam = req.params.ownerId as string | undefined;
+        const currentUserId = req.userId as string | undefined;
+        const currentUserRole = req.user?.role as string | undefined;
+
+        const ownerId = ownerIdParam || currentUserId;
+        if (!ownerId) return res.status(400).json({ message: "Owner id required" });
+
+        // if ownerId is provided explicitly, only allow admin or the same user
+        if (ownerIdParam && currentUserRole !== "admin" && ownerId !== currentUserId) {
+            return res.status(403).json({ message: "Forbidden" });
+        }
+
+        const sensors = await sensorService.getSensorsByOwnerService(ownerId as string);
+        res.status(200).json({ success: true, message: "Sensors retrieved successfully", data: sensors });
     } catch (error) {
         res.status(500).json({ message: "Error retrieving sensors", error });
     }

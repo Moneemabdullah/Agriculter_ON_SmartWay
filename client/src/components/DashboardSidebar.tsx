@@ -2,6 +2,7 @@ import {
   LayoutDashboard,
   Droplets,
   Sprout,
+  Factory,
   BarChart3,
   Settings,
   CreditCard,
@@ -23,6 +24,7 @@ const navigation = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { id: 'irrigation', label: 'Irrigation', icon: Droplets },
   { id: 'crops', label: 'Crop Management', icon: Sprout },
+  { id: 'firm', label: 'Firm Management', icon: Factory },
   { id: 'analytics', label: 'Analytics', icon: BarChart3 },
   { id: 'alerts', label: 'Alerts', icon: Bell },
   { id: 'team', label: 'Team', icon: Users },
@@ -67,7 +69,7 @@ export function DashboardSidebar({ activeTab, onTabChange, isOpen, onClose }: Si
           {navigation.map((item, index) => {
             const Icon = item.icon;
             const isActive = activeTab === item.id;
-            const isDisabled = index > 7; // Only first two are active
+            const isDisabled = index > 9; // Only first two are active
 
             return (
               <button

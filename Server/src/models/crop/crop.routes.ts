@@ -16,6 +16,7 @@ Router.post("/", addCropController);
 Router.get("/", getAllCropsController);
 Router.get("/:name", getCropByNameController);
 Router.delete("/:id", auth("admin"), deleteCropByIdController);
-Router.put("/:id", auth("user"), updateCropByIdController);
+// allow farmers and admins to update crop details
+Router.put('/:id', auth("farmer", "admin"), updateCropByIdController);
 
 export const CropRouter = Router;

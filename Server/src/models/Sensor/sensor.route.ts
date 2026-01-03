@@ -12,10 +12,13 @@ const router = express.Router();
 // create sensor
 router.post("/", auth("farmer"), addSensorcontroller);
 
+// get sensors for current user
+router.get("/", auth(), getSensorsByOwnerController);
+
 // get sensor by sensorId
 router.get("/id/:sensorId", auth("farmer"), getSensorByIdController);
 
-// get sensors by ownerId
+// get sensors by ownerId (admin or farmer)
 router.get("/owner/:ownerId", auth("farmer"), getSensorsByOwnerController);
 
 // delete sensor
