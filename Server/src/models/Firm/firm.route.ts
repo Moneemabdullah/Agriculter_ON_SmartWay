@@ -1,25 +1,28 @@
 import express from "express";
-import auth from "../../middlewares/auth.middleware";
 import {
     addFirmController,
     deleteFirmController,
+    getAllFirmsController,
     getFirmByIdController,
     updateFirmController,
 } from "./firm.controller";
+import auth from "../../middlewares/auth.middleware";
 
 const Router = express.Router();
 
-Router.post("/", (req, res, next) => {
-    addFirmController(req, res, next);
-});
-Router.get("/:id", (req, res, next) => {
-    getFirmByIdController(req, res, next);
-});
-Router.put("/:id", auth("farmer"), (req, res, next) => {
-    updateFirmController(req, res, next);
-});
-Router.delete("/:id", auth("admin", "farmer"), (req, res, next) => {
-    deleteFirmController(req, res, next);
-});
+// Create a firm (farmer only)
+Router.post("/", auth("farmer"), addFirmController);
+
+// Get all firms for logged in user
+Router.get("/", auth(), getAllFirmsController);
+
+// Get a single firm
+Router.get("/:id", auth(), getFirmByIdController);
+
+// Update firm
+Router.patch("/:id", auth(), updateFirmController);
+
+// Delete firm
+Router.delete("/:id", auth(), deleteFirmController);
 
 export const FirmRouter = Router;

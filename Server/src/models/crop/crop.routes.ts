@@ -1,6 +1,4 @@
 import express from "express";
-// import { addCrop } from "./crop.service";
-
 import auth from "../../middlewares/auth.middleware";
 import {
     addCropController,
@@ -12,20 +10,11 @@ import {
 
 const Router = express.Router();
 
-Router.post("/", (req, res, next) => {
-    addCropController(req, res, next);
-});
-Router.get("/", (req, res, next) => {
-    getAllCropsController(req, res, next);
-});
-Router.get("/:name", (req, res, next) => {
-    getCropByNameController(req, res, next);
-});
-Router.delete("/:id", auth("admin"), (req, res, next) => {
-    deleteCropByIdController(req, res, next);
-});
-Router.put("/:id", auth("farmer"), (req, res, next) => {
-    updateCropByIdController(req, res, next);
-});
+Router.post("/", addCropController);
+Router.get("/", getAllCropsController);
+Router.get("/:name", getCropByNameController);
+Router.delete("/:id", auth("admin"), deleteCropByIdController);
+// allow farmers and admins to update crop details
+Router.put("/:id", auth("farmer", "admin"), updateCropByIdController);
 
 export const CropRouter = Router;
