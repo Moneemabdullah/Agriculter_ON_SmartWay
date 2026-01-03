@@ -2,6 +2,7 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import config from "../config/env.config";
 import logger from "../utils/logger.utils";
+import UserModel from "../models/User/user.models";
 
 declare global {
     namespace Express {
@@ -36,7 +37,20 @@ const auth =
             const decoded = jwt.verify(
                 token as string,
                 config.jwtSecret as string
-            ) as unknown as JwtPayload & { role: string };
+            ) as unknown as JwtPayload & { role?: string };
+
+            // If token doesn't contain role (older tokens), try to fetch from DB
+            if (!decoded.role) {
+                try {
+                    const user = await UserModel.findById(decoded.userId).select("role").lean();
+                    (decoded as any).role = (user as any)?.role || "farmer";
+                    logger.info(`Role filled from DB: ${(decoded as any).role}`);
+                } catch (dbErr) {
+                    // fallback to a sensible default
+                    (decoded as any).role = "farmer";
+                    logger.warn("Failed to fetch user role from DB, defaulting to 'farmer'");
+                }
+            }
 
             req.user = decoded;
 

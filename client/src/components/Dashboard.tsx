@@ -11,6 +11,7 @@ import { AlertsPanel } from './AlertsPanel';
 import { TeamManagement } from './TeamManagement';
 import { PaymentsPanel } from './PaymentsPanel';
 import { SettingsPanel } from './SettingsPanel';
+import FirmManagement from './FirmManagement';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -34,6 +35,12 @@ export default function App() {
           <div className="space-y-6">
             <h2>Analytics & Reports</h2>
             <AnalyticsCharts />
+          </div>
+        );
+      case 'firm':
+        return (
+          <div className="space-y-6">
+            <FirmManagement />
           </div>
         );
       case 'alerts':
@@ -125,5 +132,5 @@ function Greeting() {
 
   if (!name) return null;
 
-  return <h2 className="text-xl font-semibold">{userId ? `Viewing: ${name}` : `Welcome, ${name} 👋`}</h2>;
+  return <h2 className="text-xl font-semibold">{userId ? `Viewing: ${name}` : `Welcome, ${name}`}</h2>;
 }

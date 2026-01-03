@@ -10,8 +10,8 @@ import { BlogSection } from './Landing page/BlogSection';
 import { NewsletterSection } from './Landing page/NewsletterSection';
 import { Footer } from './Landing page/Footer';
 import { ScrollToTop } from './Landing page/ScrollToTop';
-import { Blog } from './Landing page/Blog'; // Import separate Blog page if you have one
-import { Changelog } from './Landing page/Changelog'; // Optional
+import { Blog } from './Landing page/Blog';
+import { Changelog } from './Landing page/Changelog';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,7 @@ export default function App() {
 
   // 3s loading screen
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000);
+    const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -45,9 +45,9 @@ export default function App() {
               <span className="text-5xl">🌱</span>
             </div>
           </div>
-          <h1 className="text-5xl text-white mb-6 animate-pulse">FarmHub</h1>
+          <h1 className="text-5xl text-white mb-6 animate-pulse">Smart Agri</h1>
           <div className="w-64 h-2 bg-white/20 rounded-full overflow-hidden mx-auto">
-            <div className="h-full bg-[#7ab42c] rounded-full animate-[loading_3s_linear_forwards]" />
+            <div className="h-full bg-[#7ab42c] rounded-full animate-[loading_1s_linear_forwards]" />
           </div>
           <p className="text-white/80 mt-6 animate-fade-in">Growing Nature, Nurturing Future</p>
         </div>
@@ -73,7 +73,7 @@ export default function App() {
 
       {currentPage === 'blog' ? (
         <>
-          <Blog /> {/* This page contains Stories from the Farm + Search */}
+          <Blog /> 
           <Footer />
           <ScrollToTop />
         </>
@@ -85,14 +85,13 @@ export default function App() {
         </>
       ) : (
         <>
-          {/* Home / Landing sections */}
           <HeroSection />
           <AboutSection />
           <ImageGrid />
           <StatsSection />
           <FeaturesSection />
           <ProductShowcase />
-          <BlogSection /> {/* Optional: show previews on home */}
+          <BlogSection /> 
           <NewsletterSection />
           <Footer />
           <ScrollToTop />
