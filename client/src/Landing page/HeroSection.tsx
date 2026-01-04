@@ -90,7 +90,7 @@ export function HeroSection() {
           {/* LEFT */}
           <div className="text-white">
             <div className="hero-badge inline-block bg-[#7ab42c] px-4 py-1 rounded-full mb-4">
-              Welcome to FarmHub
+              Welcome to SmartAgri
             </div>
 
             <h1 className="hero-title text-5xl lg:text-[86px] mb-6 font-bold">

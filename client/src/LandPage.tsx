@@ -11,7 +11,9 @@ import { NewsletterSection } from './Landing page/NewsletterSection';
 import { Footer } from './Landing page/Footer';
 import { ScrollToTop } from './Landing page/ScrollToTop';
 import { Blog } from './Landing page/Blog';
-import { Changelog } from './Landing page/Changelog';
+import Changelog from './Landing page/Changelog';
+import ContactPage from './Landing page/Contact';
+import MainAbout from './Landing page/MainAbout';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -69,7 +71,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
 
       {currentPage === 'blog' ? (
         <>
@@ -83,8 +84,19 @@ export default function App() {
           <Footer />
           <ScrollToTop />
         </>
+      ) : currentPage === 'contact' ? (
+        <>
+          <ContactPage />
+          <Footer />
+          <ScrollToTop />
+        </>
+      ) : currentPage === 'about' ? (
+        <>
+          <MainAbout />
+        </>
       ) : (
         <>
+          <Header />
           <HeroSection />
           <AboutSection />
           <ImageGrid />

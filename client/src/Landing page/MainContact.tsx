@@ -1,16 +1,16 @@
 import React from 'react';
 import { Header } from './Header';
-import Changelog from './Changelog';
+import ContactPage from './Contact';
 import { Footer } from './Footer';
 
-const Logs = () => {
+const MainContact = () => {
     return (
         <div>
             <Header />
-            <Changelog />
+            <ContactPage />
             <Footer />
         </div>
     );
 };
 
-export default Logs;
+export default MainContact;

@@ -91,8 +91,8 @@ function Greeting() {
     const fetchProfile = async () => {
       try {
         if (userId) {
-          // try a few sensible endpoints to fetch another user's profile
-          const endpoints = [`/users/${userId}`, `/auth/users/${userId}`, `/users?id=${userId}`];
+          // try endpoints that exist on the API to fetch another user's profile
+          const endpoints = [`/users/${userId}`, `/users?id=${userId}`];
           for (const ep of endpoints) {
             try {
               const res = await api.get(ep);
@@ -132,5 +132,5 @@ function Greeting() {
 
   if (!name) return null;
 
-  return <h2 className="text-xl font-semibold">{userId ? `Viewing: ${name}` : `Welcome, ${name}`}</h2>;
+  // return <h2 className="text-xl font-semibold">{userId ? `Viewing: ${name}` : `Welcome, ${name}`}</h2>;
 }

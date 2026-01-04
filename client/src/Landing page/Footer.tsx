@@ -12,7 +12,7 @@ export function Footer() {
               <div className="w-10 h-10 bg-[#7ab42c] rounded-full flex items-center justify-center">
                 <span className="text-white">🌱</span>
               </div>
-              <span className="text-xl">FarmHub</span>
+              <span className="text-xl">SmartAgri</span>
             </div>
             <p className="text-gray-400 mb-6">
               Cultivating excellence in organic farming for over 30 years. 
@@ -72,7 +72,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-gray-400">
                 <Mail size={20} className="flex-shrink-0 text-[#7ab42c]" />
-                <span>info@farmhub.com</span>
+                <span>info@smartagri.com</span>
               </li>
             </ul>
           </div>
@@ -82,7 +82,7 @@ export function Footer() {
         <div className="pt-8 border-t border-[#1a4d3c]">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-gray-400 text-sm">
-              © 2025 FarmHub. All rights reserved.
+              © 2025 SmartAgri. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-[#7ab42c] transition-colors">Privacy Policy</a>

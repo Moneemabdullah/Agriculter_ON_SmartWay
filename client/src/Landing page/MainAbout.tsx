@@ -1,16 +1,16 @@
 import React from 'react';
 import { Header } from './Header';
-import Changelog from './Changelog';
+import AboutPage from './About';
 import { Footer } from './Footer';
 
-const Logs = () => {
+const MainAbout = () => {
     return (
         <div>
             <Header />
-            <Changelog />
+            <AboutPage />
             <Footer />
         </div>
     );
 };
 
-export default Logs;
+export default MainAbout;

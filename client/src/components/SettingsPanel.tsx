@@ -1,3 +1,4 @@
+import React, { useEffect, useState, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -22,15 +23,19 @@ import {
   Globe, 
   Thermometer, 
   Droplets,
-  CloudRain
+  CloudRain,
+  Camera,
+  Trash2
 } from 'lucide-react';
-
-import React, { useEffect, useState } from 'react';
 import api from '../utils/axios';
 
 export function SettingsPanel() {
   const [sensors, setSensors] = useState<Array<{_id:string, sensorId:string}>>([]);
   const [newSensorId, setNewSensorId] = useState('');
+  
+  // Profile Photo State
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchSensors = async () => {
     try {
@@ -41,15 +46,36 @@ export function SettingsPanel() {
     }
   };
 
-  useEffect(() => { fetchSensors(); }, []);
+  useEffect(() => {
+    fetchSensors();
+    const onUpdate = () => fetchSensors();
+    window.addEventListener('sensors-updated', onUpdate);
+    return () => window.removeEventListener('sensors-updated', onUpdate);
+  }, []);
+
+  // Handle Photo Selection
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Basic validation
+      if (file.size > 2 * 1024 * 1024) {
+        alert("File is too large. Max 2MB.");
+        return;
+      }
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleAddSensor = async () => {
     if (!newSensorId) return alert('Sensor id is required');
     try {
-      const res = await api.post('/sensors', { sensorId: newSensorId });
+      await api.post('/sensors', { sensorId: newSensorId });
       setNewSensorId('');
       fetchSensors();
-      // notify other components to refresh sensors
       window.dispatchEvent(new Event('sensors-updated'));
       alert('Sensor added');
     } catch (err: any) {
@@ -57,10 +83,32 @@ export function SettingsPanel() {
     }
   };
 
+  const handleDeleteSensor = async (sensorId: string) => {
+    if (!confirm(`Delete sensor ${sensorId}?`)) return;
+    try {
+      await api.delete(`/sensors/id/${sensorId}`);
+      fetchSensors();
+      window.dispatchEvent(new Event('sensors-updated'));
+      alert('Sensor deleted');
+    } catch (err: any) {
+      alert(err?.response?.data?.message || 'Failed to delete sensor');
+    }
+  };
+
+  const handleViewSensor = async (sensorId: string) => {
+    try {
+      const res = await api.get(`/sensors/id/${sensorId}`);
+      const s = res.data?.data;
+      alert(JSON.stringify(s, null, 2));
+    } catch (err: any) {
+      alert(err?.response?.data?.message || 'Failed to fetch sensor details');
+    }
+  };
+
   return (
-    <div className="max-w-6xl mx-auto space-y-8 p-6 pb-12">
+    <div className="max-w-6xl mx-auto space-y-8 p-6 pb-12 text-gray-900">
       <div className="flex flex-col gap-1">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900">Settings</h2>
+        <h2 className="text-3xl font-bold tracking-tight">Settings</h2>
         <p className="text-muted-foreground text-gray-500">
           Manage your account, notification preferences, and sensor automation rules.
         </p>
@@ -92,7 +140,53 @@ export function SettingsPanel() {
                 </CardTitle>
                 <CardDescription>Personal details and farm contact info.</CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
+                
+                {/* Photo Upload Section */}
+                <div className="flex flex-col sm:flex-row items-center gap-6 pb-2">
+                  <div className="relative group cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                    <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100 border-2 border-gray-200 flex items-center justify-center transition-all group-hover:border-green-500">
+                      {profileImage ? (
+                        <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+                      ) : (
+                        <User size={40} className="text-gray-400" />
+                      )}
+                    </div>
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Camera size={20} />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2 text-center sm:text-left">
+                    <Label className="text-sm font-medium">Profile Photo</Label>
+                    <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+                      <input 
+                        type="file" 
+                        ref={fileInputRef} 
+                        onChange={handleImageChange} 
+                        className="hidden" 
+                        accept="image/*"
+                      />
+                      <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()}>
+                        Change Photo
+                      </Button>
+                      {profileImage && (
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="text-red-500 hover:bg-red-50 hover:text-red-600"
+                          onClick={() => setProfileImage(null)}
+                        >
+                          <Trash2 size={14} className="mr-1" /> Remove
+                        </Button>
+                      )}
+                    </div>
+                    <p className="text-xs text-gray-500">JPG, PNG or GIF. Max 2MB.</p>
+                  </div>
+                </div>
+
+                <Separator />
+
                 <div className="grid gap-2">
                   <Label htmlFor="name">Full Name</Label>
                   <Input id="name" defaultValue="Abdullah Al Moneem" className="bg-gray-50/50" />
@@ -228,17 +322,16 @@ export function SettingsPanel() {
                   <CardTitle className="text-lg">Connected ESP32 Nodes</CardTitle>
                   <CardDescription>Live hardware status in the field.</CardDescription>
                 </div>
-                {/* replaced Add Node with inline add sensor form */}
                 <div className="flex items-center gap-3">
-                  <input value={newSensorId} onChange={(e) => setNewSensorId(e.target.value)} placeholder="Sensor ID e.g. S-abc123" className="rounded-lg border p-2 text-sm" />
+                  <input value={newSensorId} onChange={(e) => setNewSensorId(e.target.value)} placeholder="Sensor ID" className="rounded-lg border p-2 text-sm focus:ring-2 focus:ring-green-500 outline-none" />
                   <Button size="sm" variant="outline" className="text-green-600 border-green-200" onClick={handleAddSensor}>
                     <Plus size={16} className="mr-1" /> Add Node
                   </Button>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-3" id="nodes-list">
+              <CardContent className="space-y-3">
                 {sensors.length === 0 ? (
-                  <div className="text-sm text-gray-500">No nodes added yet.</div>
+                  <div className="text-sm text-gray-500 text-center py-4">No nodes added yet.</div>
                 ) : (
                   sensors.map((s) => (
                     <div key={s._id} className="flex items-center justify-between rounded-xl border bg-white p-4 shadow-sm hover:border-green-200 transition-colors">
@@ -247,13 +340,21 @@ export function SettingsPanel() {
                           <Cpu className="text-green-600" size={20} />
                         </div>
                         <div>
-                          <p className="font-semibold text-gray-900">{s.sensorId}</p>
+                          <p className="font-semibold">{s.sensorId}</p>
                           <p className="text-xs font-mono text-gray-400">ID: {s._id}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium">
-                        <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
-                        Online
+                      <div className="flex items-center gap-2">
+                        <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium mr-2">
+                          <div className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />
+                          Online
+                        </div>
+                        <Button size="sm" variant="ghost" onClick={() => handleViewSensor(s.sensorId)}>
+                          Details
+                        </Button>
+                        <Button size="sm" variant="destructive" onClick={() => handleDeleteSensor(s.sensorId)}>
+                          Delete
+                        </Button>
                       </div>
                     </div>
                   ))
