@@ -7,6 +7,7 @@ import {
 
 import { Request, Response, NextFunction } from "express";
 import { User } from "./User.types";
+import logger from "../../utils/logger.utils";
 
 //* Get all users
 export const getAllUsers = async (
@@ -46,6 +47,7 @@ export const getUserById = async (
     }
 };
 //* Update user by id
+//* Update user by id
 export const updateUserByIdcontroller = async (
     req: Request,
     res: Response,
@@ -53,11 +55,22 @@ export const updateUserByIdcontroller = async (
 ): Promise<void> => {
     try {
         const id = req.params.id;
-        const updateData = req.body;
+
+        // Start with body data
+        const updateData: Partial<User> = { ...req.body };
+
+        // 🔑 Add this: attach photo if uploaded
+        if (req.file) {
+            updateData.photo = req.file.path; // Cloudinary URL
+        }
+
+        logger.info("Update Data:", updateData);
+
         const result: User = (await updatedUserByIdService(
             id as string,
-            updateData as Partial<User>
+            updateData
         )) as User;
+
         res.status(200).json({
             success: true,
             message: "User updated successfully",

@@ -17,9 +17,9 @@ router.get("/:id", (req, res, next) => {
     getUserById(req, res, next);
 });
 router.put(
-    "/id",
+    "/:id",
     auth("farmer"),
-    uploadMiddleware.single("image"),
+    uploadMiddleware.single("photo"),
     (req, res, next) => {
         updateUserByIdcontroller(req, res, next);
     }
