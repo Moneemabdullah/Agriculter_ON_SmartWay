@@ -32,12 +32,10 @@ export const addFirmController = async (
             throw new AppError("Only farmers can create firms", 403);
         }
 
-        const { location, crops, sensors, plantationDate } = req.body;
+        const { location, crops, plantationDate } = req.body;
         const missing: string[] = [];
         if (!location) missing.push("location");
         if (!crops) missing.push("crops");
-        if (!sensors || !Array.isArray(sensors) || sensors.length === 0)
-            missing.push("sensors");
         if (!plantationDate) missing.push("plantationDate");
 
         if (missing.length) {
@@ -50,7 +48,6 @@ export const addFirmController = async (
         const newFirm = await firmService.addFirmService(userId, {
             location,
             crops,
-            sensors,
             plantationDate,
         } as any);
 
