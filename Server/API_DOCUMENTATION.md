@@ -768,7 +768,42 @@ Submits sensor telemetry data to the system.
 }
 ```
 
----
+### 2. Telematry bulk
+
+**post** '/ingest/bulk'
+
+### 3. get hourly avarage for a day
+
+**get:** '/average/hour/:sensorId/:date'
+
+avarage data for every hour for a day
+
+**Request Body (JSON):**
+
+```json
+
+
+```
+
+### 4. get daily avarage for 7 dayes
+
+**get** '/average/day/:sensorId/week'
+
+avarage data for day hour for last 7 day's
+
+**Request Body (JSON):**
+
+```json
+
+
+```
+
+**Response body**
+
+```json
+
+
+```
 
 ## Blog Management
 

@@ -1,0 +1,94 @@
+name: Monorepo CI
+
+on:
+    push:
+        branches: [main, develop]
+    pull_request:
+
+jobs:
+    detect-changes:
+        runs-on: ubuntu-latest
+        outputs:
+            server: ${{ steps.filter.outputs.server }}
+            client: ${{ steps.filter.outputs.client }}
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: dorny/paths-filter@v3
+              id: filter
+              with:
+                  filters: |
+                      server:
+                        - 'server/**'
+                      client:
+                        - 'client/**'
+
+    server-ci:
+        needs: detect-changes
+        if: needs.detect-changes.outputs.server == 'true'
+        runs-on: ubuntu-latest
+
+        services:
+            mongo:
+                image: mongo:6
+                ports:
+                    - 27017:27017
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+                  cache: npm
+                  cache-dependency-path: server/package-lock.json
+
+            - name: Install deps
+              run: npm ci
+              working-directory: server
+
+            - name: Lint
+              run: npm run lint
+              working-directory: server
+
+            - name: Test
+              run: npm test
+              working-directory: server
+              env:
+                  MONGO_URI: mongodb://localhost:27017/test
+                  JWT_SECRET: testsecret
+
+            - name: Build
+              run: npm run build
+              working-directory: server
+
+    client-ci:
+        needs: detect-changes
+        if: needs.detect-changes.outputs.client == 'true'
+        runs-on: ubuntu-latest
+
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 18
+                  cache: npm
+                  cache-dependency-path: client/package-lock.json
+
+            - name: Install deps
+              run: npm ci
+              working-directory: client
+
+            - name: Lint
+              run: npm run lint
+              working-directory: client
+
+            - name: Test
+              run: npm test
+              working-directory: client
+
+            - name: Build
+              run: npm run build
+              working-directory: client
