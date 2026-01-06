@@ -1,388 +1,404 @@
 import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
+import { Button } from './ui/button';
+import { Badge } from './ui/badge';
+import { Input } from './ui/input';
+import { 
+  MapPin, Calendar, Eye, Edit, Trash2, Plus, 
+  Search, Sprout, User, Settings2, Link2, Activity, X 
+} from 'lucide-react';
 import api from '../utils/axios';
-import { Plus, Eye, Edit2, Trash2, X } from 'lucide-react';
 
-/* ================= TYPES ================= */
-
-interface ISensorShort {
+// --- Interfaces ---
+interface ICrop {
   _id: string;
+  name: string;
+  category?: string;
+}
+
+interface ISensor {
   sensorId: string;
+  createdAt: string;
+  status?: string;
 }
 
 interface IFirm {
   _id: string;
-  location: {
-    latitude: number;
-    longitude: number;
-  };
+  location: { latitude: number; longitude: number };
+  crops: ICrop | string;
+  sensors?: ISensor[];
   plantationDate: string;
-  crops: {
-    _id: string;
-    name?: string;
-  };
-  sensors?: ISensorShort[];
+  user?: { _id?: string; name?: string; email?: string };
+  owner?: { _id?: string; name?: string; email?: string };
+  createdAt?: string;
 }
 
-interface ICrop {
-  _id: string;
-  name: string;
-}
-
-/* ================= COMPONENT ================= */
-
-const FirmManagement: React.FC = () => {
+export default function FirmManagement() {
   const [firms, setFirms] = useState<IFirm[]>([]);
   const [crops, setCrops] = useState<ICrop[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  // modal state
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedFirm, setSelectedFirm] = useState<IFirm | null>(null);
   const [isViewOnly, setIsViewOnly] = useState(false);
+  const [selectedFirm, setSelectedFirm] = useState<IFirm | null>(null);
+  const [newSensorId, setNewSensorId] = useState('');
+  const [form, setForm] = useState({ latitude: '', longitude: '', cropId: '', plantationDate: '' });
+  const [query, setQuery] = useState('');
 
-  // form state (backend aligned)
-  const [formData, setFormData] = useState({
-    latitude: '',
-    longitude: '',
-    plantationDate: '',
-    cropId: '',
-  });
-
-  // sensor modal & form state
-  const [isSensorModalOpen, setIsSensorModalOpen] = useState(false);
-  const [activeFirmForSensor, setActiveFirmForSensor] = useState<IFirm | null>(null);
-  const [sensorForm, setSensorForm] = useState({ sensorId: '' });
-  const [sensorLoading, setSensorLoading] = useState(false);
-  const [sensorError, setSensorError] = useState<string | null>(null);
-
-  /* ================= FETCH ================= */
+  // --- API Calls ---
+  const fetchCrops = async () => {
+    try {
+      const res = await api.get('/crops');
+      setCrops(res.data?.data || []);
+    } catch (err) {
+      console.error('Failed to fetch crops', err);
+    }
+  };
 
   const fetchFirms = async () => {
     setLoading(true);
     try {
       const res = await api.get('/firms');
-      const firmsData: IFirm[] = res.data?.data || [];
-
-      // fetch sensors for each firm in parallel (use owner route which accepts firmId as param)
-      const sensorPromises = firmsData.map(async (firm) => {
-        try {
-          const sres = await api.get(`/sensors/owner/${firm._id}`);
-          return sres.data?.data || [];
-        } catch {
-          return [];
-        }
-      });
-
-      const sensorsArr = await Promise.all(sensorPromises);
-
-      const merged = firmsData.map((f, idx) => ({ ...f, sensors: sensorsArr[idx] }));
-      setFirms(merged);
-    } catch (err: any) {
-      setError(err?.response?.data?.message || 'Failed to fetch firms');
+      setFirms(res.data?.data || []);
+    } catch (err) {
+      console.error('Failed to fetch firms', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const fetchCrops = async () => {
-    try {
-      const res = await api.get('/crops');
-      setCrops(res.data?.data || []);
-    } catch {
-      console.warn('Failed to fetch crops');
-    }
-  };
-
   useEffect(() => {
-    fetchFirms();
     fetchCrops();
+    fetchFirms();
   }, []);
 
-  /* ================= MODAL ================= */
+  // --- Actions ---
+  const getDisplayName = (val: any) => {
+    if (!val) return 'Unassigned';
+    if (typeof val === 'string') return val;
+    return val.name || val.email || 'Unknown User';
+  };
 
-  const handleOpenModal = (firm: IFirm | null = null, view = false) => {
-    setSelectedFirm(firm);
-    setIsViewOnly(view);
-
-    setFormData({
-      latitude: firm ? String(firm.location.latitude) : '',
-      longitude: firm ? String(firm.location.longitude) : '',
-      plantationDate: firm?.plantationDate
-        ? new Date(firm.plantationDate).toISOString().split('T')[0]
-        : '',
-      cropId: firm?.crops?._id || '',
-    });
-
+  const openCreate = () => {
+    setSelectedFirm(null);
+    setForm({ latitude: '', longitude: '', cropId: '', plantationDate: '' });
+    setIsViewOnly(false);
     setIsModalOpen(true);
   };
 
-  /* ================= DELETE ================= */
-
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this firm?')) return;
-    try {
-      await api.delete(`/firms/${id}`);
-      setFirms(prev => prev.filter(f => f._id !== id));
-    } catch {
-      alert('Failed to delete firm');
-    }
+  const openEdit = (firm: IFirm) => {
+    setSelectedFirm(firm);
+    setForm({
+      latitude: String(firm.location?.latitude ?? ''),
+      longitude: String(firm.location?.longitude ?? ''),
+      cropId: typeof firm.crops === 'string' ? firm.crops : (firm.crops as ICrop)?._id,
+      plantationDate: firm.plantationDate ? new Date(firm.plantationDate).toISOString().slice(0, 10) : '',
+    });
+    setIsViewOnly(false);
+    setIsModalOpen(true);
   };
 
-  /* ================= SUBMIT ================= */
+  const openView = (firm: IFirm) => {
+    setSelectedFirm(firm);
+    setForm({
+      latitude: String(firm.location?.latitude ?? ''),
+      longitude: String(firm.location?.longitude ?? ''),
+      cropId: typeof firm.crops === 'string' ? firm.crops : (firm.crops as ICrop)?._id,
+      plantationDate: firm.plantationDate ? new Date(firm.plantationDate).toISOString().slice(0, 10) : '',
+    });
+    setIsViewOnly(true);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this farm?')) return;
+    try {
+      await api.delete(`/firms/${id}`);
+      setFirms(firms.filter(f => f._id !== id));
+    } catch (err: any) {
+      alert(err?.response?.data?.message || 'Failed to delete firm');
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const { latitude, longitude, plantationDate, cropId } = formData;
-
-    if (!latitude || !longitude || !plantationDate || !cropId) {
-      alert('All fields are required');
-      return;
-    }
-
-    const payload = {
-      location: {
-        latitude: Number(latitude),
-        longitude: Number(longitude),
-      },
-      crops: cropId,
-      plantationDate,
-    };
-
     try {
+      const payload = {
+        location: { latitude: Number(form.latitude), longitude: Number(form.longitude) },
+        crops: form.cropId,
+        plantationDate: new Date(form.plantationDate),
+      };
+
       if (selectedFirm) {
-        await api.patch(`/firms/${selectedFirm._id}`, payload);
+        const res = await api.patch(`/firms/${selectedFirm._id}`, payload);
+        const updated = res.data?.data;
+        setFirms(prev => prev.map(f => f._id === updated._id ? updated : f));
       } else {
-        await api.post('/firms', payload);
+        const res = await api.post('/firms', payload);
+        setFirms(prev => [res.data?.data, ...prev]);
       }
-
       setIsModalOpen(false);
-      fetchFirms();
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to save firm');
+      alert(err?.response?.data?.message || 'Operation failed');
     }
   };
 
-  /* ================= ADD SENSOR ================= */
-
-  const handleAddSensor = (firm: IFirm) => {
-    setActiveFirmForSensor(firm);
-    setSensorForm({ sensorId: '' });
-    setSensorError(null);
-    setIsSensorModalOpen(true);
-  };
-
-  const submitAddSensor = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!sensorForm.sensorId || !activeFirmForSensor) {
-      alert('Sensor ID is required');
-      return;
-    }
-    setSensorLoading(true);
+  const handleAddSensor = async () => {
+    if (!selectedFirm || !newSensorId) return;
     try {
-      await api.post('/sensors', { sensorId: sensorForm.sensorId, firmId: activeFirmForSensor._id });
-      setIsSensorModalOpen(false);
-      setActiveFirmForSensor(null);
-      fetchFirms();
+      const res = await api.post(`/firms/${selectedFirm._id}/sensors`, { sensorId: newSensorId });
+      const updatedFirm = res.data?.data;
+      setFirms(prev => prev.map(f => f._id === updatedFirm._id ? updatedFirm : f));
+      setSelectedFirm(updatedFirm);
+      setNewSensorId('');
     } catch (err: any) {
-      setSensorError(err?.response?.data?.message || 'Failed to add sensor');
-    } finally {
-      setSensorLoading(false);
+      alert(err?.response?.data?.message || 'Failed to link sensor');
     }
   };
 
-  const handleDeleteSensor = async (sensorId: string) => {
-    if (!confirm('Are you sure you want to remove this sensor?')) return;
-    try {
-      await api.delete(`/sensors/id/${sensorId}`);
-      fetchFirms();
-    } catch {
-      alert('Failed to delete sensor');
-    }
-  }; 
-
-  /* ================= UI ================= */
+  const filtered = firms.filter((f) => {
+    const cropName = typeof f.crops === 'string' ? '' : (f.crops as ICrop)?.name || '';
+    return (
+      f._id.toLowerCase().includes(query.toLowerCase()) ||
+      cropName.toLowerCase().includes(query.toLowerCase())
+    );
+  });
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
+    <div className="max-w-7xl mx-auto p-6 space-y-8 bg-[#f8fafc] min-h-screen">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold">Firm Management</h2>
-          <p className="text-sm text-gray-500">Manage your farms</p>
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Farm Management</h1>
+          <p className="text-slate-500 mt-1">Manage agricultural plots and sensor deployments.</p>
         </div>
-
-        <button
-          onClick={() => handleOpenModal()}
-          className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg"
-        >
-          <Plus size={18} /> Add Firm
-        </button>
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Input 
+              value={query} 
+              onChange={(e) => setQuery(e.target.value)} 
+              placeholder="Search by crop..." 
+              className="pl-10 w-64 bg-white border-slate-200" 
+            />
+          </div>
+          <Button onClick={openCreate} className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all">
+            <Plus className="mr-2 h-4 w-4" /> Add New Farm
+          </Button>
+        </div>
       </div>
 
+      {/* Main Grid */}
       {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className="text-red-600">{error}</p>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map(i => <div key={i} className="h-64 bg-slate-200 animate-pulse rounded-2xl" />)}
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200">
+          <Sprout className="h-12 w-12 text-slate-300 mb-4" />
+          <h3 className="text-lg font-medium text-slate-900">No farms registered</h3>
+          <p className="text-slate-500">Get started by creating your first agricultural plot.</p>
+        </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {firms.map(f => (
-            <div key={f._id} className="bg-white p-4 rounded-xl border">
-              <h3 className="font-bold">
-                Lat: {f.location.latitude}, Lng: {f.location.longitude}
-              </h3>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {filtered.map((firm) => (
+            <Card key={firm._id} className="group border-none shadow-sm hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden bg-white">
+              <div className="h-1.5 bg-emerald-500" />
+              <CardHeader className="pb-2">
+                <div className="flex justify-between items-start">
+                  <div className="p-2 bg-emerald-50 rounded-xl text-emerald-600">
+                    <Sprout className="h-6 w-6" />
+                  </div>
+                  <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-none font-semibold">
+                    {firm.sensors?.length ?? 0} Sensors
+                  </Badge>
+                </div>
+                <CardTitle className="mt-4 text-xl font-bold text-slate-800">
+                  {(firm.crops as ICrop)?.name || 'Unnamed Plot'}
+                </CardTitle>
+                <p className="text-[10px] text-slate-400 font-mono tracking-tighter uppercase">UID: {firm._id}</p>
+              </CardHeader>
 
-              <p className="text-sm text-gray-500">
-                Crop: {f.crops?.name || f.crops?._id}
-              </p>
-
-              <p className="text-sm text-gray-500">
-                {new Date(f.plantationDate).toLocaleDateString()}
-              </p>
-
-              {f.sensors && f.sensors.length > 0 && (
-                <div className="mt-3">
-                  <p className="text-sm font-semibold">Sensors:</p>
-                  <div className="flex gap-2 mt-1 flex-wrap">
-                    {f.sensors.map(s => (
-                      <div key={(s as any)._id} className="bg-gray-100 px-2 py-1 rounded flex items-center gap-2">
-                        <span className="text-xs">{(s as any).sensorId}</span>
-                        <button onClick={() => handleDeleteSensor((s as any).sensorId)} className="text-red-500">
-                          <Trash2 size={14} />
-                        </button>
-                      </div>
-                    ))}
+              <CardContent className="space-y-4 pt-2">
+                <div className="space-y-2.5">
+                  <div className="flex items-center text-sm text-slate-600">
+                    <MapPin className="h-4 w-4 mr-2 text-slate-400" />
+                    {firm.location?.latitude.toFixed(4)}, {firm.location?.longitude.toFixed(4)}
+                  </div>
+                  <div className="flex items-center text-sm text-slate-600">
+                    <Calendar className="h-4 w-4 mr-2 text-slate-400" />
+                    Planted {firm.plantationDate ? new Date(firm.plantationDate).toLocaleDateString() : '—'}
+                  </div>
+                  <div className="flex items-center text-sm text-slate-600">
+                    <User className="h-4 w-4 mr-2 text-slate-400" />
+                    <span className="truncate">{getDisplayName(firm.user ?? firm.owner)}</span>
                   </div>
                 </div>
-              )}
+              </CardContent>
 
-              <div className="flex gap-2 mt-4 flex-wrap">
-                <button onClick={() => handleOpenModal(f, true)}><Eye /></button>
-                <button onClick={() => handleOpenModal(f)}><Edit2 /></button>
-
-                <button
-                  className="text-green-600 text-sm"
-                  onClick={() => handleAddSensor(f)}
-                >
-                  + Add Sensor
-                </button>
-
-                <button onClick={() => handleDelete(f._id)}><Trash2 /></button>
-              </div> 
-            </div>
+              <CardFooter className="bg-slate-50/50 gap-2 p-4">
+                <Button variant="ghost" size="sm" className="flex-1 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50" onClick={() => openView(firm)}>
+                  <Eye className="mr-2 h-4 w-4" /> View Details
+                </Button>
+                <div className="flex gap-1">
+                  <Button variant="ghost" size="sm" className="text-slate-400 hover:text-blue-600" onClick={() => openEdit(firm)}>
+                    <Edit className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="sm" className="text-slate-400 hover:text-red-600" onClick={() => handleDelete(firm._id)}>
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              </CardFooter>
+            </Card>
           ))}
         </div>
       )}
 
-      {/* ================= MODAL ================= */}
+      {/* Modal - Unified for View, Edit, and Create */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-white w-full max-w-md rounded-xl">
-            <div className="flex justify-between items-center p-4 border-b">
-              <h3 className="font-bold">
-                {isViewOnly
-                  ? 'Firm Details'
-                  : selectedFirm
-                  ? 'Update Firm'
-                  : 'New Firm'}
-              </h3>
-              <button onClick={() => setIsModalOpen(false)}>
-                <X />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+          <div className="bg-white rounded-4xl shadow-2xl w-full max-w-xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="px-8 py-6 border-b border-slate-100 flex justify-between items-center">
+              <div>
+                <h3 className="text-xl font-bold text-slate-900">
+                  {isViewOnly ? 'Farm Overview' : selectedFirm ? 'Update Plot' : 'Register New Farm'}
+                </h3>
+                <p className="text-xs text-slate-500 uppercase tracking-widest font-semibold mt-1">Farm Information System</p>
+              </div>
+              <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
+                <X className="h-5 w-5 text-slate-400" />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="p-4 space-y-3">
-              <input
-                disabled={isViewOnly}
-                placeholder="Latitude"
-                className="w-full border p-2 rounded"
-                value={formData.latitude}
-                onChange={e =>
-                  setFormData({ ...formData, latitude: e.target.value })
-                }
-              />
+            <div className="max-h-[75vh] overflow-y-auto">
+              <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-500 ml-1">Latitude</label>
+                    <Input 
+                      disabled={isViewOnly} 
+                      required 
+                      type="number" 
+                      step="any"
+                      value={form.latitude} 
+                      onChange={(e) => setForm({ ...form, latitude: e.target.value })} 
+                      className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white transition-all"
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-slate-500 ml-1">Longitude</label>
+                    <Input 
+                      disabled={isViewOnly} 
+                      required 
+                      type="number" 
+                      step="any"
+                      value={form.longitude} 
+                      onChange={(e) => setForm({ ...form, longitude: e.target.value })} 
+                      className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white transition-all"
+                    />
+                  </div>
+                </div>
 
-              <input
-                disabled={isViewOnly}
-                placeholder="Longitude"
-                className="w-full border p-2 rounded"
-                value={formData.longitude}
-                onChange={e =>
-                  setFormData({ ...formData, longitude: e.target.value })
-                }
-              />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-500 ml-1">Target Crop</label>
+                  <select 
+                    disabled={isViewOnly} 
+                    required 
+                    value={form.cropId} 
+                    onChange={(e) => setForm({ ...form, cropId: e.target.value })} 
+                    className="w-full flex h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                  >
+                    <option value="">Select a crop type...</option>
+                    {crops.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
+                  </select>
+                </div>
 
-              <input
-                type="date"
-                disabled={isViewOnly}
-                className="w-full border p-2 rounded"
-                value={formData.plantationDate}
-                onChange={e =>
-                  setFormData({
-                    ...formData,
-                    plantationDate: e.target.value,
-                  })
-                }
-              />
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-500 ml-1">Plantation Date</label>
+                  <Input 
+                    disabled={isViewOnly} 
+                    required 
+                    type="date" 
+                    value={form.plantationDate} 
+                    onChange={(e) => setForm({ ...form, plantationDate: e.target.value })} 
+                    className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white transition-all"
+                  />
+                </div>
 
-              <select
-                disabled={isViewOnly}
-                className="w-full border p-2 rounded"
-                value={formData.cropId}
-                onChange={e =>
-                  setFormData({ ...formData, cropId: e.target.value })
-                }
-              >
-                <option value="">Select Crop</option>
-                {crops.map(c => (
-                  <option key={c._id} value={c._id}>
-                    {c.name}
-                  </option>
-                ))}
-              </select>
+                {!isViewOnly && (
+                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                    <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                    <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 px-8 rounded-xl shadow-lg shadow-emerald-200">
+                      {selectedFirm ? 'Update Records' : 'Save Farm'}
+                    </Button>
+                  </div>
+                )}
+              </form>
 
-              {!isViewOnly && (
-                <button className="w-full bg-green-600 text-white py-2 rounded">
-                  {selectedFirm ? 'Update Firm' : 'Create Firm'}
-                </button>
+              {/* Enhanced View-Only Sensor Management Section */}
+              {isViewOnly && selectedFirm && (
+                <div className="px-8 pb-8 space-y-6 animate-in slide-in-from-bottom-4 duration-300">
+                  <div className="pt-6 border-t border-slate-100">
+                    <div className="flex items-center justify-between mb-4">
+                      <h4 className="text-sm font-bold text-slate-900 flex items-center">
+                        <Activity className="h-4 w-4 mr-2 text-emerald-500" /> 
+                        Connected Sensors
+                      </h4>
+                      <Badge variant="outline" className="text-[10px] uppercase font-bold tracking-widest text-slate-400 rounded-md">
+                        {selectedFirm.sensors?.length || 0} Total Units
+                      </Badge>
+                    </div>
+
+                    {/* Inline Add Sensor Form */}
+                    <div className="flex gap-2 mb-6">
+                      <div className="relative flex-1">
+                        <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                        <Input 
+                          placeholder="Enter Sensor Serial ID..." 
+                          value={newSensorId}
+                          onChange={(e) => setNewSensorId(e.target.value)}
+                          className="pl-9 h-10 text-xs rounded-xl bg-slate-50 border-slate-200 focus:bg-white transition-all"
+                        />
+                      </div>
+                      <Button 
+                        onClick={handleAddSensor}
+                        size="sm" 
+                        disabled={!newSensorId}
+                        className="bg-slate-900 hover:bg-black text-white h-10 px-4 rounded-xl shadow-md transition-all"
+                      >
+                        Add Sensor
+                      </Button>
+                    </div>
+
+                    {/* Sensor List Container */}
+                    <div className="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar">
+                      {selectedFirm.sensors && selectedFirm.sensors.length > 0 ? (
+                        selectedFirm.sensors.map((s, idx) => (
+                          <div key={idx} className="flex justify-between items-center bg-white p-3 border border-slate-100 rounded-2xl shadow-sm hover:border-emerald-100 transition-all group">
+                            <div className="flex items-center gap-3">
+                              <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                              <div>
+                                <p className="text-xs font-mono font-bold text-slate-700 group-hover:text-emerald-700 transition-colors">{s.sensorId}</p>
+                                <p className="text-[10px] text-slate-400 italic">Sync Date: {new Date(s.createdAt).toLocaleDateString()}</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2">
+                               <Badge className="bg-emerald-50 text-emerald-600 text-[9px] font-bold border-none px-2 py-0.5">ONLINE</Badge>
+                            </div>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                          <p className="text-xs text-slate-400">No hardware components linked yet.</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               )}
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ================= SENSOR MODAL ================= */}
-      {isSensorModalOpen && activeFirmForSensor && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
-          <div className="bg-white w-full max-w-md rounded-xl">
-            <div className="flex justify-between items-center p-4 border-b">
-              <h3 className="font-bold">Add Sensor to Firm</h3>
-              <button onClick={() => setIsSensorModalOpen(false)}><X /></button>
             </div>
-
-            <form onSubmit={submitAddSensor} className="p-4 space-y-3">
-              <p className="text-sm text-gray-500">Firm: Lat {activeFirmForSensor.location.latitude}, Lng {activeFirmForSensor.location.longitude}</p>
-              <input
-                placeholder="Sensor ID"
-                className="w-full border p-2 rounded"
-                value={sensorForm.sensorId}
-                onChange={e => setSensorForm({ sensorId: e.target.value })}
-              />
-
-              {sensorError && <p className="text-red-600 text-sm">{sensorError}</p>}
-
-              <div className="flex gap-2">
-                <button type="submit" disabled={sensorLoading} className="flex-1 bg-green-600 text-white py-2 rounded">
-                  {sensorLoading ? 'Adding...' : 'Add Sensor'}
-                </button>
-                <button type="button" onClick={() => setIsSensorModalOpen(false)} className="flex-1 border py-2 rounded">Cancel</button>
-              </div>
-            </form>
           </div>
         </div>
       )}
     </div>
   );
-};
-
-export default FirmManagement;
+}

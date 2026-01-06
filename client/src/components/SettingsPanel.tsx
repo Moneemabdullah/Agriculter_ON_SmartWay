@@ -115,7 +115,7 @@ export function SettingsPanel() {
       </div>
 
       <Tabs defaultValue="general" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 lg:w-[600px] mb-8 bg-gray-100/80 p-1">
+        <TabsList className="grid w-full grid-cols-4 lg:w-150 mb-8 bg-gray-100/80 p-1">
           <TabsTrigger value="general" className="flex items-center gap-2">
             <User size={16} /> General
           </TabsTrigger>

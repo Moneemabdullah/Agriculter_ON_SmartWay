@@ -142,7 +142,7 @@ export function CropManagement() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map(crop => (
             <Card key={crop._id} className="overflow-hidden hover:shadow-md transition-shadow">
-              <div className="aspect-video w-full overflow-hidden bg-gradient-to-tr from-green-100 to-white flex items-center justify-center">
+              <div className="aspect-video w-full overflow-hidden bg-linear-to-tr from-green-100 to-white flex items-center justify-center">
                 <span className="text-green-700 text-lg font-semibold">{crop.name[0]?.toUpperCase()}</span>
               </div>
               <CardHeader>
