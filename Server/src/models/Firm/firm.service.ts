@@ -18,19 +18,26 @@ export const addFirmService = async (
 
     const newFirm = new FirmModel({
         ...firmData,
-        user: userId,
+        owner: userId,
     });
 
     const savedFirm = await newFirm.save();
 
-    return await savedFirm.populate("crops sensors user");
+    // Populate crops fully, but only select safe fields from owner
+    return await savedFirm.populate([
+        { path: "crops" }, // crops can remain fully populated
+        {
+            path: "owner",
+            select: "name role photo", // only include these fields
+        },
+    ]);
 };
 
 export const getFirmsByUserService = async (
     userId: string
 ): Promise<Ifirm[]> => {
-    return await FirmModel.find({ user: userId })
-        .populate("crops sensors user")
+    return await FirmModel.find({ owner: userId })
+        .populate("crops sensors owner")
         .exec();
 };
 

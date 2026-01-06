@@ -15,13 +15,13 @@ const auth =
         try {
             const authHeader = req.headers.authorization;
 
-            if (!authHeader) {
+            if (!authHeader || typeof authHeader !== "string") {
                 res.status(401).json({
                     message: "Authorization token missing",
                 });
                 return;
             }
-
+            // logger.info("Authorization header found: " + authHeader);
             if (!authHeader.startsWith("Bearer ")) {
                 res.status(401).json({
                     message: "Invalid authorization format",
@@ -60,6 +60,10 @@ const auth =
                 });
                 return;
             }
+
+            // logger.info(
+            //     `User ${decoded.userId} authenticated with role ${decoded.role}`
+            // );
 
             next();
         } catch (error) {
