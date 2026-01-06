@@ -27,7 +27,7 @@ export const addSensorcontroller = async (
         });
     } catch (error) {
         if (error instanceof AppError) return next(error);
-        next(new AppError((error as any)?.message || "Error adding sensor", 400));
+        next(new AppError((error as Error)?.message || "Error adding sensor", 400));
     }
 };
 
@@ -51,7 +51,7 @@ export const getSensorsByOwnerController = async (
         });
     } catch (error) {
         if (error instanceof AppError) return next(error);
-        next(new AppError((error as any)?.message || "Error retrieving sensors", 400));
+        next(new AppError((error as Error)?.message || "Error retrieving sensors", 400));
     }
 };
 
@@ -72,7 +72,7 @@ export const getSensorByIdController = async (
         });
     } catch (error) {
         if (error instanceof AppError) return next(error);
-        next(new AppError((error as any)?.message || "Error retrieving sensor", 400));
+        next(new AppError((error as Error)?.message || "Error retrieving sensor", 400));
     }
 };
 
@@ -93,6 +93,6 @@ export const deleteSensorByIdController = async (
         });
     } catch (error) {
         if (error instanceof AppError) return next(error);
-        next(new AppError((error as any)?.message || "Error deleting sensor", 400));
+        next(new AppError((error as Error)?.message || "Error deleting sensor", 400));
     }
 };

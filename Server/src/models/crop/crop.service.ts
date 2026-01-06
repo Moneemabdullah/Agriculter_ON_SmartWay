@@ -1,7 +1,7 @@
 import { CropModel } from "./crope.model";
 import { Crop } from "./crop.@types";
 
-export const addCrop = async (cropData: any) => {
+export const addCrop = async (cropData: Crop) => {
     const newCrop = new CropModel(cropData);
     return await newCrop.save();
 };

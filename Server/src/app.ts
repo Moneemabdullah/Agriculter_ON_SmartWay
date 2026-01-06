@@ -1,5 +1,5 @@
 import cors from "cors";
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import connectDb from "./config/db.config";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors());
 connectDb();
 
-const loggerMiddleware = (req: Request, res: Response, next: Function) => {
+const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
     logger.info(
         `${req.method} ${req.path} ${
             req.body ? "- Body: " + JSON.stringify(req.body) : ""

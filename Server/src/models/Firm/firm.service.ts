@@ -1,5 +1,4 @@
 import { CropModel } from "../crop/crope.model";
-import { SensorModel } from "../Sensor/sensor.models";
 import { FirmModel } from "./firm.models";
 import { Ifirm } from "./firm.type";
 
@@ -48,24 +47,11 @@ export const updateFirmService = async (
     updateData: Partial<Ifirm>
 ): Promise<Ifirm | null> => {
     // If crops or sensors are being updated, validate them
-    if ((updateData as any).crops) {
+    if ((updateData as Partial<Ifirm>).crops) {
         const cropExists = await CropModel.findById(
-            (updateData as any).crops
+            (updateData as Partial<Ifirm>).crops
         ).lean();
         if (!cropExists) throw new Error("Crop not found");
-    }
-
-    if ((updateData as any).sensors) {
-        const sensors = (updateData as any).sensors;
-        if (!Array.isArray(sensors) || sensors.length === 0) {
-            throw new Error("Sensors must be a non-empty array of sensor ids");
-        }
-        const foundSensors = await SensorModel.find({
-            _id: { $in: sensors },
-        }).lean();
-        if (foundSensors.length !== sensors.length) {
-            throw new Error("Some sensors not found");
-        }
     }
 
     return await FirmModel.findByIdAndUpdate(firmId, updateData, {

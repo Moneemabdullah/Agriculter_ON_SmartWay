@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Model } from "mongoose";
 import { ITelemetry } from "./telemetry.types";
 
 const TelemetrySchema = new Schema<ITelemetry>(
@@ -28,10 +28,13 @@ const TelemetrySchema = new Schema<ITelemetry>(
             timeField: "createdAt",
             granularity: "seconds",
         },
-    } as any // 👈 TS limitation
+    }
 );
 
-export const TelemetryModel = mongoose.model<ITelemetry>(
+/**
+ * Telemetry Model
+ */
+export const TelemetryModel: Model<ITelemetry> = mongoose.model<ITelemetry>(
     "Telemetry",
     TelemetrySchema
 );

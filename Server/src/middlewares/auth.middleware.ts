@@ -4,70 +4,67 @@ import config from "../config/env.config";
 import logger from "../utils/logger.utils";
 import UserModel from "../models/User/user.models";
 
-declare global {
-    namespace Express {
-        interface Request {
-            user?: JwtPayload & { role?: string };
-            userId?: string;
-        }
-    }
+interface AuthJwtPayload extends JwtPayload {
+    userId: string;
+    role?: "admin" | "farmer";
 }
 
 const auth =
     (...roles: ("admin" | "farmer")[]) =>
-    async (req: Request, res: Response, next: NextFunction) => {
+    async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const authHeader = req.headers.authorization;
-            logger.info(`Auth Header: ${authHeader}`);
+
             if (!authHeader) {
-                return res.status(401).json({
+                res.status(401).json({
                     message: "Authorization token missing",
                 });
+                return;
             }
 
-            // Expect: Bearer <token>
             if (!authHeader.startsWith("Bearer ")) {
-                return res.status(401).json({
+                res.status(401).json({
                     message: "Invalid authorization format",
                 });
+                return;
             }
 
             const token = authHeader.split(" ")[1];
 
-            const decoded = jwt.verify(
-                token as string,
-                config.jwtSecret as string
-            ) as unknown as JwtPayload & { role?: string };
+            if (!token) {
+                res.status(401).json({
+                    message: "Invalid authorization format",
+                });
+                return;
+            }
 
-            // If token doesn't contain role (older tokens), try to fetch from DB
+            const decoded = jwt.verify(
+                token,
+                config.jwtSecret as string
+            ) as unknown as AuthJwtPayload;
+
             if (!decoded.role) {
-                try {
-                    const user = await UserModel.findById(decoded.userId).select("role").lean();
-                    (decoded as any).role = (user as any)?.role || "farmer";
-                    logger.info(`Role filled from DB: ${(decoded as any).role}`);
-                } catch (dbErr) {
-                    // fallback to a sensible default
-                    (decoded as any).role = "farmer";
-                    logger.warn("Failed to fetch user role from DB, defaulting to 'farmer'");
-                }
+                const user = await UserModel.findById(decoded.userId)
+                    .select("role")
+                    .lean<{ role?: "admin" | "farmer" }>();
+
+                decoded.role = user?.role ?? "farmer";
             }
 
             req.user = decoded;
+            req.userId = decoded.userId;
 
-            logger.info(`Decoded JWT: ${JSON.stringify(decoded)}`);
-
-            if (roles.length && !roles.includes(decoded.role as any)) {
-                return res.status(403).json({
+            if (roles.length && !roles.includes(decoded.role)) {
+                res.status(403).json({
                     message: "Forbidden: insufficient permissions",
                 });
+                return;
             }
-            req.userId = decoded.userId;
+
             next();
-        } catch (err: any) {
-            return res.status(401).json({
-                message: "Invalid or expired token",
-                error: err.message,
-            });
+        } catch (error) {
+            logger.warn("JWT auth failed", error);
+            res.status(401).json({ message: "Invalid or expired token" });
         }
     };
 

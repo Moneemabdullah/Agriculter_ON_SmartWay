@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../../utils/appError.utils";
 import * as firmService from "./firm.service";
+import { Ifirm } from "./firm.type";
 
 const isOwnerOrAdmin = (
     reqUserId?: string,
@@ -14,8 +15,9 @@ const isOwnerOrAdmin = (
 
 const wrapAndForwardError = (error: unknown, next: NextFunction) => {
     if (error instanceof AppError) return next(error);
-    const message = (error as any)?.message || "Internal Server Error";
-    const statusCode = typeof (error as any)?.message === "string" ? 400 : 500;
+    const message = (error as Error)?.message || "Internal Server Error";
+    const statusCode =
+        typeof (error as Error)?.message === "string" ? 400 : 500;
     return next(new AppError(message, statusCode));
 };
 
@@ -49,7 +51,7 @@ export const addFirmController = async (
             location,
             crops,
             plantationDate,
-        } as any);
+        } as Ifirm);
 
         res.status(201).json({
             success: true,
@@ -95,7 +97,7 @@ export const getFirmByIdController = async (
         const firm = await firmService.getFirmByIdService(firmId);
         if (!firm) throw new AppError("Firm not found", 404);
 
-        const ownerId = (firm as any).user ?? (firm as any).owner;
+        const ownerId = (firm as Ifirm).owner ?? (firm as Ifirm).owner;
         if (!isOwnerOrAdmin(reqUserId, reqRole, ownerId)) {
             throw new AppError("Forbidden", 403);
         }
@@ -127,14 +129,14 @@ export const updateFirmController = async (
 
         const firm = await firmService.getFirmByIdService(firmId);
         if (!firm) throw new AppError("Firm not found", 404);
-        const ownerId = (firm as any).user ?? (firm as any).owner;
+        const ownerId = (firm as Ifirm).owner ?? (firm as Ifirm).owner;
         if (!isOwnerOrAdmin(reqUserId, reqRole, ownerId)) {
             throw new AppError("Forbidden", 403);
         }
 
         const updatedFirm = await firmService.updateFirmService(
             firmId,
-            updateData as any
+            updateData as Partial<Ifirm>
         );
         res.status(200).json({
             success: true,
@@ -159,7 +161,7 @@ export const deleteFirmController = async (
         const reqRole = req.user?.role as string | undefined;
         const firm = await firmService.getFirmByIdService(firmId);
         if (!firm) throw new AppError("Firm not found", 404);
-        const ownerId = (firm as any).user ?? (firm as any).owner;
+        const ownerId = (firm as Ifirm).owner ?? (firm as Ifirm).owner;
         if (!isOwnerOrAdmin(reqUserId, reqRole, ownerId)) {
             throw new AppError("Forbidden", 403);
         }

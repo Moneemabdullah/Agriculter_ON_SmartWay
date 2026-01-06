@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
-import config from "./env.config";
-import tr from "zod/v4/locales/tr.js";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
+import type { UploadApiOptions } from "cloudinary";
+import config from "./env.config";
 
 cloudinary.config({
     cloud_name: config.cloudinary.cloudName,
@@ -12,12 +12,12 @@ cloudinary.config({
 const folderName = "agri-app";
 
 const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
+    cloudinary,
+    params: (): UploadApiOptions => ({
         folder: folderName,
         allowed_formats: ["jpg", "png", "jpeg", "webp"],
         transformation: [{ quality: "auto" }, { fetch_format: "auto" }],
-    } as any,
+    }),
 });
 
 export default storage;

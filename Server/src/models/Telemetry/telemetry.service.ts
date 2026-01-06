@@ -8,7 +8,7 @@ interface TelemetryPayload {
     soilMoisture: number;
 }
 
-export const insertTelemetry = async (payload: any) => {
+export const insertTelemetry = async (payload: TelemetryPayload) => {
     const data = await TelemetryModel.create(payload);
 
     await processAlerts(payload); // includes crop alerts
