@@ -110,7 +110,7 @@ export default function BlogSection() {
             </Button>
           </DialogTrigger>
           
-          <DialogContent className="sm:max-w-[525px] rounded-2xl bg-white border border-gray-200 shadow-2xl p-0 overflow-hidden">
+          <DialogContent className="sm:max-w-131.25 rounded-2xl bg-white border border-gray-200 shadow-2xl p-0 overflow-hidden">
             <div className="h-1.5 bg-green-600 w-full" />
             <DialogHeader className="px-6 pt-6 text-left">
               <DialogTitle className="text-2xl font-bold text-gray-900 flex items-center gap-2">

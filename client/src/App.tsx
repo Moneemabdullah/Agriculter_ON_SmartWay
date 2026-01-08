@@ -6,6 +6,7 @@ import MainBlog from "./Landing page/MainBlog";
 import MainService from "./Landing page/MainService";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminPanel from "./components/Admin/AdminPanel"; // <-- import new component
 
 const App = () => {
   return (
@@ -25,6 +26,9 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+
+        {/* Admin route */}
+        <Route path="/admin" element={<AdminPanel />} />
       </Routes>
     </BrowserRouter>
   );
