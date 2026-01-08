@@ -55,7 +55,6 @@ const Monitoring: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#09090b] text-slate-200 p-6 font-sans">
       
-      {/* HEADER: Grafana Style */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-slate-800 pb-6 mb-8 gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
@@ -88,8 +87,7 @@ const Monitoring: React.FC = () => {
         {filteredSensors.map((s) => (
           <Card key={s._id} className="bg-[#111113] border-slate-800 border-l-2 border-l-orange-500 rounded-none hover:bg-[#161618] transition-colors">
             <CardContent className="p-4">
-              
-              {/* Card Title Area */}
+
               <div className="flex justify-between items-center mb-4">
                 <div className="space-y-1">
                   <p className="text-[10px] font-mono text-slate-500 uppercase leading-none">Node ID</p>
@@ -102,7 +100,6 @@ const Monitoring: React.FC = () => {
                 </Badge>
               </div>
 
-              {/* Data Visualizers (Sparkline Style) */}
               <div className="space-y-4 mb-6">
                 <div className="space-y-1">
                   <div className="flex justify-between text-[10px] font-mono text-slate-400 uppercase">
@@ -125,7 +122,6 @@ const Monitoring: React.FC = () => {
                 </div>
               </div>
 
-              {/* Log/Info Footer */}
               <div className="grid grid-cols-2 gap-2 border-t border-slate-800 pt-4 mt-2 font-mono">
                 <div>
                   <p className="text-[9px] text-slate-500 uppercase">Last Pulse</p>
@@ -158,7 +154,6 @@ const Monitoring: React.FC = () => {
         ))}
       </div>
 
-      {/* EMPTY STATE */}
       {filteredSensors.length === 0 && (
         <div className="flex flex-col items-center justify-center py-40 border border-dashed border-slate-800">
           <Activity className="h-10 w-10 text-slate-800 mb-4" />

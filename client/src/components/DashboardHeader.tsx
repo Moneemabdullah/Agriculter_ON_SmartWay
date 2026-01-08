@@ -107,11 +107,9 @@ export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
 }
 
 function ProfileMenu() {
-  const [open, setOpen] = React.useState(false);
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userName, setUserName] = React.useState<string | null>(null);
   const [avatar, setAvatar] = React.useState<string | null>(null);
-
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -131,11 +129,7 @@ function ProfileMenu() {
         const res = await api.get('/auth/me');
 
         if (res.data?.success) {
-          setUserName(
-            res.data.data.name ||
-              res.data.data.email ||
-              'User'
-          );
+          setUserName(res.data.data.name || res.data.data.email || 'User');
         }
       } catch (err) {
         console.warn('Could not fetch user', err);
@@ -146,9 +140,7 @@ function ProfileMenu() {
 
     const onAuthChanged = () => checkAuth();
     window.addEventListener('auth-changed', onAuthChanged);
-
-    return () =>
-      window.removeEventListener('auth-changed', onAuthChanged);
+    return () => window.removeEventListener('auth-changed', onAuthChanged);
   }, []);
 
   const handleLogout = () => {
@@ -161,67 +153,51 @@ function ProfileMenu() {
   if (!isAuthenticated) return null;
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      <div
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-      >
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="gap-2 hover:shadow-sm transition-all"
-          >
-            <Avatar className="h-9 w-9 ring-2 ring-gray-200">
-              <AvatarImage
-                src={
-                  avatar ||
-                  'https://i.pinimg.com/736x/18/89/57/1889571bec55294b795af81c2b9e6359.jpg'
-                }
-                alt="Profile"
-              />
-              <AvatarFallback>
-                {(userName || 'U').slice(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          className="gap-2 hover:shadow-sm transition-all"
+        >
+          <Avatar className="h-9 w-9 ring-2 ring-gray-200">
+            <AvatarImage
+              src={
+                avatar ||
+                'https://i.pinimg.com/736x/18/89/57/1889571bec55294b795af81c2b9e6359.jpg'
+              }
+              alt="Profile"
+            />
+            <AvatarFallback>
+              {(userName || 'U').slice(0, 2).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <span className="hidden md:inline font-semibold text-gray-800 tracking-wide">
+            {userName || 'User'}
+          </span>
+        </Button>
+      </DropdownMenuTrigger>
 
-            <span className="hidden md:inline font-semibold text-gray-800 tracking-wide">
-              {userName || 'User'}
-            </span>
-          </Button>
-        </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="shadow-lg">
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuSeparator />
 
-        <DropdownMenuContent align="end" className="shadow-lg">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+        <DropdownMenuItem onSelect={() => navigate('/dashboard')}>
+          <User className="mr-2 h-4 w-4" />
+          Dashboard
+        </DropdownMenuItem>
 
-          <DropdownMenuItem
-            onSelect={() => {
-              setOpen(false);
-              navigate('/dashboard');
-            }}
-          >
-            <User className="mr-2 h-4 w-4" />
-            Dashboard
-          </DropdownMenuItem>
+        <DropdownMenuItem onSelect={() => navigate('/settings')}>
+          <Settings className="mr-2 h-4 w-4" />
+          Settings
+        </DropdownMenuItem>
 
-          <DropdownMenuItem
-            onSelect={() => {
-              setOpen(false);
-              navigate('/settings');
-            }}
-          >
-            <Settings className="mr-2 h-4 w-4" />
-            Settings
-          </DropdownMenuItem>
+        <DropdownMenuSeparator />
 
-          <DropdownMenuSeparator />
-
-          <DropdownMenuItem onSelect={handleLogout}>
-            <LogOut className="mr-2 h-4 w-4" />
-            Log out
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </div>
+        <DropdownMenuItem onSelect={handleLogout}>
+          <LogOut className="mr-2 h-4 w-4" />
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
     </DropdownMenu>
   );
 }

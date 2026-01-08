@@ -222,7 +222,6 @@ const Overview: React.FC = () => {
   );
 };
 
-// --- Stat Card Helper ---
 const ModernStatCard = ({ title, value, change, icon, color }: any) => (
   <Card className="border-none shadow-lg shadow-slate-200/40 bg-white rounded-4xl group hover:-translate-y-1 transition-all duration-300">
     <CardContent className="p-6">
