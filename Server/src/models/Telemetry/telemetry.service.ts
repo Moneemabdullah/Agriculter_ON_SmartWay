@@ -1,17 +1,21 @@
 import { TelemetryModel } from "./telemetry.model";
 import { processAlerts } from "../alert/alert.service";
 
-interface TelemetryPayload {
+export interface TelemetryPayload {
     sensorId: string;
     temperature: number;
     humidity: number;
     soilMoisture: number;
 }
 
-export const insertTelemetry = async (payload: TelemetryPayload) => {
-    const data = await TelemetryModel.create(payload);
+export const insertTelemetry = async (
+    payload: TelemetryPayload | TelemetryPayload[]
+) => {
+    const payloads = Array.isArray(payload) ? payload : [payload];
 
-    await processAlerts(payload); // includes crop alerts
+    const data = await TelemetryModel.insertMany(payloads);
+
+    await Promise.all(payloads.map((item) => processAlerts(item)));
 
     return data;
 };

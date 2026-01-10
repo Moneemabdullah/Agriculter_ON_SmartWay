@@ -4,7 +4,7 @@ import {
 } from "./telemetry.aggregation";
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../../utils/appError.utils";
-import { insertTelemetry } from "./telemetry.service";
+import { insertTelemetry, TelemetryPayload } from "./telemetry.service";
 
 export const ingestTelemetry = async (
     req: Request,
@@ -12,33 +12,13 @@ export const ingestTelemetry = async (
     next: NextFunction
 ) => {
     try {
-        const telemetryData = req.body;
-        if (!telemetryData || Object.keys(telemetryData).length === 0) {
+        const body = req.body as TelemetryPayload | TelemetryPayload[];
+
+        if (!body || (Array.isArray(body) && body.length === 0)) {
             throw new AppError("Telemetry data is required", 400);
         }
 
-        const data = await insertTelemetry(telemetryData);
-
-        res.status(201).json({
-            success: true,
-            data,
-        });
-    } catch (error) {
-        next(error);
-    }
-};
-
-export const ingestBulkTelemetry = async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-) => {
-    try {
-        const telemetryArray = req.body;
-        if (!Array.isArray(telemetryArray) || telemetryArray.length === 0) {
-            throw new AppError("An array of telemetry data is required", 400);
-        }
-        const data = await insertTelemetry(telemetryArray);
+        const data = await insertTelemetry(body);
 
         res.status(201).json({
             success: true,

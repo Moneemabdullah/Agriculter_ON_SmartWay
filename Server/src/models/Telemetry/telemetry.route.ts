@@ -11,10 +11,6 @@ router.post("/ingest", (req, res, next) => {
     ingestTelemetry(req, res, next);
 });
 
-router.post("/ingest/bulk", (req, res, next) => {
-    ingestTelemetry(req, res, next);
-});
-
 router.get("/average/hour/:sensorId/:date", (req, res, next) => {
     getHourAverageForDayController(req, res, next);
 });

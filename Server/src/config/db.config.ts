@@ -2,9 +2,17 @@ import mongoose from "mongoose";
 import config from "./env.config";
 import logger from "../utils/logger.utils";
 
+let isConnected = false;
+
 const connectDB = async () => {
     try {
-        mongoose.connect(config.dbUri);
+        if (isConnected) {
+            logger.info("===================================");
+            logger.info("Database is already connected 🎉 🎉");
+            return;
+        }
+        await mongoose.connect(config.dbUri);
+        isConnected = true;
         logger.info("===================================");
         logger.info(`Mongodb Connected 🎉 🎉`);
     } catch (err) {
