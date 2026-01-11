@@ -1,4 +1,5 @@
 #include <WiFi.h>
+#include <WiFiClientSecure.h>
 #include <HTTPClient.h>
 #include <Wire.h>
 #include <ArduinoJson.h>
@@ -6,8 +7,8 @@
 #include <LiquidCrystal_I2C.h>
 
 // 🌐 WiFi Credentials
-const char *ssid = "MONEEM...";    // Your WiFi SSID
-const char *password = "11223344"; // Your WiFi Password
+const char *ssid = "";     // Your WiFi SSID
+const char *password = ""; // Your WiFi Password
 
 // 🌍 API Endpoint
 const char *serverUrl = "https://agriculter-smartway.vercel.app/api/v1/telemetry/ingest";
@@ -21,11 +22,11 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 #define SENSOR_ID "01"
 
 // ⏱️ Timing Configuration
-const unsigned long READING_INTERVAL = 30000;    // Read sensors every 30 seconds
-const unsigned long SEND_INTERVAL = 300000;      // Send data every 5 minutes
+const unsigned long READING_INTERVAL = 60000;    // Read sensors every 1 minute
+const unsigned long SEND_INTERVAL = 600000;      // Send data every 10 minutes
 const unsigned long WIFI_CHECK_INTERVAL = 10000; // Check WiFi every 10 seconds
 const unsigned long LCD_UPDATE_INTERVAL = 3000;  // Update LCD every 3 seconds
-const unsigned long BLINK_INTERVAL = 500;        // LED blink every 500ms
+const unsigned long BLINK_INTERVAL = 1000;       // LED blink every 1 second
 
 unsigned long lastReadingTime = 0;
 unsigned long lastSendTime = 0;
@@ -209,13 +210,27 @@ void sendDataToServer()
   Serial.println(jsonData);
   Serial.printf("📊 Sending %d readings\n", readingCount);
 
-  // Send HTTP POST request
-  HTTPClient http;
-  http.begin(serverUrl);
-  http.addHeader("Content-Type", "application/json");
-  http.setTimeout(15000);
+  // Send HTTP POST request with retry
+  WiFiClientSecure client;
+  client.setInsecure();
 
-  int httpCode = http.POST(jsonData);
+  HTTPClient http;
+  http.begin(client, serverUrl);
+  http.addHeader("Content-Type", "application/json");
+  http.setTimeout(30000); // Increased to 30 seconds for Vercel cold starts
+
+  int httpCode = -1;
+  int retries = 3;
+
+  for (int i = 0; i < retries && httpCode <= 0; i++)
+  {
+    if (i > 0)
+    {
+      Serial.printf("🔄 Retry attempt %d/%d...\n", i + 1, retries);
+      delay(2000); // Wait 2 seconds before retry
+    }
+    httpCode = http.POST(jsonData);
+  }
 
   if (httpCode > 0)
   {

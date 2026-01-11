@@ -22,12 +22,12 @@ This ESP32-based sensor hub collects environmental data (temperature, humidity, 
 
 ### Core Functionality
 
--   **Batch Data Collection**: Collects sensor readings every 30 seconds
--   **Efficient Transmission**: Sends data in arrays every 5 minutes to reduce network overhead
+-   **Batch Data Collection**: Collects sensor readings every 1 minute
+-   **Efficient Transmission**: Sends data in arrays every 10 minutes to reduce network overhead
 -   **Local Display**: Real-time sensor data display on 16x2 LCD
--   **Visual Indicators**: LED blink status for system health monitoring
+-   **Visual Indicators**: LED blink status (1 second interval) for system health monitoring
 -   **Auto-Reconnect**: Automatic WiFi reconnection on connection loss
--   **Error Handling**: Robust error detection and recovery mechanisms
+-   **Error Handling**: Robust error detection and recovery with automatic retry mechanism
 
 ### Monitoring Capabilities
 
@@ -187,19 +187,19 @@ Adjust these values to change system behavior:
 
 ```cpp
 // Sensor reading interval (milliseconds)
-const unsigned long READING_INTERVAL = 30000;  // 30 seconds
+const unsigned long READING_INTERVAL = 60000;      // 1 minute
 
 // Data transmission interval (milliseconds)
-const unsigned long SEND_INTERVAL = 300000;    // 5 minutes
+const unsigned long SEND_INTERVAL = 600000;        // 10 minutes
 
 // WiFi check interval (milliseconds)
-const unsigned long WIFI_CHECK_INTERVAL = 10000; // 10 seconds
+const unsigned long WIFI_CHECK_INTERVAL = 10000;   // 10 seconds
 
 // LCD update interval (milliseconds)
-const unsigned long LCD_UPDATE_INTERVAL = 3000;  // 3 seconds
+const unsigned long LCD_UPDATE_INTERVAL = 3000;    // 3 seconds
 
 // LED blink interval (milliseconds)
-const unsigned long BLINK_INTERVAL = 500;        // 0.5 seconds
+const unsigned long BLINK_INTERVAL = 1000;         // 1 second
 ```
 
 ### Buffer Configuration
@@ -287,7 +287,7 @@ float soilPercent = map(soilValue, dryValue, wetValue, 0, 100);
 
 ## Data Flow
 
-### 1. Sensor Reading Phase (Every 30 seconds)
+### 1. Sensor Reading Phase (Every 1 minute)
 
 ```cpp
 [HTU21D Sensor] → Temperature (°C)
@@ -309,14 +309,14 @@ Line 1: T:25.5C H:65%
 Line 2: Soil:78% W 5/10
 ```
 
-### 3. Data Transmission Phase (Every 5 minutes)
+### 3. Data Transmission Phase (Every 10 minutes)
 
 ```cpp
 [Memory Buffer]
         ↓
 [JSON Array Construction]
         ↓
-[HTTP POST Request]
+[HTTP POST Request with Retry]
         ↓
 [Server Response]
         ↓
@@ -596,9 +596,11 @@ obj["timestamp"] = now;
 -   **Boot time:** 2-3 seconds
 -   **Sensor read time:** 100-200ms
 -   **WiFi connect time:** 3-5 seconds
--   **HTTP POST time:** 1-3 seconds (depends on network)
+-   **HTTP POST time:** 1-30 seconds (Vercel cold start can take 10-20 seconds)
 -   **Power consumption:** 80-160mA active, 10mA deep sleep
 -   **Memory usage:** ~40KB used, ~280KB free
+-   **Data collection cycle:** 10 minutes (10 readings × 1 minute)
+-   **Network requests:** 1 batch every 10 minutes (very efficient)
 
 ### Optimization Tips
 
@@ -616,20 +618,24 @@ This project is open source and available under the MIT License.
 
 For issues, questions, or contributions:
 
--   GitHub Issues: [Your Repository]
+-   GitHub Issues:https://github.com/Moneemabdullah/Agriculter_ON_SmartWay.git
 -   Email: moneem.all.abdullah@gmail.com
--   Documentation: [Your Docs URL]
 
 ## Changelog
 
 ### Version 1.0.0 (Current)
 
 -   Initial release
--   Batch data collection and transmission
+-   Batch data collection and transmission (10 readings per batch)
+-   Reading interval: 1 minute
+-   Send interval: 10 minutes
 -   LCD display integration
--   LED status indicator
+-   LED status indicator (1 second blink)
 -   Auto WiFi reconnection
+-   Automatic retry mechanism (3 attempts) for HTTP requests
+-   HTTPS support with certificate bypass
 -   Error handling and recovery
+-   Optimized for Vercel serverless platform (30s timeout)
 
 ---
 
