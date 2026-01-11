@@ -20,7 +20,7 @@ const postBlog = async (req: Request, res: Response) => {
 
 const getBlogsByOwner = async (req: Request, res: Response) => {
     try {
-        const userId = req.params.userId;
+        const userId = req.userId;
         const blogs = await getBlogServiceByOwner(userId as string);
         res.status(200).json(blogs);
     } catch (error) {
