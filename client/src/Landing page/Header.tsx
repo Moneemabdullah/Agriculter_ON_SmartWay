@@ -38,21 +38,21 @@ export function Header() {
     <header className="bg-[#1a4d3c] text-white sticky top-0 z-50">
       <div className="container mx-auto px-4 flex items-center justify-between py-4">
         {/* Logo */}
-        <div className="flex items-center gap-2">
+        <Link to="/home" onClick={() => setMobileMenuOpen(false)} className="flex items-center gap-2">
           <div className="w-10 h-10 bg-[#7ab42c] rounded-full flex items-center justify-center">
             <span className="text-white">🌱</span>
           </div>
           <span className="text-xl">FarmHub</span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center gap-8">
-          <a href="#home" className="hover:text-[#7ab42c] transition-colors">Home</a>
-          <a href="#about" className="hover:text-[#7ab42c] transition-colors">About</a>
+          <Link to="/home" className="hover:text-[#7ab42c] transition-colors">Home</Link>
+          <Link to="/about" className="hover:text-[#7ab42c] transition-colors">About</Link>
           <Link to="/services" className="hover:text-[#7ab42c] transition-colors">Services</Link>
-          <a href="#products" className="hover:text-[#7ab42c] transition-colors">Products</a>
-          <Link to="/blogs" className="hover:text-[#7ab42c] transition-colors">Blog</Link>
-          <a href="#contact" className="hover:text-[#7ab42c] transition-colors">Contact</a>
+          <Link to="/home#products" className="hover:text-[#7ab42c] transition-colors">Products</Link>
+          <Link to="/blog" className="hover:text-[#7ab42c] transition-colors">Blog</Link>
+          <Link to="/contact" className="hover:text-[#7ab42c] transition-colors">Contact</Link>
         </nav>
 
         {/* Right side */}
@@ -117,12 +117,12 @@ export function Header() {
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
           <nav className="lg:hidden py-4 border-t border-[#2a5d4c] flex flex-col gap-4">
-            <a href="#home" className="hover:text-[#7ab42c] transition-colors">Home</a>
-            <a href="#about" className="hover:text-[#7ab42c] transition-colors">About</a>
+            <Link to="/home" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Home</Link>
+            <Link to="/about" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">About</Link>
             <Link to="/services" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Services</Link>
-            <a href="#products" className="hover:text-[#7ab42c] transition-colors">Products</a>
-            <Link to="/blogs" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Blog</Link>
-            <a href="#contact" className="hover:text-[#7ab42c] transition-colors">Contact</a>
+            <Link to="/home#products" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Products</Link>
+            <Link to="/blog" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Blog</Link>
+            <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Contact</Link>
           </nav>
         )}
       </div>
