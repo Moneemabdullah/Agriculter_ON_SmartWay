@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import SensorDetails from './SensorDetails';
 
 interface ISensor {
   _id: string;
@@ -20,6 +21,7 @@ const Monitoring: React.FC = () => {
   const [sensors, setSensors] = useState<ISensor[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<string>("all");
+  const [selectedSensor, setSelectedSensor] = useState<ISensor | null>(null);
 
   const fetchSensors = async () => {
     setLoading(true);
@@ -36,6 +38,22 @@ const Monitoring: React.FC = () => {
   useEffect(() => {
     fetchSensors();
   }, []);
+
+  // Listen for adminSelectedSensor if redirected from sidebar
+  useEffect(() => {
+    try {
+      const chosen = localStorage.getItem('adminSelectedSensor');
+      if (chosen && sensors.length > 0) {
+        const found = sensors.find((x) => x.sensorId === chosen);
+        if (found) {
+          setSelectedSensor(found);
+        }
+        localStorage.removeItem('adminSelectedSensor');
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, [sensors]);
 
   const filteredSensors = sensors.filter(s => {
     if (filter === "online") return s.status !== "offline";
@@ -85,7 +103,11 @@ const Monitoring: React.FC = () => {
       {/* SENSOR GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
         {filteredSensors.map((s) => (
-          <Card key={s._id} className="bg-[#111113] border-slate-800 border-l-2 border-l-orange-500 rounded-none hover:bg-[#161618] transition-colors">
+          <Card 
+            key={s._id} 
+            onClick={() => setSelectedSensor(s)}
+            className="cursor-pointer bg-[#111113] border-slate-800 border-l-2 border-l-orange-500 rounded-none hover:bg-[#161618] transition-colors"
+          >
             <CardContent className="p-4">
 
               <div className="flex justify-between items-center mb-4">
@@ -153,6 +175,10 @@ const Monitoring: React.FC = () => {
           </Card>
         ))}
       </div>
+
+      {selectedSensor && (
+        <SensorDetails sensor={selectedSensor} onClose={() => setSelectedSensor(null)} />
+      )}
 
       {filteredSensors.length === 0 && (
         <div className="flex flex-col items-center justify-center py-40 border border-dashed border-slate-800">

@@ -56,6 +56,19 @@ export default function SensorAnalytics() {
     return () => { mounted = false; };
   }, []);
 
+  // Accept being launched from Admin/Overview or Monitoring via localStorage
+  useEffect(() => {
+    try {
+      const chosen = localStorage.getItem('dashboardSelectedSensor');
+      if (chosen) {
+        setSensorId(chosen);
+        localStorage.removeItem('dashboardSelectedSensor');
+      }
+    } catch (e) {
+      // ignore
+    }
+  }, []);
+
   useEffect(() => {
     if (!sensorId) return;
     let mounted = true;

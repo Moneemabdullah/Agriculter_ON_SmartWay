@@ -1,0 +1,137 @@
+{
+  "project": "Agriculture On Smart Way",
+  "import_format_version": "1.0",
+  "suites": [
+    {
+      "name": "Auth",
+      "tests": [
+        {
+          "id": "TS-001",
+          "title": "Login - happy path",
+          "preconditions": "App running at http://localhost:5173; backend /auth available; test user exists (test@example.com / Test123!)",
+          "steps": [
+            {"step": 1, "action": "Open http://localhost:5173", "expected": "Landing page loads"},
+            {"step": 2, "action": "Open Auth modal via Header → Login", "expected": "Login form visible"},
+            {"step": 3, "action": "Enter email and password and submit", "expected": "2xx response and success message"},
+            {"step": 4, "action": "Wait for auth-changed event and navigate to /dashboard/{userId}", "expected": "Dashboard loads and user data is visible"}
+          ],
+          "expected_result": "User is authenticated, token stored, dashboard visible",
+          "priority": "P0",
+          "tags": ["auth", "smoke"]
+        },
+        {
+          "id": "TS-002",
+          "title": "Login - validation and error handling",
+          "preconditions": "App running",
+          "steps": [
+            {"step": 1, "action": "Open Login modal and submit empty form", "expected": "Client-side validation messages"},
+            {"step": 2, "action": "Submit wrong credentials", "expected": "Server error shown - invalid credentials message"}
+          ],
+          "expected_result": "Proper validation and server errors are shown to the user",
+          "priority": "P1",
+          "tags": ["auth", "validation"]
+        }
+      ]
+    },
+    {
+      "name": "Routing & Dashboard",
+      "tests": [
+        {
+          "id": "TS-003",
+          "title": "ProtectedRoute redirect when unauthenticated",
+          "preconditions": "Clear localStorage/token",
+          "steps": [
+            {"step": 1, "action": "Navigate to /dashboard/anyId", "expected": "Redirected to /home or Auth modal displayed"}
+          ],
+          "expected_result": "Unauthenticated users cannot access dashboard", 
+          "priority": "P0",
+          "tags": ["routing", "security"]
+        },
+        {
+          "id": "TS-004",
+          "title": "Dashboard basic load and API calls",
+          "preconditions": "Logged in user",
+          "steps": [
+            {"step": 1, "action": "Navigate to /dashboard/{userId}", "expected": "DashboardHeader, Sidebar and Overview shown"},
+            {"step": 2, "action": "Verify API calls like /auth/me return 200", "expected": "Data displayed in charts/cards"}
+          ],
+          "expected_result": "Dashboard UI renders with backend data",
+          "priority": "P0",
+          "tags": ["dashboard"]
+        }
+      ]
+    },
+    {
+      "name": "Sensors & Admin",
+      "tests": [
+        {
+          "id": "TS-005",
+          "title": "Sensor details navigation and state preservation",
+          "preconditions": "Logged in; at least one sensor exists",
+          "steps": [
+            {"step": 1, "action": "Open Sensors list and click a sensor", "expected": "SensorDetails page loads"},
+            {"step": 2, "action": "Verify localStorage values like dashboardActiveTab and dashboardSelectedSensor are set", "expected": "Dashboard navigates to correct tab when returning"}
+          ],
+          "expected_result": "Sensor selection persists and navigates correctly",
+          "priority": "P1",
+          "tags": ["sensor", "navigation"]
+        },
+        {
+          "id": "TS-006",
+          "title": "Admin - Users list search & pagination",
+          "preconditions": "Logged in as admin",
+          "steps": [
+            {"step": 1, "action": "Open Admin → Users", "expected": "Users table shown"},
+            {"step": 2, "action": "Use search field", "expected": "Results filtered accordingly"}
+          ],
+          "expected_result": "Admin list and search works",
+          "priority": "P2",
+          "tags": ["admin"]
+        }
+      ]
+    },
+    {
+      "name": "Settings & UI",
+      "tests": [
+        {
+          "id": "TS-007",
+          "title": "Settings update persists",
+          "preconditions": "Logged in",
+          "steps": [
+            {"step": 1, "action": "Open SettingsPanel and toggle a setting (Two-Factor) and save", "expected": "200 response and UI updated"}
+          ],
+          "expected_result": "Settings persisted on server and UI reflects change",
+          "priority": "P2",
+          "tags": ["settings"]
+        },
+        {
+          "id": "TS-008",
+          "title": "Responsiveness and accessibility smoke",
+          "preconditions": "App running",
+          "steps": [
+            {"step": 1, "action": "Resize to mobile, open modal and navigate with keyboard", "expected": "Layout adapts and focus order is logical"}
+          ],
+          "expected_result": "Basic responsive behavior and keyboard accessibility are present",
+          "priority": "P3",
+          "tags": ["ui", "accessibility"]
+        },
+        {
+          "id": "TS-009",
+          "title": "Network error handling",
+          "preconditions": "Simulate API 500 or offline",
+          "steps": [
+            {"step": 1, "action": "Block /auth/me or dashboard endpoints", "expected": "User-friendly error message or fallback UI"}
+          ],
+          "expected_result": "App handles network errors gracefully",
+          "priority": "P2",
+          "tags": ["network", "resilience"]
+        }
+      ]
+    }
+  ],
+  "attachments": [
+    "../prd_files/readme.md",
+    "../code_summary.json",
+    "../config.json"
+  ]
+}

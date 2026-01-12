@@ -1,0 +1,140 @@
+{
+  "project": "Agriculture On Smart Way - Backend",
+  "import_format_version": "1.0",
+  "suites": [
+    {
+      "name": "Auth API",
+      "tests": [
+        {
+          "id": "B-TS-001",
+          "title": "POST /api/v1/auth/signup - register new user",
+          "preconditions": "Server running at http://localhost:5000, DB available",
+          "steps": [
+            {"step": 1, "action": "POST to /api/v1/auth/signup with payload {name, email, password}", "expected": "201 Created with user id and token"},
+            {"step": 2, "action": "Attempt to GET /api/v1/auth/me with returned token", "expected": "200 and user payload"}
+          ],
+          "expected_result": "New user created and authenticated",
+          "priority": "P0",
+          "tags": ["auth", "signup", "smoke"]
+        },
+        {
+          "id": "B-TS-002",
+          "title": "POST /api/v1/auth/signin - login existing user",
+          "preconditions": "User exists (seed or from previous test)",
+          "steps": [
+            {"step": 1, "action": "POST to /api/v1/auth/signin with correct credentials", "expected": "200 with token"},
+            {"step": 2, "action": "GET /api/v1/auth/me using bearer token", "expected": "200 and user info"}
+          ],
+          "expected_result": "User can sign in and token returns user info",
+          "priority": "P0",
+          "tags": ["auth", "signin"]
+        },
+        {
+          "id": "B-TS-003",
+          "title": "GET /api/v1/auth/me - unauthorized access",
+          "preconditions": "No token or invalid token",
+          "steps": [
+            {"step": 1, "action": "GET /api/v1/auth/me without token", "expected": "401 Unauthorized or 403"}
+          ],
+          "expected_result": "Unauthorized users cannot access /auth/me",
+          "priority": "P1",
+          "tags": ["auth", "security"]
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "tests": [
+        {
+          "id": "B-TS-004",
+          "title": "GET /api/v1/users - list users (admin)",
+          "preconditions": "Admin token available",
+          "steps": [
+            {"step": 1, "action": "GET /api/v1/users?limit=10&page=1", "expected": "200 and users array"}
+          ],
+          "expected_result": "Users list returned and paging works",
+          "priority": "P1",
+          "tags": ["users"]
+        },
+        {
+          "id": "B-TS-005",
+          "title": "GET /api/v1/users/:id - get user details",
+          "preconditions": "Valid user id",
+          "steps": [
+            {"step": 1, "action": "GET /api/v1/users/{userId}", "expected": "200 and user details"}
+          ],
+          "expected_result": "User found and returned",
+          "priority": "P2",
+          "tags": ["users"]
+        }
+      ]
+    },
+    {
+      "name": "Sensors",
+      "tests": [
+        {
+          "id": "B-TS-006",
+          "title": "POST /api/v1/sensors - create sensor",
+          "preconditions": "Authenticated user",
+          "steps": [
+            {"step": 1, "action": "POST to /api/v1/sensors with valid payload", "expected": "201 and sensor id"},
+            {"step": 2, "action": "GET /api/v1/sensors/id/{sensorId}", "expected": "200 and sensor details"}
+          ],
+          "expected_result": "Sensor created and retrievable",
+          "priority": "P1",
+          "tags": ["sensors", "crud"]
+        },
+        {
+          "id": "B-TS-007",
+          "title": "GET /api/v1/sensors - list sensors",
+          "preconditions": "Sensors exist",
+          "steps": [
+            {"step": 1, "action": "GET /api/v1/sensors", "expected": "200 and sensors list"}
+          ],
+          "expected_result": "Sensors listed successfully",
+          "priority": "P2",
+          "tags": ["sensors"]
+        }
+      ]
+    },
+    {
+      "name": "Telemetry",
+      "tests": [
+        {
+          "id": "B-TS-008",
+          "title": "POST /api/v1/telemetry/ingest - ingest telemetry payload",
+          "preconditions": "Valid sensor id and owner",
+          "steps": [
+            {"step": 1, "action": "POST to /api/v1/telemetry/ingest with telemetry payload", "expected": "200 or 201 and success message"},
+            {"step": 2, "action": "GET /api/v1/telemetry?sensorId={sensorId}&limit=10", "expected": "200 and telemetry data"}
+          ],
+          "expected_result": "Telemetry accepted and can be retrieved",
+          "priority": "P1",
+          "tags": ["telemetry", "ingest"]
+        }
+      ]
+    },
+    {
+      "name": "Error Handling & Validation",
+      "tests": [
+        {
+          "id": "B-TS-009",
+          "title": "POST /api/v1/sensors - invalid payload returns 400",
+          "preconditions": "Authenticated user",
+          "steps": [
+            {"step": 1, "action": "POST to /api/v1/sensors with malformed payload", "expected": "400 Bad Request with validation message"}
+          ],
+          "expected_result": "Server returns validation errors for bad input",
+          "priority": "P2",
+          "tags": ["validation", "errors"]
+        }
+      ]
+    }
+  ],
+  "attachments": [
+    "../prd_files/readme.md",
+    "../code_summary.json",
+    "../config.json",
+    "../../Server/API_DOCUMENTATION.md"
+  ]
+}

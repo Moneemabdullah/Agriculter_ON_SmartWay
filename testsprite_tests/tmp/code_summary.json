@@ -1,0 +1,95 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React",
+    "Vite",
+    "Tailwind CSS",
+    "Axios",
+    "React Router",
+    "Jest / React Testing Library",
+    "Node.js / Express (backend)"
+  ],
+  "devServerPort": 5173,
+  "features": [
+    {
+      "name": "Landing Page",
+      "description": "Public marketing pages, hero, header and footer components and copy.",
+      "files": [
+        "client/src/LandPage.tsx",
+        "client/src/Landing page/Header.tsx",
+        "client/src/Landing page/HeroSection.tsx",
+        "client/src/Landing page/Footer.tsx",
+        "client/src/Landing page/FeaturesSection.tsx"
+      ]
+    },
+    {
+      "name": "Auth Modal",
+      "description": "Modal for login / register / change password that calls backend /auth endpoints.",
+      "files": [
+        "client/src/Landing page/popup.tsx"
+      ]
+    },
+    {
+      "name": "Routing & ProtectedRoute",
+      "description": "App routing and a `ProtectedRoute` wrapper that guards the dashboard routes.",
+      "files": [
+        "client/src/App.tsx",
+        "client/src/components/ProtectedRoute.tsx"
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "description": "Main authenticated area with header, sidebar and multiple panels (overview, analytics, settings).",
+      "files": [
+        "client/src/components/Dashboard.tsx",
+        "client/src/components/DashboardHeader.tsx",
+        "client/src/components/DashboardSidebar.tsx",
+        "client/src/components/DashboardOverview.tsx",
+        "client/src/components/AnalyticsCharts.tsx"
+      ]
+    },
+    {
+      "name": "Admin Panel",
+      "description": "Admin-specific pages for users, monitoring and settings.",
+      "files": [
+        "client/src/components/Admin/AdminPanel.tsx",
+        "client/src/components/Admin/Overview.tsx",
+        "client/src/components/Admin/Users.tsx",
+        "client/src/components/Admin/SensorDetails.tsx"
+      ]
+    },
+    {
+      "name": "Sensors & Telemetry UI",
+      "description": "Components to display sensor cards and analytics charts for telemetry data.",
+      "files": [
+        "client/src/components/SensorAnalytics.tsx",
+        "client/src/components/SensorCard.tsx",
+        "client/src/components/IrrigationControl.tsx"
+      ]
+    },
+    {
+      "name": "Settings & Management",
+      "description": "Settings, firm and team management UIs",
+      "files": [
+        "client/src/components/SettingsPanel.tsx",
+        "client/src/components/FirmManagement.tsx",
+        "client/src/components/TeamManagement.tsx"
+      ]
+    },
+    {
+      "name": "API Client",
+      "description": "Axios wrapper that injects auth token into requests and centralizes base URL.",
+      "files": [
+        "client/src/utils/axios.js"
+      ]
+    },
+    {
+      "name": "UI primitives",
+      "description": "Shared design system / primitives used across pages (dialogs, cards, buttons, tables).",
+      "files": [
+        "client/src/Landing page/Ui/*",
+        "client/src/components/ui/*"
+      ]
+    }
+  ]
+}
