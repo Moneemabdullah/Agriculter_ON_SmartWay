@@ -6,6 +6,7 @@ import { UserRoutes } from "./models/User/user.routes";
 import { CropRouter } from "./models/crop/crop.routes";
 import { TelemetryRouter } from "./models/Telemetry/telemetry.route";
 import { BlogRouter } from "./models/blog/blog.route";
+import { AdminRouter } from "./models/Admin/admin.route";
 
 const router = Router();
 
@@ -16,5 +17,6 @@ router.use("/users", UserRoutes);
 router.use("/crops", CropRouter);
 router.use("/telemetry", TelemetryRouter);
 router.use("/blogs", BlogRouter);
+router.use("/admin", AdminRouter);
 
 export const mainRouter = router;

@@ -5,11 +5,6 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/02efa5f1-5573-4c5e-9805-2694863be63d/deploy-status)](https://app.netlify.com/projects/agriculture-smart/deploys)
 
-<p align="center">
-  <a href="Server/SERVER.ProjectTree.md">📁 <strong>Project tree</strong></a> &nbsp; | &nbsp;
-  <a href="Server/API_DOCUMENTATION.md">📚 <strong>API docs</strong></a>
-</p>
-
 ---
 
 ## Project Overview

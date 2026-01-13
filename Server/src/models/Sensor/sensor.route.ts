@@ -15,6 +15,9 @@ router.post("/", auth("farmer"), addSensorcontroller);
 // get sensors for current user
 router.get("/", auth(), getSensorsByOwnerController);
 
+// get all sensors (admin)
+router.get("/all", auth("admin"), getAllSensorsController);
+
 // get sensor by sensorId
 router.get("/id/:sensorId", auth(), getSensorByIdController);
 

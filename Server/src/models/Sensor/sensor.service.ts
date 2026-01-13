@@ -9,6 +9,10 @@ export const addSensorService = async (
     return await newSensor.save();
 };
 
+export const getAllSensorsService = async (): Promise<ISensor[]> => {
+    return await SensorModel.find({});
+};
+
 export const getSensorsByFirmService = async (
     firmId: string
 ): Promise<ISensor[]> => {

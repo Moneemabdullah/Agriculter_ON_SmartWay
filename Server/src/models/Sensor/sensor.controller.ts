@@ -31,6 +31,24 @@ export const addSensorcontroller = async (
     }
 };
 
+export const getAllSensorsController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const sensors = await sensorService.getAllSensorsService();
+        res.status(200).json({
+            success: true,
+            message: "All sensors retrieved successfully",
+            data: sensors,
+        });
+    } catch (error) {
+        if (error instanceof AppError) return next(error);
+        next(new AppError((error as Error)?.message || "Error retrieving sensors", 400));
+    }
+};
+
 export const getSensorsByOwnerController = async (
     req: Request,
     res: Response,
