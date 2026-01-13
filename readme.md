@@ -9,19 +9,20 @@
 **Agriculture On Smart Way** is a modern web platform that connects farmers, suppliers, and consumers to streamline agricultural operations and improve decision-making. The system integrates IoT sensors for real-time monitoring, provides analytics-driven recommendations, and includes a user-friendly dashboard for farmers and administrators.
 
 Key objectives:
-- Improve crop yields and resource efficiency
-- Provide timely insights using sensor telemetry and analytics
-- Simplify supply-chain operations and marketplace interactions
+
+-   Improve crop yields and resource efficiency
+-   Provide timely insights using sensor telemetry and analytics
+-   Simplify supply-chain operations and marketplace interactions
 
 ---
 
 ## Tech Stack
 
-- Frontend: **React**, **TypeScript**, **Vite**, **Tailwind CSS**
-- Backend: **Node.js**, **Express**
-- Database: **MongoDB**
-- IoT: **Arduino** (sensor integration)
-- Dev & Infra: **Docker**, CI/CD workflows
+-   Frontend: **React**, **TypeScript**, **Vite**, **Tailwind CSS**
+-   Backend: **Node.js**, **Express**
+-   Database: **MongoDB**
+-   IoT: **Arduino** (sensor integration)
+-   Dev & Infra: **Docker**, CI/CD workflows
 
 <p align="center"><img src="https://skillicons.dev/icons?i=react,tailwind,js,nodejs,express,mongodb,arduino,typescript,docker" alt="technologies"/></p>
 
@@ -29,16 +30,16 @@ Key objectives:
 
 ## Table of Contents
 
-- [Project Overview](#project-overview)
-- [Tech Stack](#tech-stack)
-- [Project structure](#project-structure)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Running the app](#running-the-app)
-- [Environment variables](#environment-variables)
-- [Features](#features)
-- [Contributing](#contributing)
-- [Contact & Support](#contact--support)
+-   [Project Overview](#project-overview)
+-   [Tech Stack](#tech-stack)
+-   [Project structure](#project-structure)
+-   [Requirements](#requirements)
+-   [Installation](#installation)
+-   [Running the app](#running-the-app)
+-   [Environment variables](#environment-variables)
+-   [Features](#features)
+-   [Contributing](#contributing)
+-   [Contact & Support](#contact--support)
 
 ---
 
@@ -46,10 +47,10 @@ Key objectives:
 
 Top-level folders:
 
-- `client/` — React frontend (Vite + TypeScript)
-- `agri-server/` — TypeScript server (API, services, models)
-- `Server/` — Node.js/Express API (additional/legacy server code)
-- `lib/` — Embedded/IoT sketches (Arduino)
+-   `client/` — React frontend (Vite + TypeScript)
+-   `agri-server/` — TypeScript server (API, services, models)
+-   `Server/` — Node.js/Express API (additional/legacy server code)
+-   `lib/` — Embedded/IoT sketches (Arduino)
 
 Refer to subfolders for controllers, models, routes, and React components.
 
@@ -57,9 +58,9 @@ Refer to subfolders for controllers, models, routes, and React components.
 
 ## Requirements
 
-- Node.js v18+ (recommended)
-- npm or yarn
-- MongoDB instance (local or cloud)
+-   Node.js v18+ (recommended)
+-   npm or yarn
+-   MongoDB instance (local or cloud)
 
 ---
 
@@ -129,18 +130,18 @@ cd ../Server
 npm start
 ```
 
-- Frontend available at: http://localhost:3000
-- API available at: http://localhost:5000 (config dependent)
+-   Frontend available at: [Client side](https://sam-smart-agriculture2.netlify.app/)
+-   API available at: [Server](https://agriculter-smartway.vercel.app/)
 
 ---
 
 ## Features
 
-- Real-time telemetry from IoT sensors
-- Data aggregation & analytics (daily averages, trends)
-- Crop recommendations and alerts
-- Role-based access for farmers, suppliers, and admins
-- Dashboard widgets for monitoring, payments, and irrigation control
+-   Real-time telemetry from IoT sensors
+-   Data aggregation & analytics (daily averages, trends)
+-   Crop recommendations and alerts
+-   Role-based access for farmers, suppliers, and admins
+-   Dashboard widgets for monitoring, payments, and irrigation control
 
 ---
 
