@@ -6,6 +6,7 @@ const blogModel = new mongoose.Schema(
         title: { type: String, required: true },
         content: { type: String, required: true },
         likes: { type: Number, default: 0 },
+        photos: { type: [String] },
         owner: { type: mongoose.Types.ObjectId, ref: "User", required: true },
         statues: {
             type: String,

@@ -39,7 +39,7 @@ export const addFirmController = async (
         if (!location) missing.push("location");
         if (!crops) missing.push("crops");
         if (!plantationDate) missing.push("plantationDate");
-
+        if (!req.body.photos) missing.push("photos");
         if (missing.length) {
             throw new AppError(
                 `Missing required fields: ${missing.join(", ")}`,
@@ -51,6 +51,7 @@ export const addFirmController = async (
             location,
             crops,
             plantationDate,
+            photos: req.body.photos,
         } as Ifirm);
 
         res.status(201).json({

@@ -197,7 +197,7 @@ Retrieves a specific user's information.
 
 ### 3. Update User Profile
 
-**PUT** `/users/id`
+**PUT** `/users/:id`
 
 Updates the authenticated user's profile information.
 
@@ -768,41 +768,115 @@ Submits sensor telemetry data to the system.
 }
 ```
 
-### 2. Telematry bulk
+---
 
-**post** '/ingest/bulk'
+### 2. Bulk Ingest Telemetry Data
 
-### 3. get hourly avarage for a day
+**POST** `/telemetry/ingest/bulk`
 
-**get:** '/average/hour/:sensorId/:date'
-
-avarage data for every hour for a day
+Submits multiple sensor telemetry data entries to the system.
 
 **Request Body (JSON):**
 
 ```json
-
-
+{
+    "data": [
+        {
+            "sensorId": "SENSOR001",
+            "timestamp": "2024-12-15T10:30:00Z",
+            "data": {
+                "temperature": 28.5,
+                "humidity": 65,
+                "moisture": 45.2
+            }
+        }
+    ]
+}
 ```
 
-### 4. get daily avarage for 7 dayes
-
-**get** '/average/day/:sensorId/week'
-
-avarage data for day hour for last 7 day's
-
-**Request Body (JSON):**
+**Response:** `200 OK`
 
 ```json
-
-
+{
+    "success": true,
+    "message": "Bulk telemetry data ingested successfully",
+    "data": {
+        "inserted": 1
+    }
+}
 ```
 
-**Response body**
+---
+
+### 3. Get Hourly Average Data
+
+**GET** `/telemetry/average/hour/:sensorId/:date`
+
+Retrieves average sensor data for every hour of a specific day.
+
+**Authentication:** Required ✓
+
+**URL Parameters:**
+
+-   `sensorId` - Sensor ID
+-   `date` - Date in format YYYY-MM-DD
+
+**Response:** `200 OK`
 
 ```json
+{
+    "success": true,
+    "data": [
+        {
+            "hour": 0,
+            "temperature": 25.3,
+            "humidity": 60,
+            "moisture": 42.1
+        },
+        {
+            "hour": 1,
+            "temperature": 24.8,
+            "humidity": 62,
+            "moisture": 43.5
+        }
+    ]
+}
+```
 
+---
 
+### 4. Get Daily Average Data (7 Days)
+
+**GET** `/telemetry/average/day/:sensorId/week`
+
+Retrieves average sensor data for each day of the last 7 days.
+
+**Authentication:** Required ✓
+
+**URL Parameters:**
+
+-   `sensorId` - Sensor ID
+
+**Response:** `200 OK`
+
+```json
+{
+    "success": true,
+    "data": [
+        {
+            "date": "2024-12-09",
+            "temperature": 26.2,
+            "humidity": 61,
+            "moisture": 44.3
+        },
+        {
+            "date": "2024-12-10",
+            "temperature": 27.1,
+            "humidity": 59,
+            "moisture": 45.2
+        }
+    ]
+}
 ```
 
 ## Blog Management

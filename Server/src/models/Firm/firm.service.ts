@@ -19,7 +19,9 @@ export const addFirmService = async (
     const newFirm = new FirmModel({
         ...firmData,
         owner: userId,
+        photos: firmData.photos || [],
     });
+
 
     const savedFirm = await newFirm.save();
 

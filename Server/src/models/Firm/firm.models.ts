@@ -7,6 +7,7 @@ export const firmModelFields = new mongoose.Schema<Ifirm>(
             latitude: { type: Number, required: true },
             longitude: { type: Number, required: true },
         },
+        photos: { type: [String] },
         crops: { type: mongoose.Types.ObjectId, ref: "Crop", required: true },
         owner: { type: mongoose.Types.ObjectId, ref: "User", required: true },
         plantationDate: { type: Date, required: true },
