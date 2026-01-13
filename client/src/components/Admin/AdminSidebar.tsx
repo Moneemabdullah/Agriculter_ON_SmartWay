@@ -1,5 +1,6 @@
-import React from "react";
-import { Home, Users, Cpu, Settings, LogOut } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { Home, Users, Cpu, Settings, LogOut, Search } from "lucide-react";
+import api from "../../utils/axios";
 
 interface SidebarProps {
   active: string;
@@ -13,26 +14,89 @@ const links = [
   { name: "Settings", icon: <Settings size={16} />, key: "settings" },
 ];
 
+
+
 const AdminSidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
+  const [sensorCount, setSensorCount] = useState<number | null>(null);
+  const [onlineCount, setOnlineCount] = useState<number | null>(null);
+  const [query, setQuery] = useState("");
+  const [quick, setQuick] = useState<string[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      try {
+        const res = await api.get('/sensors/all');
+        const list = res.data?.data || [];
+        if (!mounted) return;
+        setSensorCount(list.length);
+        setOnlineCount(list.filter((s: any) => s.status !== 'offline').length);
+        setQuick(list.slice(0, 8).map((s: any) => s.sensorId));
+      } catch (e) {
+        console.warn('Failed to load sensors for sidebar', e);
+      }
+    };
+    load();
+    return () => { mounted = false; };
+  }, []);
+
+  const filteredQuick = quick.filter(s => s.toLowerCase().includes(query.toLowerCase()));
+
+  const openSensor = (sensorId: string) => {
+    try {
+      // store for Monitoring to pick up
+      localStorage.setItem('adminSelectedSensor', sensorId);
+      onChange('monitoring');
+    } catch (e) { console.error(e); }
+  }
+
   return (
-    <aside className="bg-white border-r border-slate-200 h-screen w-64 flex flex-col">
-      <div className="flex items-center justify-center h-20 border-b border-slate-100 font-black text-xl text-green-600">
-        Admin Panel
+    <aside className="bg-white border-r border-slate-200 h-screen w-72 flex flex-col">
+      <div className="flex items-center justify-between h-20 border-b border-slate-100 px-4">
+        <div className="font-black text-lg text-green-600">Admin Panel</div>
+        <div className="text-xs text-slate-500">{sensorCount !== null ? `${sensorCount} sensors` : '…'}</div>
       </div>
+
+      <div className="p-3">
+        <div className="flex items-center gap-2 bg-slate-50 rounded-md px-2 py-1">
+          <Search className="w-4 h-4 text-slate-400" />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search sensors"
+            className="bg-transparent text-sm w-full focus:outline-none"
+          />
+        </div>
+
+        <div className="mt-3 space-y-2">
+          {filteredQuick.map((s) => (
+            <button key={s} onClick={() => openSensor(s)} className="text-sm text-slate-600 block w-full text-left py-1 px-2 rounded hover:bg-slate-50">
+              {s}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <nav className="flex-1 px-2 py-4 space-y-1">
         {links.map((link) => (
           <button
             key={link.key}
             onClick={() => onChange(link.key)}
-            className={`flex items-center gap-3 p-3 rounded-lg text-sm font-medium w-full text-left transition-colors ${
+            className={`flex items-center justify-between gap-3 p-3 rounded-lg text-sm font-medium w-full text-left transition-colors ${
               active === link.key ? "bg-green-50 text-green-600" : "text-slate-600 hover:bg-slate-50"
             }`}
           >
-            {link.icon}
-            <span>{link.name}</span>
+            <div className="flex items-center gap-3">
+              {link.icon}
+              <span>{link.name}</span>
+            </div>
+            {link.key === 'monitoring' && (
+              <div className="text-xs text-slate-500">{onlineCount !== null ? `${onlineCount}` : '—'}</div>
+            )}
           </button>
         ))}
       </nav>
+
       <div className="p-4 border-t border-slate-100">
         <button className="flex items-center gap-2 p-2 text-slate-600 hover:bg-slate-50 rounded-lg w-full">
           <LogOut size={16} /> Logout

@@ -10,7 +10,7 @@ export function DashboardOverview() {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const API_KEY = import.meta.env.VITE_OPEN_WEATHER
+        const API_KEY = (import.meta as any).env?.VITE_OPEN_WEATHER
         const CITY = 'Comilla'
 
         const res = await fetch(

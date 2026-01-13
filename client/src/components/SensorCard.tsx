@@ -31,7 +31,7 @@ export function SensorCard({
 
   return (
     <Card className="group relative overflow-hidden rounded-xl border border-gray-100 bg-white transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-xl">
-      <div className="absolute inset-x-0 bottom-0 h-1 scale-x-0 bg-gradient-to-r from-sky-400 via-emerald-400 to-teal-500 transition-all duration-500 group-hover:scale-x-100" />
+      <div className="absolute inset-x-0 bottom-0 h-1 scale-x-0 bg-linear-to-r from-sky-400 via-emerald-400 to-teal-500 transition-all duration-500 group-hover:scale-x-100" />
 
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
         <CardTitle className="text-sm font-semibold text-gray-700 tracking-wide">

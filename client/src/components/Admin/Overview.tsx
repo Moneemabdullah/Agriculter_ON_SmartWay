@@ -11,6 +11,7 @@ import {
 import { Input } from "../ui/input";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import SensorDetails from './SensorDetails';
 
 interface ISensor {
   _id: string;
@@ -26,6 +27,7 @@ const Overview: React.FC = () => {
   const [totalFirms, setTotalFirms] = useState(0);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedSensor, setSelectedSensor] = useState<ISensor | null>(null);
 
   const fetchDashboardData = async () => {
     setLoading(true);
@@ -165,7 +167,7 @@ const Overview: React.FC = () => {
               </thead>
               <tbody className="divide-y divide-slate-50">
                 {filteredSensors.map((s) => (
-                  <tr key={s._id} className="hover:bg-slate-50/30 transition-all duration-200 group">
+                  <tr key={s._id} onClick={() => setSelectedSensor(s)} className="cursor-pointer hover:bg-slate-50/30 transition-all duration-200 group">
                     <td className="px-8 py-5">
                       <div className="flex items-center gap-3">
                         <div className={`h-2.5 w-2.5 rounded-full ${s.status === 'offline' ? 'bg-rose-500' : 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)] animate-pulse'}`} />

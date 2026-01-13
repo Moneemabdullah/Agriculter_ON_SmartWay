@@ -5,7 +5,7 @@ import { Badge } from './ui/badge';
 import { Input } from './ui/input';
 import { 
   MapPin, Calendar, Eye, Edit, Trash2, Plus, 
-  Search, Sprout, User, Settings2, Link2, Activity, X 
+  Search, Sprout, User, Link2, Activity, X 
 } from 'lucide-react';
 import api from '../utils/axios';
 
@@ -71,7 +71,7 @@ export default function FirmManagement() {
     fetchFirms();
   }, []);
 
-  // --- Actions ---
+  // --- Helper ---
   const getDisplayName = (val: any) => {
     if (!val) return 'Unassigned';
     if (typeof val === 'string') return val;
@@ -113,7 +113,8 @@ export default function FirmManagement() {
     if (!confirm('Are you sure you want to delete this farm?')) return;
     try {
       await api.delete(`/firms/${id}`);
-      setFirms(firms.filter(f => f._id !== id));
+      // Refetch the list after deletion
+      await fetchFirms();
     } catch (err: any) {
       alert(err?.response?.data?.message || 'Failed to delete firm');
     }
@@ -129,13 +130,13 @@ export default function FirmManagement() {
       };
 
       if (selectedFirm) {
-        const res = await api.patch(`/firms/${selectedFirm._id}`, payload);
-        const updated = res.data?.data;
-        setFirms(prev => prev.map(f => f._id === updated._id ? updated : f));
+        await api.patch(`/firms/${selectedFirm._id}`, payload);
       } else {
-        const res = await api.post('/firms', payload);
-        setFirms(prev => [res.data?.data, ...prev]);
+        await api.post('/firms', payload);
       }
+
+      // Always refetch after create/update to ensure persistence
+      await fetchFirms();
       setIsModalOpen(false);
     } catch (err: any) {
       alert(err?.response?.data?.message || 'Operation failed');
@@ -146,9 +147,9 @@ export default function FirmManagement() {
     if (!selectedFirm || !newSensorId) return;
     try {
       const res = await api.post(`/firms/${selectedFirm._id}/sensors`, { sensorId: newSensorId });
-      const updatedFirm = res.data?.data;
-      setFirms(prev => prev.map(f => f._id === updatedFirm._id ? updatedFirm : f));
-      setSelectedFirm(updatedFirm);
+      // Refetch the full farm list after adding sensor
+      await fetchFirms();
+      setSelectedFirm(res.data?.data);
       setNewSensorId('');
     } catch (err: any) {
       alert(err?.response?.data?.message || 'Failed to link sensor');
@@ -165,7 +166,7 @@ export default function FirmManagement() {
 
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-8 bg-[#f8fafc] min-h-screen">
-      {/* Header Section */}
+      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Farm Management</h1>
@@ -187,7 +188,7 @@ export default function FirmManagement() {
         </div>
       </div>
 
-      {/* Main Grid */}
+      {/* Farms Grid */}
       {loading ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map(i => <div key={i} className="h-64 bg-slate-200 animate-pulse rounded-2xl" />)}
@@ -253,7 +254,7 @@ export default function FirmManagement() {
         </div>
       )}
 
-      {/* Modal - Unified for View, Edit, and Create */}
+      {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
           <div className="bg-white rounded-4xl shadow-2xl w-full max-w-xl overflow-hidden animate-in fade-in zoom-in duration-200">
@@ -334,7 +335,7 @@ export default function FirmManagement() {
                 )}
               </form>
 
-              {/* Enhanced View-Only Sensor Management Section */}
+              {/* View-Only Sensor Section */}
               {isViewOnly && selectedFirm && (
                 <div className="px-8 pb-8 space-y-6 animate-in slide-in-from-bottom-4 duration-300">
                   <div className="pt-6 border-t border-slate-100">
@@ -348,7 +349,6 @@ export default function FirmManagement() {
                       </Badge>
                     </div>
 
-                    {/* Inline Add Sensor Form */}
                     <div className="flex gap-2 mb-6">
                       <div className="relative flex-1">
                         <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
@@ -369,7 +369,6 @@ export default function FirmManagement() {
                       </Button>
                     </div>
 
-                    {/* Sensor List Container */}
                     <div className="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar">
                       {selectedFirm.sensors && selectedFirm.sensors.length > 0 ? (
                         selectedFirm.sensors.map((s, idx) => (
@@ -395,6 +394,7 @@ export default function FirmManagement() {
                   </div>
                 </div>
               )}
+
             </div>
           </div>
         </div>

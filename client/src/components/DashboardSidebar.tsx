@@ -27,7 +27,7 @@ const navigation = [
   { id: 'crops', label: 'Crop Management', icon: Sprout },
   { id: 'firm', label: 'Firm Management', icon: Factory },
   { id: 'blogs', label: 'Blogs', icon: FileText },
-  { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+  { id: 'sensor-analytics', label: 'Sensor Analytics', icon: BarChart3 },
   { id: 'alerts', label: 'Alerts', icon: Bell },
   { id: 'team', label: 'Team', icon: Users },
   { id: 'payments', label: 'Payments', icon: CreditCard },

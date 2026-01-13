@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { DashboardHeader } from './DashboardHeader';
 import { DashboardSidebar } from './DashboardSidebar';
 import { DashboardOverview } from './DashboardOverview';
 import { IrrigationControl } from './IrrigationControl';
 import { CropManagement } from './CropManagement';
-import { AnalyticsCharts } from './AnalyticsCharts';
+import SensorAnalytics from './SensorAnalytics';
 import { AlertsPanel } from './AlertsPanel';
 import { TeamManagement } from './TeamManagement';
 import { PaymentsPanel } from './PaymentsPanel';
@@ -13,8 +13,23 @@ import FirmManagement from './FirmManagement';
 import BlogSection from './BlogSection';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState(() => {
+    try {
+      return localStorage.getItem('dashboardActiveTab') || 'dashboard';
+    } catch (e) {
+      return 'dashboard';
+    }
+  });
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Persist selected tab so refresh keeps the same page
+  useEffect(() => {
+    try {
+      localStorage.setItem('dashboardActiveTab', activeTab);
+    } catch (e) {
+      // ignore storage errors
+    }
+  }, [activeTab]);
 
   const renderContent = () => {
     switch (activeTab) {
@@ -28,8 +43,8 @@ export default function App() {
         return <FirmManagement />;
       case 'blogs':
         return <BlogSection />;
-      case 'analytics':
-        return <AnalyticsCharts />;
+      case 'sensor-analytics':
+        return <SensorAnalytics />;
       case 'alerts':
         return <AlertsPanel />;
       case 'team':
