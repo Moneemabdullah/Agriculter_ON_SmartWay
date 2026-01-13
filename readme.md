@@ -1,6 +1,9 @@
 # Agriculture On Smart Way
 
 [Live demo](https://sam-smart-agriculture2.netlify.app/) • [Repository](https://github.com/Moneemabdullah/Agriculter_ON_SmartWay)
+</br>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/59152b88-93c5-4709-a2ec-c0620d249eab/deploy-status)](https://app.netlify.com/projects/agriculter-on-smartway/deploys)
 
 ---
 
