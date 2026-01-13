@@ -9,6 +9,7 @@ import MainContact from "./Landing page/MainContact";
 import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminPanel from "./components/Admin/AdminPanel"; // <-- import new component
+import TestPage from "./components/TestPage";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/blogs" element={<MainBlog />} />
         <Route path="/services" element={<MainService />} />
         <Route path="/contact" element={<MainContact />} />
+        <Route path="/test" element={<TestPage />} />
 
         {/* Protected dashboard */}
         <Route

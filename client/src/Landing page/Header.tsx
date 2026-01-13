@@ -53,6 +53,7 @@ export function Header() {
           <Link to="/home#products" className="hover:text-[#7ab42c] transition-colors">Products</Link>
           <Link to="/blog" className="hover:text-[#7ab42c] transition-colors">Blog</Link>
           <Link to="/contact" className="hover:text-[#7ab42c] transition-colors">Contact</Link>
+          <Link to="/test" className="hover:text-[#7ab42c] transition-colors">Tests</Link>
         </nav>
 
         {/* Right side */}
@@ -123,6 +124,7 @@ export function Header() {
             <Link to="/home#products" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Products</Link>
             <Link to="/blog" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Blog</Link>
             <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Contact</Link>
+            <Link to="/test" onClick={() => setMobileMenuOpen(false)} className="hover:text-[#7ab42c] transition-colors">Tests</Link>
           </nav>
         )}
       </div>
