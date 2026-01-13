@@ -284,7 +284,7 @@ export function AnalyticsCharts() {
               )}
             </ResponsiveContainer>
           ) : (
-            <div className="flex h-[300px] items-center justify-center text-sm text-gray-500">
+            <div className="flex h-75 items-center justify-center text-sm text-gray-500">
               Loading weather data or API key missing...
             </div>
           )}
