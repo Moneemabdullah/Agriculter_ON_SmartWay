@@ -2,6 +2,7 @@ import express from "express";
 import {
     addSensorcontroller,
     deleteSensorByIdController,
+    getAllSensorsController,
     getSensorByIdController,
     getSensorsByOwnerController,
 } from "./sensor.controller";

@@ -39,8 +39,8 @@ export const getHourAverageForDayController = async (
         if (!sensorId || !date) {
             throw new AppError("sensorId and date are required", 400);
         }
-        const dateObj = new Date(date);
-        const data = await getHourAverageForDay(sensorId, dateObj);
+        const dateObj = new Date(date + "T00:00:00Z");
+        const data = await getHourAverageForDay(sensorId as string, dateObj);
         res.status(200).json({
             success: true,
             data,
@@ -60,7 +60,7 @@ export const getDayAverageForWeekController = async (
         if (!sensorId) {
             throw new AppError("sensorId is required", 400);
         }
-        const data = await getDayAverageForWeek(sensorId);
+        const data = await getDayAverageForWeek(sensorId as string);
         res.status(200).json({
             success: true,
             data,
