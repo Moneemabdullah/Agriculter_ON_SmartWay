@@ -1,6 +1,6 @@
 import { CropModel } from "../crop/crope.model";
 import { FirmModel } from "./firm.models";
-import { Ifirm } from "./firm.type";
+import { Ifirm, ISensor } from "./firm.type";
 
 export const addFirmService = async (
     userId: string,
@@ -22,7 +22,6 @@ export const addFirmService = async (
         photos: firmData.photos || [],
     });
 
-
     const savedFirm = await newFirm.save();
 
     // Populate crops fully, but only select safe fields from owner
@@ -39,7 +38,10 @@ export const getFirmsByUserService = async (
     userId: string
 ): Promise<Ifirm[]> => {
     return await FirmModel.find({ owner: userId })
-        .populate("crops sensors owner")
+        .populate([
+            { path: "crops" },
+            { path: "owner", select: "name email role" },
+        ])
         .exec();
 };
 
@@ -47,7 +49,10 @@ export const getFirmByIdService = async (
     firmId: string
 ): Promise<Ifirm | null> => {
     return await FirmModel.findById(firmId)
-        .populate("crops sensors user")
+        .populate([
+            { path: "crops" },
+            { path: "owner", select: "name email role" },
+        ])
         .exec();
 };
 
@@ -66,7 +71,10 @@ export const updateFirmService = async (
     return await FirmModel.findByIdAndUpdate(firmId, updateData, {
         new: true,
     })
-        .populate("crops sensors user")
+        .populate([
+            { path: "crops" },
+            { path: "owner", select: "name email role" },
+        ])
         .exec();
 };
 
@@ -74,6 +82,46 @@ export const deleteFirmService = async (
     firmId: string
 ): Promise<Ifirm | null> => {
     return await FirmModel.findByIdAndDelete(firmId)
-        .populate("crops sensors user")
+        .populate([
+            { path: "crops" },
+            { path: "owner", select: "name email role" },
+        ])
+        .exec();
+};
+
+export const addSensorToFirmService = async (
+    firmId: string,
+    sensorId: string
+): Promise<Ifirm | null> => {
+    const firm = await FirmModel.findById(firmId);
+    if (!firm) {
+        throw new Error("Firm not found");
+    }
+
+    // Check if sensor already exists
+    const sensorExists = firm.sensors?.some(
+        (s: ISensor) => s.sensorId === sensorId
+    );
+    if (sensorExists) {
+        throw new Error("Sensor already linked to this farm");
+    }
+
+    return await FirmModel.findByIdAndUpdate(
+        firmId,
+        {
+            $push: {
+                sensors: {
+                    sensorId,
+                    createdAt: new Date(),
+                    status: "active",
+                },
+            },
+        },
+        { new: true }
+    )
+        .populate([
+            { path: "crops" },
+            { path: "owner", select: "name email role" },
+        ])
         .exec();
 };

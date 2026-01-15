@@ -1,17 +1,17 @@
+import { Bell, LogOut, Menu, Settings, User } from 'lucide-react';
 import React from 'react';
-import { Bell, Menu, Settings, User, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from './ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu';
 import { Badge } from './ui/badge';
+import { Button } from './ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 
 export function DashboardHeader({ onMenuClick }: { onMenuClick: () => void }) {
   return (
@@ -112,36 +112,47 @@ function ProfileMenu() {
   const [avatar, setAvatar] = React.useState<string | null>(null);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setIsAuthenticated(false);
-        setUserName(null);
-        setAvatar(null);
-        return;
-      }
+  const fetchUserProfile = React.useCallback(async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setIsAuthenticated(false);
+      setUserName(null);
+      setAvatar(null);
+      return;
+    }
 
-      setIsAuthenticated(true);
+    setIsAuthenticated(true);
 
-      try {
-        const api = (await import('../utils/axios')).default;
-        const res = await api.get('/auth/me');
+    try {
+      const api = (await import('../utils/axios')).default;
+      const res = await api.get('/auth/me');
 
-        if (res.data?.success) {
-          setUserName(res.data.data.name || res.data.data.email || 'User');
+      if (res.data?.success) {
+        setUserName(res.data.data.name || res.data.data.email || 'User');
+        // Set avatar from user profile if available
+        if (res.data.data.photo) {
+          setAvatar(res.data.data.photo);
         }
-      } catch (err) {
-        console.warn('Could not fetch user', err);
       }
-    };
-
-    checkAuth();
-
-    const onAuthChanged = () => checkAuth();
-    window.addEventListener('auth-changed', onAuthChanged);
-    return () => window.removeEventListener('auth-changed', onAuthChanged);
+    } catch (err) {
+      console.warn('Could not fetch user', err);
+    }
   }, []);
+
+  React.useEffect(() => {
+    fetchUserProfile();
+
+    const onAuthChanged = () => fetchUserProfile();
+    const onProfileUpdated = () => fetchUserProfile();
+    
+    window.addEventListener('auth-changed', onAuthChanged);
+    window.addEventListener('profile-updated', onProfileUpdated);
+    
+    return () => {
+      window.removeEventListener('auth-changed', onAuthChanged);
+      window.removeEventListener('profile-updated', onProfileUpdated);
+    };
+  }, [fetchUserProfile]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

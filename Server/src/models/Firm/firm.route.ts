@@ -1,13 +1,14 @@
 import express from "express";
+import auth from "../../middlewares/auth.middleware";
+import { uploadMiddleware } from "../../middlewares/upload.middleware";
 import {
     addFirmController,
+    addSensorToFirmController,
     deleteFirmController,
     getAllFirmsController,
     getFirmByIdController,
     updateFirmController,
 } from "./firm.controller";
-import auth from "../../middlewares/auth.middleware";
-import { uploadMiddleware } from "../../middlewares/upload.middleware";
 
 const Router = express.Router();
 
@@ -35,5 +36,8 @@ Router.patch(
 
 // Delete firm
 Router.delete("/:id", auth(), deleteFirmController);
+
+// Add sensor to firm
+Router.post("/:id/sensors", auth(), addSensorToFirmController);
 
 export const FirmRouter = Router;

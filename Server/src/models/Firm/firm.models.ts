@@ -11,6 +11,13 @@ export const firmModelFields = new mongoose.Schema<Ifirm>(
         crops: { type: mongoose.Types.ObjectId, ref: "Crop", required: true },
         owner: { type: mongoose.Types.ObjectId, ref: "User", required: true },
         plantationDate: { type: Date, required: true },
+        sensors: [
+            {
+                sensorId: { type: String, required: true },
+                createdAt: { type: Date, default: Date.now },
+                status: { type: String, default: "active" },
+            },
+        ],
     },
     {
         timestamps: true,

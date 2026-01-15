@@ -5,9 +5,71 @@ import {
     updatedUserByIdService,
 } from "./user.service";
 
-import { Request, Response, NextFunction } from "express";
-import { User } from "./User.types";
+import { NextFunction, Request, Response } from "express";
 import logger from "../../utils/logger.utils";
+import { User } from "./User.types";
+
+//* Update user profile photo
+export const updateProfilePhotoController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const userId = req.userId || (req as any).userId;
+
+        logger.info("Profile photo update attempt for user:", userId);
+        logger.info("File info:", req.file);
+
+        if (!userId) {
+            res.status(401).json({
+                success: false,
+                message: "Unauthorized - User ID not found",
+            });
+            return;
+        }
+
+        if (!req.file) {
+            res.status(400).json({
+                success: false,
+                message: "No file uploaded",
+            });
+            return;
+        }
+
+        if (!req.file.path) {
+            logger.error(
+                "File uploaded but no path from Cloudinary:",
+                req.file
+            );
+            res.status(400).json({
+                success: false,
+                message: "File upload failed - no path returned",
+            });
+            return;
+        }
+
+        const updateData: Partial<User> = {
+            photo: req.file.path, // Cloudinary URL
+        };
+
+        logger.info("Updating user", userId, "with photo:", req.file.path);
+
+        const result: User = (await updatedUserByIdService(
+            userId,
+            updateData
+        )) as User;
+
+        res.status(200).json({
+            success: true,
+            message: "Profile photo updated successfully",
+            data: result,
+        });
+    } catch (error) {
+        logger.error("Error updating profile photo:", error);
+        next(error);
+    }
+};
 
 //* Get all users
 export const getAllUsers = async (

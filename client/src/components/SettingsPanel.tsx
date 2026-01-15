@@ -1,33 +1,33 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
+import {
+    Bell,
+    Camera,
+    CloudRain,
+    Cpu,
+    Droplets,
+    Globe,
+    Plus,
+    Save,
+    Thermometer,
+    Trash2,
+    User,
+    Zap
+} from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import api from '../utils/axios';
 import { Button } from './ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Switch } from './ui/switch';
-import { Separator } from './ui/separator';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
 } from './ui/select';
+import { Separator } from './ui/separator';
+import { Switch } from './ui/switch';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { 
-  User, 
-  Bell, 
-  Cpu, 
-  Zap, 
-  Save, 
-  Plus, 
-  Globe, 
-  Thermometer, 
-  Droplets,
-  CloudRain,
-  Camera,
-  Trash2
-} from 'lucide-react';
-import api from '../utils/axios';
 
 export function SettingsPanel() {
   const [sensors, setSensors] = useState<Array<{_id:string, sensorId:string}>>([]);
@@ -35,6 +35,7 @@ export function SettingsPanel() {
   
   // Profile Photo State
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchSensors = async () => {
@@ -67,6 +68,33 @@ export function SettingsPanel() {
         setProfileImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+      // Store the actual file for upload
+      setPhotoFile(file);
+    }
+  };
+
+  const handleSaveProfilePhoto = async () => {
+    if (!photoFile) {
+      alert("Please select a photo first");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('photo', photoFile);
+
+      // Don't set Content-Type header - let axios/browser set it automatically with boundary
+      const response = await api.patch('/users/profile/photo', formData);
+
+      alert('Profile photo updated successfully!');
+      setProfileImage(null);
+      setPhotoFile(null);
+      
+      // Dispatch event to refresh header
+      window.dispatchEvent(new Event('profile-updated'));
+    } catch (err: any) {
+      console.error('Error uploading photo:', err);
+      alert(err?.response?.data?.message || 'Failed to update profile photo');
     }
   };
 
@@ -175,7 +203,10 @@ export function SettingsPanel() {
                           variant="ghost" 
                           size="sm" 
                           className="text-red-500 hover:bg-red-50 hover:text-red-600"
-                          onClick={() => setProfileImage(null)}
+                          onClick={() => {
+                            setProfileImage(null);
+                            setPhotoFile(null);
+                          }}
                         >
                           <Trash2 size={14} className="mr-1" /> Remove
                         </Button>
@@ -199,7 +230,7 @@ export function SettingsPanel() {
                   <Label htmlFor="location">Primary Farm Location</Label>
                   <Input id="location" defaultValue="Dhaka, Bangladesh" className="bg-gray-50/50" />
                 </div>
-                <Button className="w-full bg-green-600 hover:bg-green-700">
+                <Button className="w-full bg-green-600 hover:bg-green-700" onClick={handleSaveProfilePhoto}>
                   <Save className="mr-2" size={16} /> Save Changes
                 </Button>
               </CardContent>

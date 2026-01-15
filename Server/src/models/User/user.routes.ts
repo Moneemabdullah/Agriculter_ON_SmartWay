@@ -5,10 +5,21 @@ import {
     deleteUserById,
     getAllUsers,
     getUserById,
+    updateProfilePhotoController,
     updateUserByIdcontroller,
 } from "./user.controller";
 
 const router = Router();
+
+// Update profile photo - MUST come before /:id routes
+router.patch(
+    "/profile/photo",
+    auth(),
+    uploadMiddleware.single("photo"),
+    (req, res, next) => {
+        updateProfilePhotoController(req, res, next);
+    }
+);
 
 router.get("/", (req, res, next) => {
     getAllUsers(req, res, next);

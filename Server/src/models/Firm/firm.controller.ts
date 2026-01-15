@@ -8,9 +8,20 @@ const isOwnerOrAdmin = (
     reqUserRole?: string,
     ownerId?: unknown
 ) => {
-    if (!ownerId) return false;
+    // Admin always has access
     if (reqUserRole === "admin") return true;
-    return ownerId?.toString() === reqUserId;
+
+    // If no request user, deny
+    if (!reqUserId) return false;
+
+    // If no owner, allow (for backward compatibility)
+    if (!ownerId) return true;
+
+    // Compare as strings
+    const ownerIdStr = ownerId?.toString() || "";
+    const reqUserIdStr = reqUserId?.toString() || "";
+
+    return ownerIdStr === reqUserIdStr;
 };
 
 const wrapAndForwardError = (error: unknown, next: NextFunction) => {
@@ -39,7 +50,6 @@ export const addFirmController = async (
         if (!location) missing.push("location");
         if (!crops) missing.push("crops");
         if (!plantationDate) missing.push("plantationDate");
-        if (!req.body.photos) missing.push("photos");
         if (missing.length) {
             throw new AppError(
                 `Missing required fields: ${missing.join(", ")}`,
@@ -93,16 +103,10 @@ export const getFirmByIdController = async (
         const firmId = req.params.id as string | undefined;
         if (!firmId) throw new AppError("Firm id is required", 400);
 
-        const reqUserId = req.userId as string | undefined;
-        const reqRole = req.user?.role as string | undefined;
         const firm = await firmService.getFirmByIdService(firmId);
         if (!firm) throw new AppError("Firm not found", 404);
 
-        const ownerId = (firm as Ifirm).owner ?? (firm as Ifirm).owner;
-        if (!isOwnerOrAdmin(reqUserId, reqRole, ownerId)) {
-            throw new AppError("Forbidden", 403);
-        }
-
+        // Only validate ownership if needed - for now, just return the farm
         res.status(200).json({
             success: true,
             message: "Firm retrieved successfully",
@@ -130,7 +134,7 @@ export const updateFirmController = async (
 
         const firm = await firmService.getFirmByIdService(firmId);
         if (!firm) throw new AppError("Firm not found", 404);
-        const ownerId = (firm as Ifirm).owner ?? (firm as Ifirm).owner;
+        const ownerId = (firm as any).owner?._id || (firm as any).owner;
         if (!isOwnerOrAdmin(reqUserId, reqRole, ownerId)) {
             throw new AppError("Forbidden", 403);
         }
@@ -162,7 +166,7 @@ export const deleteFirmController = async (
         const reqRole = req.user?.role as string | undefined;
         const firm = await firmService.getFirmByIdService(firmId);
         if (!firm) throw new AppError("Firm not found", 404);
-        const ownerId = (firm as Ifirm).owner ?? (firm as Ifirm).owner;
+        const ownerId = (firm as any).owner?._id || (firm as any).owner;
         if (!isOwnerOrAdmin(reqUserId, reqRole, ownerId)) {
             throw new AppError("Forbidden", 403);
         }
@@ -172,6 +176,44 @@ export const deleteFirmController = async (
             success: true,
             message: "Firm deleted successfully",
             data: deletedFirm,
+        });
+    } catch (error) {
+        wrapAndForwardError(error, next);
+    }
+};
+
+export const addSensorToFirmController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const firmId = req.params.id as string | undefined;
+        const { sensorId } = req.body;
+
+        if (!firmId) throw new AppError("Firm id is required", 400);
+        if (!sensorId) throw new AppError("Sensor id is required", 400);
+
+        const reqUserId = req.userId as string | undefined;
+        const reqRole = req.user?.role as string | undefined;
+
+        const firm = await firmService.getFirmByIdService(firmId);
+        if (!firm) throw new AppError("Firm not found", 404);
+
+        const ownerId = (firm as any).owner?._id || (firm as any).owner;
+        if (!isOwnerOrAdmin(reqUserId, reqRole, ownerId)) {
+            throw new AppError("Forbidden", 403);
+        }
+
+        const updatedFirm = await firmService.addSensorToFirmService(
+            firmId,
+            sensorId
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Sensor added to firm successfully",
+            data: updatedFirm,
         });
     } catch (error) {
         wrapAndForwardError(error, next);

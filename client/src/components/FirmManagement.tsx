@@ -1,13 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from './ui/card';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
-import { Input } from './ui/input';
-import { 
-  MapPin, Calendar, Eye, Edit, Trash2, Plus, 
-  Search, Sprout, User, Link2, Activity, X 
+import {
+    Activity,
+    Calendar,
+    Edit,
+    Eye,
+    Map as MapIcon,
+    MapPin,
+    Plus,
+    Search, Sprout,
+    Trash2,
+    User,
+    X
 } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
 import api from '../utils/axios';
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card';
+import { Input } from './ui/input';
 
 // --- Interfaces ---
 interface ICrop {
@@ -28,7 +37,6 @@ interface IFirm {
   crops: ICrop | string;
   sensors?: ISensor[];
   plantationDate: string;
-  user?: { _id?: string; name?: string; email?: string };
   owner?: { _id?: string; name?: string; email?: string };
   createdAt?: string;
 }
@@ -36,6 +44,7 @@ interface IFirm {
 export default function FirmManagement() {
   const [firms, setFirms] = useState<IFirm[]>([]);
   const [crops, setCrops] = useState<ICrop[]>([]);
+  const [availableSensors, setAvailableSensors] = useState<Array<{_id: string, sensorId: string}>>([]);
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isViewOnly, setIsViewOnly] = useState(false);
@@ -43,6 +52,8 @@ export default function FirmManagement() {
   const [newSensorId, setNewSensorId] = useState('');
   const [form, setForm] = useState({ latitude: '', longitude: '', cropId: '', plantationDate: '' });
   const [query, setQuery] = useState('');
+  const [showMap, setShowMap] = useState(false);
+  const mapRef = useRef<HTMLDivElement>(null);
 
   // --- API Calls ---
   const fetchCrops = async () => {
@@ -51,6 +62,15 @@ export default function FirmManagement() {
       setCrops(res.data?.data || []);
     } catch (err) {
       console.error('Failed to fetch crops', err);
+    }
+  };
+
+  const fetchSensors = async () => {
+    try {
+      const res = await api.get('/sensors');
+      setAvailableSensors(res.data?.data || []);
+    } catch (err) {
+      console.error('Failed to fetch sensors', err);
     }
   };
 
@@ -68,6 +88,7 @@ export default function FirmManagement() {
 
   useEffect(() => {
     fetchCrops();
+    fetchSensors();
     fetchFirms();
   }, []);
 
@@ -82,6 +103,7 @@ export default function FirmManagement() {
     setSelectedFirm(null);
     setForm({ latitude: '', longitude: '', cropId: '', plantationDate: '' });
     setIsViewOnly(false);
+    setShowMap(false);
     setIsModalOpen(true);
   };
 
@@ -94,6 +116,7 @@ export default function FirmManagement() {
       plantationDate: firm.plantationDate ? new Date(firm.plantationDate).toISOString().slice(0, 10) : '',
     });
     setIsViewOnly(false);
+    setShowMap(false);
     setIsModalOpen(true);
   };
 
@@ -106,6 +129,7 @@ export default function FirmManagement() {
       plantationDate: firm.plantationDate ? new Date(firm.plantationDate).toISOString().slice(0, 10) : '',
     });
     setIsViewOnly(true);
+    setShowMap(false);
     setIsModalOpen(true);
   };
 
@@ -154,6 +178,22 @@ export default function FirmManagement() {
     } catch (err: any) {
       alert(err?.response?.data?.message || 'Failed to link sensor');
     }
+  };
+
+  // Map click handler
+  const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!mapRef.current) return;
+    
+    const rect = mapRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Convert pixel coordinates to lat/lng (simplified for demo)
+    // This is a basic conversion - for production, use a proper map library like Leaflet
+    const lat = (23.8103 + (1 - y / rect.height) * 0.5).toFixed(6);
+    const lng = (90.4125 + (x / rect.width) * 0.5).toFixed(6);
+    
+    setForm({ ...form, latitude: lat, longitude: lng });
   };
 
   const filtered = firms.filter((f) => {
@@ -231,7 +271,7 @@ export default function FirmManagement() {
                   </div>
                   <div className="flex items-center text-sm text-slate-600">
                     <User className="h-4 w-4 mr-2 text-slate-400" />
-                    <span className="truncate">{getDisplayName(firm.user ?? firm.owner)}</span>
+                    <span className="truncate">{getDisplayName(firm.owner)}</span>
                   </div>
                 </div>
               </CardContent>
@@ -272,6 +312,83 @@ export default function FirmManagement() {
 
             <div className="max-h-[75vh] overflow-y-auto">
               <form onSubmit={handleSubmit} className="p-8 space-y-6">
+                
+                {/* Map Section - Only show when not in view mode */}
+                {!isViewOnly && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <label className="text-xs font-bold text-slate-500 ml-1">Location Picker</label>
+                      <Button 
+                        type="button" 
+                        size="sm" 
+                        variant="outline" 
+                        onClick={() => setShowMap(!showMap)}
+                        className="text-xs"
+                      >
+                        <MapIcon className="h-3 w-3 mr-1" />
+                        {showMap ? 'Hide Map' : 'Show Map'}
+                      </Button>
+                    </div>
+                    
+                    {showMap && (
+                      <div 
+                        ref={mapRef}
+                        onClick={handleMapClick}
+                        className="relative w-full h-64 rounded-xl border-2 border-emerald-200 cursor-crosshair overflow-hidden shadow-inner"
+                        style={{
+                          background: 'linear-gradient(to bottom, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%)',
+                          backgroundSize: 'cover'
+                        }}
+                      >
+                        {/* Grid lines for map effect */}
+                        <div className="absolute inset-0" style={{
+                          backgroundImage: `
+                            linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px)
+                          `,
+                          backgroundSize: '40px 40px'
+                        }} />
+                        
+                        {/* Road-like lines */}
+                        <div className="absolute inset-0">
+                          <div className="absolute top-1/4 left-0 right-0 h-1 bg-yellow-600/30"></div>
+                          <div className="absolute top-1/2 left-0 right-0 h-1.5 bg-gray-700/40"></div>
+                          <div className="absolute top-3/4 left-0 right-0 h-1 bg-yellow-600/30"></div>
+                          <div className="absolute left-1/4 top-0 bottom-0 w-1 bg-yellow-600/30"></div>
+                          <div className="absolute left-1/2 top-0 bottom-0 w-1.5 bg-gray-700/40"></div>
+                          <div className="absolute left-3/4 top-0 bottom-0 w-1 bg-yellow-600/30"></div>
+                        </div>
+
+                        {/* Buildings/Trees for effect */}
+                        <div className="absolute top-4 left-8 w-6 h-6 bg-green-700/40 rounded"></div>
+                        <div className="absolute top-12 right-12 w-8 h-8 bg-green-800/40 rounded-full"></div>
+                        <div className="absolute bottom-8 left-16 w-5 h-5 bg-amber-700/40 rounded-sm"></div>
+                        <div className="absolute bottom-16 right-20 w-7 h-7 bg-green-700/40 rounded-full"></div>
+                        
+                        <div className="absolute inset-0 flex items-center justify-center text-emerald-700 font-bold text-sm pointer-events-none bg-white/30 backdrop-blur-[1px]">
+                          🗺️ Click anywhere to set coordinates
+                        </div>
+                        
+                        {form.latitude && form.longitude && (
+                          <div 
+                            className="absolute pointer-events-none z-10"
+                            style={{
+                              left: `${((parseFloat(form.longitude) - 90.4125) / 0.5) * 100}%`,
+                              top: `${(1 - (parseFloat(form.latitude) - 23.8103) / 0.5) * 100}%`,
+                              transform: 'translate(-50%, -100%)'
+                            }}
+                          >
+                            <div className="relative">
+                              <MapPin className="h-8 w-8 text-red-600 filter drop-shadow-lg" fill="#dc2626" />
+                              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-600/30 rounded-full blur-sm"></div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-slate-500 ml-1">Latitude</label>
@@ -350,22 +467,31 @@ export default function FirmManagement() {
                     </div>
 
                     <div className="flex gap-2 mb-6">
-                      <div className="relative flex-1">
-                        <Link2 className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
-                        <Input 
-                          placeholder="Enter Sensor Serial ID..." 
-                          value={newSensorId}
-                          onChange={(e) => setNewSensorId(e.target.value)}
-                          className="pl-9 h-10 text-xs rounded-xl bg-slate-50 border-slate-200 focus:bg-white transition-all"
-                        />
-                      </div>
+                      <select
+                        value={newSensorId}
+                        onChange={(e) => setNewSensorId(e.target.value)}
+                        className="flex-1 h-10 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                      >
+                        <option value="">Select a sensor from available list...</option>
+                        {availableSensors
+                          .filter(sensor => 
+                            !selectedFirm.sensors?.some(s => s.sensorId === sensor.sensorId)
+                          )
+                          .map((sensor) => (
+                            <option key={sensor._id} value={sensor.sensorId}>
+                              {sensor.sensorId} (ID: {sensor._id})
+                            </option>
+                          ))
+                        }
+                      </select>
                       <Button 
                         onClick={handleAddSensor}
                         size="sm" 
                         disabled={!newSensorId}
                         className="bg-slate-900 hover:bg-black text-white h-10 px-4 rounded-xl shadow-md transition-all"
                       >
-                        Add Sensor
+                        <Plus className="h-3 w-3 mr-1" />
+                        Link Sensor
                       </Button>
                     </div>
 
