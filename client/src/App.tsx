@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LandPage from "./LandPage";
-import Logs from "./Landing page/Logs";
-import MainBlog from "./Landing page/MainBlog";
-import MainService from "./Landing page/MainService";
-import MainAbout from "./Landing page/MainAbout";
-import MainContact from "./Landing page/MainContact";
-import Dashboard from "./components/Dashboard";
-import ProtectedRoute from "./components/ProtectedRoute";
-import AdminPanel from "./components/Admin/AdminPanel"; // <-- import new component
-import TestPage from "./components/TestPage";
+import LandPage from "@/features/landing/pages/LandPage";
+import Logs from "@/features/landing/pages/Logs";
+import MainBlog from "@/features/landing/pages/MainBlog";
+import MainService from "@/features/landing/pages/MainService";
+import MainAbout from "@/features/landing/pages/MainAbout";
+import MainContact from "@/features/landing/pages/MainContact";
+import Dashboard from "@/features/dashboard/pages/Dashboard";
+import ProtectedRoute from "@/features/dashboard/components/ProtectedRoute";
+import AdminPanel from "@/features/admin/pages/AdminPanel";
+import TestPage from "@/components/TestPage";
 
 const App = () => {
   return (
