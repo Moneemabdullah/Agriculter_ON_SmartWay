@@ -51,8 +51,7 @@ Key objectives:
 Top-level folders:
 
 -   `client/` — React frontend (Vite + TypeScript)
--   `agri-server/` — TypeScript server (API, services, models)
--   `Server/` — Node.js/Express API (additional/legacy server code)
+-   `server/` — TypeScript server (API, services, models)
 -   `lib/` — Embedded/IoT sketches (Arduino)
 
 Refer to subfolders for controllers, models, routes, and React components.
