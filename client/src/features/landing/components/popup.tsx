@@ -60,6 +60,8 @@ const handleLogin = async (e: React.FormEvent) => {
 
     localStorage.setItem('token', result.token);
     localStorage.setItem('userId', result.user?.id);
+    localStorage.setItem('userName', result.user?.name || 'User');
+    localStorage.setItem('role', result.user?.role || 'User');
 
     window.dispatchEvent(new Event('auth-changed'));
 
