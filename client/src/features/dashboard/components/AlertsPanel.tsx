@@ -96,9 +96,12 @@ export function AlertsPanel() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-6xl mx-auto space-y-8 p-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-800">System Alerts</h2>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">System Alerts</h2>
+          <p className="text-sm text-gray-500">Monitor field conditions and system notifications</p>
+        </div>
         <Button variant="outline" size="sm">
           Mark All as Read
         </Button>

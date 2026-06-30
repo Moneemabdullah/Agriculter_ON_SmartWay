@@ -128,8 +128,13 @@ export function PaymentsPanel() {
   };
 
   return (
-    <div className="space-y-8 p-4">
-      <h1 className="text-3xl font-bold">💳 Payment & Billing</h1>
+    <div className="max-w-6xl mx-auto space-y-8 p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Payment & Billing</h2>
+          <p className="text-sm text-gray-500">Manage subscriptions, invoices, and payment methods</p>
+        </div>
+      </div>
       <div className="grid gap-6 md:grid-cols-3">
         {/* --- Card 1: Current Plan --- */}
         <Card>

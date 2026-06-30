@@ -117,16 +117,15 @@ export function CropManagement() {
   const filtered = crops.filter(c => c.name.toLowerCase().includes(query.toLowerCase()));
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-6xl mx-auto space-y-8 p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold">Crop Inventory</h2>
+          <h2 className="text-2xl font-bold text-gray-900">Crop Inventory</h2>
           <p className="text-sm text-gray-500">Add and manage crop types used on your farms</p>
-          <p className="text-xs text-gray-400 mt-1">{crops.length} crops • Showing {filtered.length}</p>
         </div>
         <div className="flex items-center gap-3">
-          <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search crops..." className="bg-white" />
-          <Button onClick={openCreate} className="flex items-center gap-2 bg-green-600 text-white hover:bg-green-700">
+          <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search crops..." className="bg-white w-48" />
+          <Button onClick={openCreate} className="bg-green-600 text-white hover:bg-green-700">
             <Upload className="mr-2 h-4 w-4" />
             Add New Crop
           </Button>
@@ -138,17 +137,17 @@ export function CropManagement() {
           {[1,2,3].map(i => <div key={i} className="h-48 bg-gray-200 animate-pulse rounded-xl" />)}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="text-gray-500">No crops match your search.</div>
+        <div className="text-center py-16 text-gray-500">No crops match your search.</div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map(crop => (
             <Card key={crop._id} className="overflow-hidden hover:shadow-md transition-shadow">
-              <div className="aspect-video w-full overflow-hidden bg-linear-to-tr from-green-100 to-white flex items-center justify-center">
+              <div className="aspect-video w-full overflow-hidden bg-gradient-to-tr from-green-100 to-white flex items-center justify-center">
                 <span className="text-green-700 text-lg font-semibold">{crop.name[0]?.toUpperCase()}</span>
               </div>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
-                  <span className="text-lg font-bold">{crop.name}</span>
+                  <span className="text-lg font-bold text-gray-900">{crop.name}</span>
                   <Badge className="bg-green-100 text-green-800">{crop.season}</Badge>
                 </CardTitle>
               </CardHeader>
@@ -182,48 +181,48 @@ export function CropManagement() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
           <div className="bg-white rounded-2xl shadow-xl w-full max-w-2xl overflow-hidden">
             <div className="flex items-center justify-between p-6 border-b">
-              <h3 className="text-xl font-bold">{isViewOnly ? 'Crop Details' : selectedCrop ? 'Edit Crop' : 'New Crop'}</h3>
-              <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700">✕</button>
+              <h3 className="text-xl font-bold text-gray-900">{isViewOnly ? 'Crop Details' : selectedCrop ? 'Edit Crop' : 'New Crop'}</h3>
+              <button onClick={() => setIsModalOpen(false)} className="text-gray-500 hover:text-gray-700 text-2xl leading-none">&times;</button>
             </div>
             <form onSubmit={handleSubmit} className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
-                <input disabled={isViewOnly} required value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} className="w-full rounded-lg border p-2" />
+                <Input disabled={isViewOnly} required value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
-                <input disabled={isViewOnly} required value={form.caregory} onChange={(e) => setForm({...form, caregory: e.target.value})} className="w-full rounded-lg border p-2" />
+                <Input disabled={isViewOnly} required value={form.caregory} onChange={(e) => setForm({...form, caregory: e.target.value})} />
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Season</label>
-                <input disabled={isViewOnly} required value={form.season} onChange={(e) => setForm({...form, season: e.target.value})} className="w-full rounded-lg border p-2" />
+                <Input disabled={isViewOnly} required value={form.season} onChange={(e) => setForm({...form, season: e.target.value})} />
               </div>
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Showing Start (month)</label>
-                  <input disabled={isViewOnly} type="number" min={1} max={12} value={form.showingStart} onChange={(e) => setForm({...form, showingStart: e.target.value})} className="w-full rounded-lg border p-2" />
+                  <Input disabled={isViewOnly} type="number" min={1} max={12} value={form.showingStart} onChange={(e) => setForm({...form, showingStart: e.target.value})} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Showing End (month)</label>
-                  <input disabled={isViewOnly} type="number" min={1} max={12} value={form.showingEnd} onChange={(e) => setForm({...form, showingEnd: e.target.value})} className="w-full rounded-lg border p-2" />
+                  <Input disabled={isViewOnly} type="number" min={1} max={12} value={form.showingEnd} onChange={(e) => setForm({...form, showingEnd: e.target.value})} />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Harvest Start (month)</label>
-                  <input disabled={isViewOnly} type="number" min={1} max={12} value={form.harvestStart} onChange={(e) => setForm({...form, harvestStart: e.target.value})} className="w-full rounded-lg border p-2" />
+                  <Input disabled={isViewOnly} type="number" min={1} max={12} value={form.harvestStart} onChange={(e) => setForm({...form, harvestStart: e.target.value})} />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Harvest End (month)</label>
-                  <input disabled={isViewOnly} type="number" min={1} max={12} value={form.harvestEnd} onChange={(e) => setForm({...form, harvestEnd: e.target.value})} className="w-full rounded-lg border p-2" />
+                  <Input disabled={isViewOnly} type="number" min={1} max={12} value={form.harvestEnd} onChange={(e) => setForm({...form, harvestEnd: e.target.value})} />
                 </div>
               </div>
 
               <div className="md:col-span-2 flex justify-end gap-3 pt-4">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="py-2 px-4 rounded-lg border">Cancel</button>
-                {!isViewOnly && <button type="submit" className="py-2 px-4 rounded-lg bg-green-600 text-white">{selectedCrop ? 'Save Changes' : 'Create Crop'}</button>}
+                <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                {!isViewOnly && <Button type="submit" className="bg-green-600 text-white hover:bg-green-700">{selectedCrop ? 'Save Changes' : 'Create Crop'}</Button>}
               </div>
             </form>
           </div>

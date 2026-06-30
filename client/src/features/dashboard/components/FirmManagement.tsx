@@ -205,24 +205,24 @@ export default function FirmManagement() {
   });
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-8 bg-[#f8fafc] min-h-screen">
+    <div className="max-w-6xl mx-auto space-y-8 p-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div className="flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Farm Management</h1>
-          <p className="text-slate-500 mt-1">Manage agricultural plots and sensor deployments.</p>
+          <h2 className="text-2xl font-bold text-gray-900">Farm Management</h2>
+          <p className="text-sm text-gray-500">Manage agricultural plots and sensor deployments</p>
         </div>
         <div className="flex items-center gap-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <Input 
               value={query} 
               onChange={(e) => setQuery(e.target.value)} 
               placeholder="Search by crop..." 
-              className="pl-10 w-64 bg-white border-slate-200" 
+              className="pl-10 w-64 bg-white" 
             />
           </div>
-          <Button onClick={openCreate} className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition-all">
+          <Button onClick={openCreate} className="bg-green-600 hover:bg-green-700 text-white">
             <Plus className="mr-2 h-4 w-4" /> Add New Farm
           </Button>
         </div>
@@ -231,60 +231,60 @@ export default function FirmManagement() {
       {/* Farms Grid */}
       {loading ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3].map(i => <div key={i} className="h-64 bg-slate-200 animate-pulse rounded-2xl" />)}
+          {[1, 2, 3].map(i => <div key={i} className="h-64 bg-gray-200 animate-pulse rounded-xl" />)}
         </div>
       ) : filtered.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 bg-white rounded-3xl border-2 border-dashed border-slate-200">
-          <Sprout className="h-12 w-12 text-slate-300 mb-4" />
-          <h3 className="text-lg font-medium text-slate-900">No farms registered</h3>
-          <p className="text-slate-500">Get started by creating your first agricultural plot.</p>
+        <div className="flex flex-col items-center justify-center py-20 bg-white rounded-2xl border-2 border-dashed border-gray-200">
+          <Sprout className="h-12 w-12 text-gray-300 mb-4" />
+          <h3 className="text-lg font-medium text-gray-900">No farms registered</h3>
+          <p className="text-gray-500">Get started by creating your first agricultural plot.</p>
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((firm) => (
-            <Card key={firm._id} className="group border-none shadow-sm hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden bg-white">
-              <div className="h-1.5 bg-emerald-500" />
+            <Card key={firm._id} className="group shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+              <div className="h-1.5 bg-green-500" />
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-start">
-                  <div className="p-2 bg-emerald-50 rounded-xl text-emerald-600">
+                  <div className="p-2 bg-green-50 rounded-xl text-green-600">
                     <Sprout className="h-6 w-6" />
                   </div>
-                  <Badge variant="secondary" className="bg-emerald-50 text-emerald-700 border-none font-semibold">
+                  <Badge variant="secondary" className="bg-green-50 text-green-700 border-none font-semibold">
                     {firm.sensors?.length ?? 0} Sensors
                   </Badge>
                 </div>
-                <CardTitle className="mt-4 text-xl font-bold text-slate-800">
+                <CardTitle className="mt-4 text-xl font-bold text-gray-800">
                   {(firm.crops as ICrop)?.name || 'Unnamed Plot'}
                 </CardTitle>
-                <p className="text-[10px] text-slate-400 font-mono tracking-tighter uppercase">UID: {firm._id}</p>
+                <p className="text-xs text-gray-400 font-mono tracking-tight uppercase">UID: {firm._id}</p>
               </CardHeader>
 
               <CardContent className="space-y-4 pt-2">
                 <div className="space-y-2.5">
-                  <div className="flex items-center text-sm text-slate-600">
-                    <MapPin className="h-4 w-4 mr-2 text-slate-400" />
+                  <div className="flex items-center text-sm text-gray-600">
+                    <MapPin className="h-4 w-4 mr-2 text-gray-400" />
                     {firm.location?.latitude.toFixed(4)}, {firm.location?.longitude.toFixed(4)}
                   </div>
-                  <div className="flex items-center text-sm text-slate-600">
-                    <Calendar className="h-4 w-4 mr-2 text-slate-400" />
+                  <div className="flex items-center text-sm text-gray-600">
+                    <Calendar className="h-4 w-4 mr-2 text-gray-400" />
                     Planted {firm.plantationDate ? new Date(firm.plantationDate).toLocaleDateString() : '—'}
                   </div>
-                  <div className="flex items-center text-sm text-slate-600">
-                    <User className="h-4 w-4 mr-2 text-slate-400" />
+                  <div className="flex items-center text-sm text-gray-600">
+                    <User className="h-4 w-4 mr-2 text-gray-400" />
                     <span className="truncate">{getDisplayName(firm.owner)}</span>
                   </div>
                 </div>
               </CardContent>
 
-              <CardFooter className="bg-slate-50/50 gap-2 p-4">
-                <Button variant="ghost" size="sm" className="flex-1 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50" onClick={() => openView(firm)}>
+              <CardFooter className="bg-gray-50 gap-2 p-4">
+                <Button variant="ghost" size="sm" className="flex-1 text-gray-600 hover:text-green-600 hover:bg-green-50" onClick={() => openView(firm)}>
                   <Eye className="mr-2 h-4 w-4" /> View Details
                 </Button>
                 <div className="flex gap-1">
-                  <Button variant="ghost" size="sm" className="text-slate-400 hover:text-blue-600" onClick={() => openEdit(firm)}>
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-blue-600" onClick={() => openEdit(firm)}>
                     <Edit className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="sm" className="text-slate-400 hover:text-red-600" onClick={() => handleDelete(firm._id)}>
+                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-600" onClick={() => handleDelete(firm._id)}>
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </div>
@@ -296,28 +296,28 @@ export default function FirmManagement() {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <div className="bg-white rounded-4xl shadow-2xl w-full max-w-xl overflow-hidden animate-in fade-in zoom-in duration-200">
-            <div className="px-8 py-6 border-b border-slate-100 flex justify-between items-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className="bg-white shadow-2xl w-full max-w-xl overflow-hidden rounded-2xl">
+            <div className="px-8 py-6 border-b border-gray-100 flex justify-between items-center">
               <div>
-                <h3 className="text-xl font-bold text-slate-900">
+                <h3 className="text-xl font-bold text-gray-900">
                   {isViewOnly ? 'Farm Overview' : selectedFirm ? 'Update Plot' : 'Register New Farm'}
                 </h3>
-                <p className="text-xs text-slate-500 uppercase tracking-widest font-semibold mt-1">Farm Information System</p>
+                <p className="text-xs text-gray-500 uppercase tracking-widest font-semibold mt-1">Farm Information System</p>
               </div>
-              <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
-                <X className="h-5 w-5 text-slate-400" />
+              <button onClick={() => setIsModalOpen(false)} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                <X className="h-5 w-5 text-gray-400" />
               </button>
             </div>
 
             <div className="max-h-[75vh] overflow-y-auto">
               <form onSubmit={handleSubmit} className="p-8 space-y-6">
                 
-                {/* Map Section - Only show when not in view mode */}
+                {/* Map Section */}
                 {!isViewOnly && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="text-xs font-bold text-slate-500 ml-1">Location Picker</label>
+                      <label className="text-xs font-bold text-gray-500 ml-1">Location Picker</label>
                       <Button 
                         type="button" 
                         size="sm" 
@@ -334,13 +334,11 @@ export default function FirmManagement() {
                       <div 
                         ref={mapRef}
                         onClick={handleMapClick}
-                        className="relative w-full h-64 rounded-xl border-2 border-emerald-200 cursor-crosshair overflow-hidden shadow-inner"
+                        className="relative w-full h-64 rounded-xl border-2 border-green-200 cursor-crosshair overflow-hidden shadow-inner"
                         style={{
                           background: 'linear-gradient(to bottom, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%)',
-                          backgroundSize: 'cover'
                         }}
                       >
-                        {/* Grid lines for map effect */}
                         <div className="absolute inset-0" style={{
                           backgroundImage: `
                             linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
@@ -349,7 +347,6 @@ export default function FirmManagement() {
                           backgroundSize: '40px 40px'
                         }} />
                         
-                        {/* Road-like lines */}
                         <div className="absolute inset-0">
                           <div className="absolute top-1/4 left-0 right-0 h-1 bg-yellow-600/30"></div>
                           <div className="absolute top-1/2 left-0 right-0 h-1.5 bg-gray-700/40"></div>
@@ -359,13 +356,12 @@ export default function FirmManagement() {
                           <div className="absolute left-3/4 top-0 bottom-0 w-1 bg-yellow-600/30"></div>
                         </div>
 
-                        {/* Buildings/Trees for effect */}
                         <div className="absolute top-4 left-8 w-6 h-6 bg-green-700/40 rounded"></div>
                         <div className="absolute top-12 right-12 w-8 h-8 bg-green-800/40 rounded-full"></div>
                         <div className="absolute bottom-8 left-16 w-5 h-5 bg-amber-700/40 rounded-sm"></div>
                         <div className="absolute bottom-16 right-20 w-7 h-7 bg-green-700/40 rounded-full"></div>
                         
-                        <div className="absolute inset-0 flex items-center justify-center text-emerald-700 font-bold text-sm pointer-events-none bg-white/30 backdrop-blur-[1px]">
+                        <div className="absolute inset-0 flex items-center justify-center text-green-700 font-bold text-sm pointer-events-none bg-white/30 backdrop-blur-[1px]">
                           🗺️ Click anywhere to set coordinates
                         </div>
                         
@@ -391,7 +387,7 @@ export default function FirmManagement() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-500 ml-1">Latitude</label>
+                    <label className="text-xs font-bold text-gray-500 ml-1">Latitude</label>
                     <Input 
                       disabled={isViewOnly} 
                       required 
@@ -399,11 +395,10 @@ export default function FirmManagement() {
                       step="any"
                       value={form.latitude} 
                       onChange={(e) => setForm({ ...form, latitude: e.target.value })} 
-                      className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white transition-all"
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-bold text-slate-500 ml-1">Longitude</label>
+                    <label className="text-xs font-bold text-gray-500 ml-1">Longitude</label>
                     <Input 
                       disabled={isViewOnly} 
                       required 
@@ -411,19 +406,18 @@ export default function FirmManagement() {
                       step="any"
                       value={form.longitude} 
                       onChange={(e) => setForm({ ...form, longitude: e.target.value })} 
-                      className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white transition-all"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-500 ml-1">Target Crop</label>
+                  <label className="text-xs font-bold text-gray-500 ml-1">Target Crop</label>
                   <select 
                     disabled={isViewOnly} 
                     required 
                     value={form.cropId} 
                     onChange={(e) => setForm({ ...form, cropId: e.target.value })} 
-                    className="w-full flex h-11 rounded-xl border border-slate-200 bg-slate-50/50 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                    className="w-full flex h-11 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-green-500 transition-all"
                   >
                     <option value="">Select a crop type...</option>
                     {crops.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
@@ -431,37 +425,35 @@ export default function FirmManagement() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-slate-500 ml-1">Plantation Date</label>
+                  <label className="text-xs font-bold text-gray-500 ml-1">Plantation Date</label>
                   <Input 
                     disabled={isViewOnly} 
                     required 
                     type="date" 
                     value={form.plantationDate} 
                     onChange={(e) => setForm({ ...form, plantationDate: e.target.value })} 
-                    className="rounded-xl border-slate-200 bg-slate-50/50 focus:bg-white transition-all"
                   />
                 </div>
 
                 {!isViewOnly && (
-                  <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
-                    <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)}>Cancel</Button>
-                    <Button type="submit" className="bg-emerald-600 hover:bg-emerald-700 px-8 rounded-xl shadow-lg shadow-emerald-200">
+                  <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+                    <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)}>Cancel</Button>
+                    <Button type="submit" className="bg-green-600 hover:bg-green-700 px-8 shadow-md">
                       {selectedFirm ? 'Update Records' : 'Save Farm'}
                     </Button>
                   </div>
                 )}
               </form>
 
-              {/* View-Only Sensor Section */}
               {isViewOnly && selectedFirm && (
-                <div className="px-8 pb-8 space-y-6 animate-in slide-in-from-bottom-4 duration-300">
-                  <div className="pt-6 border-t border-slate-100">
+                <div className="px-8 pb-8 space-y-6">
+                  <div className="pt-6 border-t border-gray-100">
                     <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-sm font-bold text-slate-900 flex items-center">
-                        <Activity className="h-4 w-4 mr-2 text-emerald-500" /> 
+                      <h4 className="text-sm font-bold text-gray-900 flex items-center">
+                        <Activity className="h-4 w-4 mr-2 text-green-500" /> 
                         Connected Sensors
                       </h4>
-                      <Badge variant="outline" className="text-[10px] uppercase font-bold tracking-widest text-slate-400 rounded-md">
+                      <Badge variant="outline" className="text-xs uppercase font-bold tracking-widest text-gray-400">
                         {selectedFirm.sensors?.length || 0} Total Units
                       </Badge>
                     </div>
@@ -470,7 +462,7 @@ export default function FirmManagement() {
                       <select
                         value={newSensorId}
                         onChange={(e) => setNewSensorId(e.target.value)}
-                        className="flex-1 h-10 rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all"
+                        className="flex-1 h-10 rounded-lg border border-gray-200 bg-white px-3 text-xs outline-none focus:ring-2 focus:ring-green-500 transition-all"
                       >
                         <option value="">Select a sensor from available list...</option>
                         {availableSensors
@@ -488,7 +480,7 @@ export default function FirmManagement() {
                         onClick={handleAddSensor}
                         size="sm" 
                         disabled={!newSensorId}
-                        className="bg-slate-900 hover:bg-black text-white h-10 px-4 rounded-xl shadow-md transition-all"
+                        className="bg-gray-900 hover:bg-black text-white h-10 px-4 shadow-md transition-all"
                       >
                         <Plus className="h-3 w-3 mr-1" />
                         Link Sensor
@@ -498,29 +490,28 @@ export default function FirmManagement() {
                     <div className="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar">
                       {selectedFirm.sensors && selectedFirm.sensors.length > 0 ? (
                         selectedFirm.sensors.map((s, idx) => (
-                          <div key={idx} className="flex justify-between items-center bg-white p-3 border border-slate-100 rounded-2xl shadow-sm hover:border-emerald-100 transition-all group">
+                          <div key={idx} className="flex justify-between items-center bg-white p-3 border border-gray-100 rounded-xl shadow-sm hover:border-green-100 transition-all group">
                             <div className="flex items-center gap-3">
-                              <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                              <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
                               <div>
-                                <p className="text-xs font-mono font-bold text-slate-700 group-hover:text-emerald-700 transition-colors">{s.sensorId}</p>
-                                <p className="text-[10px] text-slate-400 italic">Sync Date: {new Date(s.createdAt).toLocaleDateString()}</p>
+                                <p className="text-xs font-mono font-bold text-gray-700 group-hover:text-green-700 transition-colors">{s.sensorId}</p>
+                                <p className="text-xs text-gray-400">Sync Date: {new Date(s.createdAt).toLocaleDateString()}</p>
                               </div>
                             </div>
                             <div className="flex items-center gap-2">
-                               <Badge className="bg-emerald-50 text-emerald-600 text-[9px] font-bold border-none px-2 py-0.5">ONLINE</Badge>
+                               <Badge className="bg-green-50 text-green-600 text-xs font-bold border-none px-2 py-0.5">ONLINE</Badge>
                             </div>
                           </div>
                         ))
                       ) : (
-                        <div className="text-center py-8 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-                          <p className="text-xs text-slate-400">No hardware components linked yet.</p>
+                        <div className="text-center py-8 bg-gray-50 rounded-xl border border-dashed border-gray-200">
+                          <p className="text-xs text-gray-400">No hardware components linked yet.</p>
                         </div>
                       )}
                     </div>
                   </div>
                 </div>
               )}
-
             </div>
           </div>
         </div>

@@ -132,7 +132,15 @@ export default function SensorAnalytics() {
   const weeklyCount = weeklyData.filter(d => typeof d.temperature === 'number').length || 1;
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="max-w-6xl mx-auto space-y-8 p-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">Sensor Analytics</h2>
+          <p className="text-sm text-gray-500">Real-time and historical telemetry from field sensors</p>
+        </div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
       <Card className="md:col-span-2">
         <CardHeader>
           <CardTitle>Sensor Analytics</CardTitle>
@@ -256,6 +264,7 @@ export default function SensorAnalytics() {
           </div>
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 }
