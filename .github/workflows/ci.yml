@@ -20,7 +20,7 @@ jobs:
               with:
                   filters: |
                       server:
-                        - 'server/**'
+                        - 'Server/**'
                       client:
                         - 'client/**'
 
@@ -42,26 +42,26 @@ jobs:
               with:
                   node-version: 18
                   cache: npm
-                  cache-dependency-path: server/package-lock.json
+                  cache-dependency-path: Server/package-lock.json
 
             - name: Install deps
               run: npm ci
-              working-directory: server
+              working-directory: Server
 
             - name: Lint
               run: npm run lint
-              working-directory: server
+              working-directory: Server
 
             - name: Test
               run: npm test
-              working-directory: server
+              working-directory: Server
               env:
                   MONGO_URI: mongodb://localhost:27017/test
                   JWT_SECRET: testsecret
 
             - name: Build
               run: npm run build
-              working-directory: server
+              working-directory: Server
 
     client-ci:
         needs: detect-changes

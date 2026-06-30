@@ -51,7 +51,7 @@ Key objectives:
 Top-level folders:
 
 -   `client/` — React frontend (Vite + TypeScript)
--   `server/` — TypeScript server (API, services, models)
+-   `Server/` — Express API (TypeScript, controllers, services, models)
 -   `lib/` — Embedded/IoT sketches (Arduino)
 
 Refer to subfolders for controllers, models, routes, and React components.
@@ -78,16 +78,6 @@ cd Agriculter_ON_SmartWay
 2. Install dependencies:
 
 ```bash
-# Frontend
-cd client
-npm install
-
-# Backend (TypeScript server)
-cd ../agri-server
-npm install
-
-# Optional: legacy server
-cd ../Server
 npm install
 ```
 
@@ -100,51 +90,38 @@ npm install
 Create a `.env` file in each server directory you intend to run (example keys):
 
 ```
-# Server (agri-server/.env or Server/.env)
-DATABASE_URL=<your_mongodb_connection_string>
-PORT=5000
+# Server/.env
+CONNECTION_STRING=<your_mongodb_connection_string>
+PORT=3000
 JWT_SECRET=<your_jwt_secret>
-API_KEY=<optional_api_key>
+CLOUDINARY_CLOUD_NAME=<your_cloudinary_name>
+CLOUDINARY_API_KEY=<your_api_key>
+CLOUDINARY_API_SECRET=<your_api_secret>
 ```
+
+See `Server/.env.example` for all required vars.
 
 ---
 
 ## Running the app
 
-Start the client:
-
 ```bash
-cd client
-npm start
+# Client (http://localhost:5173)
+cd client && npm run dev
+
+# Server (http://localhost:3000)
+cd Server && npm run dev
 ```
 
-Start the TypeScript server:
-
-```bash
-cd ../agri-server
-npm run dev
-```
-
-Legacy server (if needed):
-
-```bash
-cd ../Server
-npm start
-```
-
--   Frontend (Live demo): [Client Site](https://agriculter-smartway.vercel.app/)
 -   Frontend (Local): http://localhost:5173
--   API (Deployed): [Server API](https://agriculter-smartway.vercel.app/)
--   API (Local): http://localhost:5000/api/v1
+-   API (Local): http://localhost:3000/api/v1
 
 ---
 
 ## Useful links
 
--   Full backend API docs: `Server/API_DOCUMENTATION.md`
--   Client folder: `client/` (React + Vite)
--   Server folder: `Server/` (Express API)
--   Test cases & API tests: `testsprite_tests/`
+-   API docs: `Server/API_DOCUMENTATION.md`
+-   Test scripts: `testsprite_tests/`
 
 ---
 
