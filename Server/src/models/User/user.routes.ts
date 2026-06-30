@@ -2,6 +2,7 @@ import { Router } from "express";
 import auth from "../../middlewares/auth.middleware";
 import { uploadMiddleware } from "../../middlewares/upload.middleware";
 import {
+    banUserById,
     deleteUserById,
     getAllUsers,
     getUserById,
@@ -37,6 +38,9 @@ router.put(
 );
 router.delete("/:id", auth("admin", "farmer"), (req, res, next) => {
     deleteUserById(req, res, next);
+});
+router.patch("/ban/:id", auth("admin"), (req, res, next) => {
+    banUserById(req, res, next);
 });
 
 export const UserRoutes = router;

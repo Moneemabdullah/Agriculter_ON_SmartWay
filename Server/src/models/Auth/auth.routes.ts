@@ -2,6 +2,7 @@ import { Router } from "express";
 import auth from "../../middlewares/auth.middleware";
 import { uploadMiddleware } from "../../middlewares/upload.middleware";
 import {
+    changePasswordController,
     meController,
     signInController,
     signUpController,
@@ -17,6 +18,9 @@ router.post("/signin", (req, res, next) => {
 });
 router.get("/me", auth(), (req, res, next) => {
     meController(req, res, next);
+});
+router.post("/change-password", (req, res, next) => {
+    changePasswordController(req, res, next);
 });
 
 export const AuthRoutes = router;

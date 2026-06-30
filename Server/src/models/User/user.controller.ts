@@ -162,3 +162,29 @@ export const deleteUserById = async (
         next(error);
     }
 };
+
+//* Ban / unban user
+export const banUserById = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const id = req.params.id;
+        const user = await getUserByIdService(id as string);
+        if (!user) {
+            res.status(404).json({ success: false, message: "User not found" });
+            return;
+        }
+        const updated = await updatedUserByIdService(id as string, {
+            isBanned: !(user as any).isBanned,
+        } as any);
+        res.status(200).json({
+            success: true,
+            message: "User ban status toggled",
+            data: updated,
+        });
+    } catch (error) {
+        next(error);
+    }
+};

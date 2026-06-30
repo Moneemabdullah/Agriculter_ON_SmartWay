@@ -19,6 +19,12 @@ export const getSensorsByFirmService = async (
     return await SensorModel.find({ firmId: firmId });
 };
 
+export const getSensorsByFirmIdsService = async (
+    firmIds: string[]
+): Promise<ISensor[]> => {
+    return await SensorModel.find({ firmId: { $in: firmIds } });
+};
+
 export const getSensorByIdService = async (
     sensorId: string
 ): Promise<ISensor | null> => {

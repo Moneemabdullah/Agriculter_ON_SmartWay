@@ -9,7 +9,7 @@ export const postBlogService = async (blogbody: IBlog) => {
 export const getBlogServiceByOwner = async (userId: string) => {
     const blogs = await blogModel
         .find({ owner: userId })
-        .populate("owner", "username email")
+        .populate("owner", "name email")
         .exec();
     return blogs;
 };
@@ -17,7 +17,7 @@ export const getBlogServiceByOwner = async (userId: string) => {
 export const getAllBlogsService = async () => {
     const blogs = await blogModel
         .find()
-        .populate("owner", "username email")
+        .populate("owner", "name email")
         .exec();
     return blogs;
 };

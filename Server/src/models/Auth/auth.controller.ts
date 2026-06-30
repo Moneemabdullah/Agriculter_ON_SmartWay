@@ -61,3 +61,23 @@ export const meController = async (
         next(error);
     }
 };
+
+export const changePasswordController = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { email, oldPassword, newPassword } = req.body;
+        if (!email || !oldPassword || !newPassword) {
+            throw new AppError("Email, old password, and new password are required", 400);
+        }
+        if (newPassword.length < 6) {
+            throw new AppError("New password must be at least 6 characters", 400);
+        }
+        await authservice.changePasswordService(email, oldPassword, newPassword);
+        res.status(200).json({ success: true, message: "Password changed successfully" });
+    } catch (error) {
+        next(error);
+    }
+};

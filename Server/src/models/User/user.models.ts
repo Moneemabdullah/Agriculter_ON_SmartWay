@@ -11,6 +11,7 @@ const userSchema: Schema<User> = new mongoose.Schema<User>(
             type: String,
             enum: ["admin", "farmer", "viewer"],
         },
+        isBanned: { type: Boolean, default: false },
         photo: { type: String, required: false },
         address: {
             village: { type: String },

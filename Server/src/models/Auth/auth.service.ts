@@ -75,6 +75,27 @@ export const signInService = async (identifier: string, password: string) => {
     };
 };
 
+/* ===================== CHANGE PASSWORD ===================== */
+export const changePasswordService = async (
+    email: string,
+    oldPassword: string,
+    newPassword: string
+) => {
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+        throw new Error("User not found");
+    }
+
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
+        throw new Error("Invalid current password");
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+    user.password = hashedPassword;
+    await user.save();
+};
+
 /* ===================== GET USER ===================== */
 export const getUserById = async (id: string): Promise<PublicUser | null> => {
     const user = await UserModel.findById(id)

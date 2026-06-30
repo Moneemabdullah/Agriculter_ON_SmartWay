@@ -7,6 +7,7 @@ export interface User {
     password: string;
     photo?: string;
     role: "admin" | "farmer" | "viewer";
+    isBanned?: boolean;
     address?: {
         village: string;
         city: string;

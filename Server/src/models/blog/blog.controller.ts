@@ -12,6 +12,7 @@ import {
 const postBlog = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const blogData = req.body;
+        blogData.owner = req.userId;
         const newBlog = await postBlogService(blogData);
         res.status(201).json(newBlog);
     } catch (error) {

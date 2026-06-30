@@ -1,7 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../../utils/appError.utils";
 import logger from "../../utils/logger.utils";
+import { FirmModel } from "../Firm/firm.models";
 import * as sensorService from "./sensor.service";
+
+const resolveFirmId = async (userId: string, preferredFirmId?: string): Promise<string> => {
+    if (preferredFirmId) return preferredFirmId;
+    const firm = await FirmModel.findOne({ owner: userId }).lean();
+    if (!firm) throw new AppError("No firm found for this user. Create a firm first.", 400);
+    return firm._id.toString();
+};
 
 export const addSensorcontroller = async (
     req: Request,
@@ -10,12 +18,11 @@ export const addSensorcontroller = async (
 ) => {
     try {
         const sensorId = req.body.sensorId as string | undefined;
-        const firmId = req.body.firmId as string | undefined;
-
-        if (!firmId) throw new AppError("Firm ID is required", 400);
         if (!sensorId) throw new AppError("Sensor ID is required", 400);
 
-        logger.info(`Firm/Owner ID: ${firmId}, Sensor ID: ${sensorId}`);
+        const firmId = await resolveFirmId(req.userId as string, req.body.firmId as string | undefined);
+
+        logger.info(`Firm ID: ${firmId}, Sensor ID: ${sensorId}`);
         const newSensor = await sensorService.addSensorService(
             firmId,
             sensorId
@@ -55,13 +62,35 @@ export const getSensorsByOwnerController = async (
     next: NextFunction
 ) => {
     try {
-        const firmId =
+        const explicitFirmId =
             (req.params.ownerId as string | undefined) ??
-            (req.params.firmId as string | undefined) ??
-            (req.userId as string | undefined);
-        if (!firmId) throw new AppError("Firm ID is required", 400);
+            (req.params.firmId as string | undefined);
 
-        const sensors = await sensorService.getSensorsByFirmService(firmId);
+        if (explicitFirmId) {
+            const sensors = await sensorService.getSensorsByFirmService(explicitFirmId);
+            res.status(200).json({
+                success: true,
+                message: "Sensors retrieved successfully",
+                data: sensors,
+            });
+            return;
+        }
+
+        const userId = req.userId as string | undefined;
+        if (!userId) throw new AppError("Authentication required", 401);
+
+        const firms = await FirmModel.find({ owner: userId }).lean();
+        if (!firms.length) {
+            res.status(200).json({
+                success: true,
+                message: "Sensors retrieved successfully",
+                data: [],
+            });
+            return;
+        }
+
+        const firmIds = firms.map((f) => f._id.toString());
+        const sensors = await sensorService.getSensorsByFirmIdsService(firmIds);
         res.status(200).json({
             success: true,
             message: "Sensors retrieved successfully",
