@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, User, LogOut } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthModal } from './popup';
@@ -11,6 +11,7 @@ export function Header() {
   const [userName, setUserName] = useState('');
   const [userId, setUserId] = useState('');
   const [role, setRole] = useState('');
+  const profileRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
 
@@ -23,6 +24,18 @@ export function Header() {
       setRole(localStorage.getItem('role') || 'User');
     }
   }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(e.target as Node)) {
+        setProfileMenuOpen(false);
+      }
+    };
+    if (profileMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [profileMenuOpen]);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -60,7 +73,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           {/* Profile avatar */}
           {isLoggedIn && (
-            <div className="relative">
+            <div className="relative" ref={profileRef}>
               <button
                 onClick={() => setProfileMenuOpen(!profileMenuOpen)}
                 className="hover:text-[#7ab42c] transition-colors"

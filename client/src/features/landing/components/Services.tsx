@@ -1,55 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Cpu, Thermometer, Droplets, Wifi, TrendingUp, Clock, Shield, BarChart3, Zap, Activity, Radio, Gauge } from 'lucide-react';
 import { ImageWithFallback } from './Figma/ImageWithFallback';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Services() {
   const heroRef = useRef(null);
   const techSectionRef = useRef(null);
   const benefitsRef = useRef(null);
-
-  useEffect(() => {
-    // Hero animation
-    // gsap.from(heroRef.current, {
-    //   opacity: 0,
-    //   y: 50,
-    //   duration: 1,
-    //   ease: 'power3.out'
-    // });
-
-    // Technology cards animation
-    // gsap.from('.tech-card', {
-    //   scrollTrigger: {
-    //     trigger: techSectionRef.current,
-    //     start: 'top 80%',
-    //   },
-    //   opacity: 0,
-    //   y: 50,
-    //   stagger: 0.2,
-    //   duration: 0.8,
-    //   ease: 'power3.out'
-    // });
-
-    // Benefits animation
-    // gsap.from('.benefit-card', {
-    //   scrollTrigger: {
-    //     trigger: benefitsRef.current,
-    //     start: 'top 80%',
-    //   },
-    //   opacity: 0,
-    //   scale: 0.9,
-    //   stagger: 0.15,
-    //   duration: 0.6,
-    //   ease: 'back.out(1.7)'
-    // });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, []);
 
   return (
     <div className="bg-white">

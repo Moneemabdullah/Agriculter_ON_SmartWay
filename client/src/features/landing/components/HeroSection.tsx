@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { ArrowRight, FileText } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { Link } from "react-router-dom";
 import { gsap } from 'gsap'
 
@@ -108,10 +108,7 @@ export function HeroSection() {
 
             <div className="hero-buttons flex flex-wrap gap-4">
             <Link to="/logs">
-              <button 
-                onClick={() => window.location.hash = '#changelog'}
-                className="bg-[#7ab42c] text-white px-8 py-3 rounded-md hover:bg-[#6a9c28] transition-colors flex items-center gap-2"
-              >
+              <button className="bg-[#7ab42c] text-white px-8 py-3 rounded-md hover:bg-[#6a9c28] transition-colors flex items-center gap-2">
                 Changelog <FileText size={20} />
               </button>
             </Link>

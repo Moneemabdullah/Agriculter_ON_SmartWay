@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Calendar, User, ArrowRight, Search, Tag, Clock, TrendingUp, ArrowLeft } from 'lucide-react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface BlogPost {
   id: number;
@@ -120,13 +117,9 @@ export function Blog() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredPosts, setFilteredPosts] = useState(blogPosts);
   
-  const heroRef = useRef(null);
-  const searchRef = useRef(null);
-  const categoriesRef = useRef(null);
   const postsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    // Filter posts based on category and search
     let filtered = blogPosts;
     
     if (selectedCategory !== 'All') {
@@ -143,34 +136,6 @@ export function Blog() {
     
     setFilteredPosts(filtered);
   }, [selectedCategory, searchQuery]);
-
-  useEffect(() => {
-    // Hero animation
-    // gsap.from(heroRef.current, {
-    //   opacity: 0,
-    //   y: -50,
-    //   duration: 1,
-    //   ease: 'power3.out',
-    // });
-
-    // // Search bar animation
-    // gsap.from(searchRef.current, {
-    //   opacity: 0,
-    //   y: 30,
-    //   duration: 0.8,
-    //   delay: 0.3,
-    //   ease: 'power3.out',
-    // });
-
-    // Categories animation
-    // gsap.from(categoriesRef.current, {
-    //   opacity: 0,
-    //   y: 30,
-    //   duration: 0.8,
-    //   delay: 0.5,
-    //   ease: 'power3.out',
-    // });
-  }, []);
 
   useEffect(() => {
     // Animate blog posts when they change
@@ -202,7 +167,6 @@ export function Blog() {
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
       {/* Hero Section */}
       <div 
-        ref={heroRef}
         className="relative bg-gradient-to-r from-[#1a4d3c] to-[#2a6d5c] text-white py-20 overflow-hidden"
       >
         <div className="absolute inset-0 opacity-10">
@@ -243,7 +207,7 @@ export function Blog() {
           {/* Main Content */}
           <div className="flex-1">
             {/* Search Bar */}
-            <div ref={searchRef} className="mb-8">
+            <div className="mb-8">
               <div className="relative">
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
                 <input
@@ -257,7 +221,7 @@ export function Blog() {
             </div>
 
             {/* Categories */}
-            <div ref={categoriesRef} className="mb-8">
+            <div className="mb-8">
               <div className="flex flex-wrap gap-3">
                 {categories.map(category => (
                   <button

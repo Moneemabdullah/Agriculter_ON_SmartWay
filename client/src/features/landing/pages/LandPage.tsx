@@ -10,32 +10,13 @@ import { BlogSection } from "../components/BlogSection";
 import { NewsletterSection } from "../components/NewsletterSection";
 import { Footer } from "../components/Footer";
 import { ScrollToTop } from "../components/ScrollToTop";
-import { Blog } from "../components/Blog";
-import Changelog from "../components/Changelog";
-import ContactPage from "../components/Contact";
-import MainAbout from "./MainAbout";
 
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState('home');
 
-  // 3s loading screen
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1000);
     return () => clearTimeout(timer);
-  }, []);
-
-  // Hash-based routing
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '');
-      setCurrentPage(hash || 'home');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   if (loading) {
@@ -71,44 +52,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white">
-
-      {currentPage === 'blog' ? (
-        <>
-          <Blog /> 
-          <Footer />
-          <ScrollToTop />
-        </>
-      ) : currentPage === 'changelog' ? (
-        <>
-          <Changelog />
-          <Footer />
-          <ScrollToTop />
-        </>
-      ) : currentPage === 'contact' ? (
-        <>
-          <ContactPage />
-          <Footer />
-          <ScrollToTop />
-        </>
-      ) : currentPage === 'about' ? (
-        <>
-          <MainAbout />
-        </>
-      ) : (
-        <>
-          <Header />
-          <HeroSection />
-          <AboutSection />
-          <ImageGrid />
-          <StatsSection />
-          <FeaturesSection />
-          <ProductShowcase />
-          <BlogSection /> 
-          <NewsletterSection />
-          <Footer />
-          <ScrollToTop />
-        </>
-      )}
+      <Header />
+      <HeroSection />
+      <AboutSection />
+      <ImageGrid />
+      <StatsSection />
+      <FeaturesSection />
+      <ProductShowcase />
+      <BlogSection /> 
+      <NewsletterSection />
+      <Footer />
+      <ScrollToTop />
     </div>
   );
 }
