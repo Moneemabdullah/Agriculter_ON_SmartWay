@@ -10,7 +10,7 @@ export const addSensorcontroller = async (
 ) => {
     try {
         const sensorId = req.body.sensorId as string | undefined;
-        const firmId = (req.body.firmId as string | undefined) ?? req.userId;
+        const firmId = req.body.firmId as string | undefined;
 
         if (!firmId) throw new AppError("Firm ID is required", 400);
         if (!sensorId) throw new AppError("Sensor ID is required", 400);

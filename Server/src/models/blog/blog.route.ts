@@ -14,16 +14,16 @@ const router = Router();
 
 router.post(
     "/",
-    uploadMiddleware.array("photos"),
     auth("admin", "farmer"),
+    uploadMiddleware.array("photos"),
     postBlog
 );
 router.get("/owner", auth("admin", "farmer"), getBlogsByOwner);
 router.get("/", getAllBlogs);
 router.put(
     "/:blogId",
-    uploadMiddleware.array("photos"),
     auth("admin", "farmer"),
+    uploadMiddleware.array("photos"),
     updateBlogById
 );
 router.delete("/:blogId", auth("admin"), deleteBlogById);

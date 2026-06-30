@@ -16,7 +16,7 @@ export const addCropController = async (
 
         logger.info("Crop Data:", cropData);
         const newCrop = await cropservice.addCrop(cropData);
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             message: "Crop added successfully",
             data: newCrop,

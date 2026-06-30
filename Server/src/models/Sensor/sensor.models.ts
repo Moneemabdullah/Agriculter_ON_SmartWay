@@ -7,7 +7,7 @@ const SensorSchema = new Schema<ISensor>(
     {
         firmId: {
             type: Types.ObjectId,
-            ref: "User",
+            ref: "Firm",
             required: true,
             index: true,
         },

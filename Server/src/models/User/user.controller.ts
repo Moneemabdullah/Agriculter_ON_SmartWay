@@ -16,7 +16,7 @@ export const updateProfilePhotoController = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const userId = req.userId || (req as any).userId;
+        const userId = req.userId;
 
         logger.info("Profile photo update attempt for user:", userId);
         logger.info("File info:", req.file);
@@ -108,7 +108,6 @@ export const getUserById = async (
         next(error);
     }
 };
-//* Update user by id
 //* Update user by id
 export const updateUserByIdcontroller = async (
     req: Request,

@@ -1,4 +1,5 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import { AppError } from "../../utils/appError.utils";
 import {
     postBlogService,
     getBlogServiceByOwner,
@@ -8,66 +9,70 @@ import {
     likeBlogServiceById,
 } from "./blog.service";
 
-const postBlog = async (req: Request, res: Response) => {
+const postBlog = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const blogData = req.body;
         const newBlog = await postBlogService(blogData);
         res.status(201).json(newBlog);
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error });
+        next(error);
     }
 };
 
-const getBlogsByOwner = async (req: Request, res: Response) => {
+const getBlogsByOwner = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId = req.userId;
-        const blogs = await getBlogServiceByOwner(userId as string);
+        if (!userId) throw new AppError("Unauthorized", 401);
+        const blogs = await getBlogServiceByOwner(userId);
         res.status(200).json(blogs);
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error });
+        next(error);
     }
 };
 
-const getAllBlogs = async (req: Request, res: Response) => {
+const getAllBlogs = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const blogs = await getAllBlogsService();
         res.status(200).json(blogs);
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error });
+        next(error);
     }
 };
 
-const updateBlogById = async (req: Request, res: Response) => {
+const updateBlogById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const blogId = req.params.blogId;
         const updateData = req.body;
+        if (!blogId) throw new AppError("Blog ID is required", 400);
         const updatedBlog = await updateBlogServiceById(
-            blogId as string,
+            blogId,
             updateData
         );
         res.status(200).json(updatedBlog);
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error });
+        next(error);
     }
 };
 
-const deleteBlogById = async (req: Request, res: Response) => {
+const deleteBlogById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const blogId = req.params.blogId;
-        const deletedBlog = await deleteBlogServiceById(blogId as string);
+        if (!blogId) throw new AppError("Blog ID is required", 400);
+        const deletedBlog = await deleteBlogServiceById(blogId);
         res.status(200).json(deletedBlog);
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error });
+        next(error);
     }
 };
 
-const likeBlogById = async (req: Request, res: Response) => {
+const likeBlogById = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const blogId = req.params.blogId;
-        const likedBlog = await likeBlogServiceById(blogId as string);
+        if (!blogId) throw new AppError("Blog ID is required", 400);
+        const likedBlog = await likeBlogServiceById(blogId);
         res.status(200).json(likedBlog);
     } catch (error) {
-        res.status(500).json({ message: "Internal server error", error });
+        next(error);
     }
 };
 export {

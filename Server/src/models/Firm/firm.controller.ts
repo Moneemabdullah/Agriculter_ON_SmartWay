@@ -27,8 +27,11 @@ const isOwnerOrAdmin = (
 const wrapAndForwardError = (error: unknown, next: NextFunction) => {
     if (error instanceof AppError) return next(error);
     const message = (error as Error)?.message || "Internal Server Error";
-    const statusCode =
-        typeof (error as Error)?.message === "string" ? 400 : 500;
+    const isClientError =
+        (error as any)?.name === "ValidationError" ||
+        (error as any)?.name === "CastError" ||
+        (error as any)?.code === 11000;
+    const statusCode = isClientError ? 400 : 500;
     return next(new AppError(message, statusCode));
 };
 

@@ -15,8 +15,8 @@ const Router = express.Router();
 // Create a firm (farmer only)
 Router.post(
     "/",
-    uploadMiddleware.array("photos"),
     auth("farmer"),
+    uploadMiddleware.array("photos"),
     addFirmController
 );
 
@@ -29,8 +29,8 @@ Router.get("/:id", auth(), getFirmByIdController);
 // Update firm
 Router.patch(
     "/:id",
-    uploadMiddleware.array("photos"),
     auth(),
+    uploadMiddleware.array("photos"),
     updateFirmController
 );
 
