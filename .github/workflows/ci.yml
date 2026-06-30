@@ -14,6 +14,8 @@ jobs:
 
         steps:
             - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
             - uses: dorny/paths-filter@v3
               id: filter
@@ -56,7 +58,7 @@ jobs:
               run: npm test
               working-directory: Server
               env:
-                  MONGO_URI: mongodb://localhost:27017/test
+                  CONNECTION_STRING: mongodb://localhost:27017/test
                   JWT_SECRET: testsecret
 
             - name: Build
