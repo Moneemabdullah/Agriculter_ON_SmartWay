@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import {
   LineChart,
   Line,
@@ -141,7 +142,7 @@ export default function SensorAnalytics() {
             <select
               value={sensorId}
               onChange={(e) => setSensorId(e.target.value)}
-              className="rounded border px-3 py-2"
+              className="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-green-500"
             >
               <option value="">-- Select Sensor --</option>
               {sensorList.map((s) => (
@@ -149,11 +150,11 @@ export default function SensorAnalytics() {
               ))}
             </select>
 
-            <input
+            <Input
               placeholder="Or enter Sensor ID"
               value={sensorId}
               onChange={(e) => setSensorId(e.target.value)}
-              className="rounded border px-3 py-2"
+              className="w-48"
             />
 
             <div className="text-sm text-gray-500">{loading ? 'Loading...' : (error ? `Error: ${error}` : 'Data pulled from telemetry')}</div>

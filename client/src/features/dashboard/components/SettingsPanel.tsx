@@ -354,7 +354,7 @@ export function SettingsPanel() {
                   <CardDescription>Live hardware status in the field.</CardDescription>
                 </div>
                 <div className="flex items-center gap-3">
-                  <input value={newSensorId} onChange={(e) => setNewSensorId(e.target.value)} placeholder="Sensor ID" className="rounded-lg border p-2 text-sm focus:ring-2 focus:ring-green-500 outline-none" />
+                  <Input value={newSensorId} onChange={(e) => setNewSensorId(e.target.value)} placeholder="Sensor ID" className="w-36" />
                   <Button size="sm" variant="outline" className="text-green-600 border-green-200" onClick={handleAddSensor}>
                     <Plus size={16} className="mr-1" /> Add Node
                   </Button>

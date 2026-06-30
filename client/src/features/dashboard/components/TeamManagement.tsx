@@ -52,10 +52,9 @@ export function TeamManagement() {
 
   return (
     <div className="space-y-10 p-6 md:p-10 min-h-screen">
-      {/* Header */}
       <div className="flex items-center justify-between">
         <h2 className="text-3xl font-extrabold text-emerald-700 tracking-tight">
-          {/* 👥 Team Management */}
+          Team Management
         </h2>
         <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl shadow-md">
           <UserPlus className="mr-2 h-5 w-5" />

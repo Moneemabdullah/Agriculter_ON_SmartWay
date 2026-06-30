@@ -48,7 +48,7 @@ export function IrrigationControl() {
           {fields.map(field => (
             <Card
               key={field.id}
-              className="relative overflow-hidden border-none shadow-xl bg-white rounded-[2rem] transition-all duration-300 hover:shadow-2xl border border-gray-100"
+              className="relative overflow-hidden shadow-xl bg-white rounded-[2rem] transition-all duration-300 hover:shadow-2xl border border-gray-100"
             >
               {/* Active Status Glow */}
               {field.isRunning && (

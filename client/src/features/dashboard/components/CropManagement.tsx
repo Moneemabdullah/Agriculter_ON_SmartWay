@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Upload, Edit, Trash2, Eye } from 'lucide-react';
+import { Upload, Edit, Trash2, Eye, Search } from 'lucide-react';
 import api from "@/api/axios";
 
 interface ICrop {
@@ -124,7 +125,7 @@ export function CropManagement() {
           <p className="text-xs text-gray-400 mt-1">{crops.length} crops • Showing {filtered.length}</p>
         </div>
         <div className="flex items-center gap-3">
-          <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search crops..." className="rounded-lg border p-2 text-sm" />
+          <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search crops..." className="bg-white" />
           <Button onClick={openCreate} className="flex items-center gap-2 bg-green-600 text-white hover:bg-green-700">
             <Upload className="mr-2 h-4 w-4" />
             Add New Crop

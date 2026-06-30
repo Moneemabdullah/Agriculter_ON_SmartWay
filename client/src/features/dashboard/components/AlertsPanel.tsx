@@ -98,7 +98,7 @@ export function AlertsPanel() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2>System Alerts</h2>
+        <h2 className="text-2xl font-bold text-gray-800">System Alerts</h2>
         <Button variant="outline" size="sm">
           Mark All as Read
         </Button>
