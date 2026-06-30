@@ -22,10 +22,10 @@ router.patch(
     }
 );
 
-router.get("/", (req, res, next) => {
+router.get("/", auth("admin"), (req, res, next) => {
     getAllUsers(req, res, next);
 });
-router.get("/:id", (req, res, next) => {
+router.get("/:id", auth(), (req, res, next) => {
     getUserById(req, res, next);
 });
 router.put(

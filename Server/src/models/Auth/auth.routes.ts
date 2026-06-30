@@ -19,7 +19,7 @@ router.post("/signin", (req, res, next) => {
 router.get("/me", auth(), (req, res, next) => {
     meController(req, res, next);
 });
-router.post("/change-password", (req, res, next) => {
+router.post("/change-password", auth(), (req, res, next) => {
     changePasswordController(req, res, next);
 });
 

@@ -10,7 +10,7 @@ import {
 
 const Router = express.Router();
 
-Router.post("/", addCropController);
+Router.post("/", auth("admin"), addCropController);
 Router.get("/", getAllCropsController);
 Router.get("/:name", getCropByNameController);
 Router.delete("/:id", auth("admin"), deleteCropByIdController);

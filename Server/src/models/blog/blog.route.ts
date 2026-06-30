@@ -27,6 +27,6 @@ router.put(
     updateBlogById
 );
 router.delete("/:blogId", auth("admin"), deleteBlogById);
-router.post("/:blogId/like", likeBlogById);
+router.post("/:blogId/like", auth(), likeBlogById);
 
 export const BlogRouter = router;

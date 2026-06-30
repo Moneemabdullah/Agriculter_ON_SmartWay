@@ -13,7 +13,7 @@ export const updatedUserByIdService = async (
     id: string,
     updateData: Partial<User>
 ): Promise<User | null> => {
-    return await UserModel.findByIdAndUpdate(id, updateData, { new: true });
+    return await UserModel.findByIdAndUpdate(id, updateData, { new: true }).select("-password");
 };
 
 export const deleteUserByIdService = async (
