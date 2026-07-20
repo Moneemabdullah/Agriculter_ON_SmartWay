@@ -36,7 +36,7 @@ const App = () => {
         />
 
         {/* Admin route */}
-        <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminPanel /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );

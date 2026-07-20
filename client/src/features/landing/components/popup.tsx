@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from "@/api/axios";
-import { X, User, Mail, Lock, Phone, MapPin, Hash, Calendar } from 'lucide-react';
+import { X, User, Mail, Lock, Phone } from 'lucide-react';
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -13,9 +13,6 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [mode, setMode] = useState<AuthMode>('login');
   const [formData, setFormData] = useState({
     name: '',
-    age: '',
-    address: '',
-    nID: '',
     Phone: '',
     email: '',
     password: '',
@@ -100,9 +97,6 @@ const handleLogin = async (e: React.FormEvent) => {
     try {
       const payload = {
         name: formData.name,
-        age: formData.age,
-        address: formData.address,
-        nID: formData.nID,
         phone: formData.Phone,
         email: formData.email,
         password: formData.password,
@@ -166,9 +160,6 @@ const handleLogin = async (e: React.FormEvent) => {
   const resetForm = () => {
     setFormData({
       name: '',
-      age: '',
-      address: '',
-      nID: '',
       Phone: '',
       email: '',
       password: '',
@@ -191,11 +182,6 @@ const handleLogin = async (e: React.FormEvent) => {
     'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg ' +
     'focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent ' +
     'text-gray-900 placeholder-gray-400';
-
-  const textareaClass =
-    'w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg ' +
-    'focus:outline-none focus:ring-2 focus:ring-[#7ab42c] focus:border-transparent ' +
-    'resize-none text-gray-900 placeholder-gray-400';
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
@@ -344,65 +330,6 @@ const handleLogin = async (e: React.FormEvent) => {
                     aria-label="Full name"
                     className={inputClass}
                     placeholder="Enter your full name"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm text-gray-700 mb-2">Age</label>
-                  <div className="relative">
-                    <Calendar
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                      size={20}
-                    />
-                    <input
-                      type="number"
-                      name="age"
-                      value={formData.age}
-                      onChange={handleChange}
-                      required
-                      aria-label="Age"
-                      className={inputClass}
-                      placeholder="Age"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="block text-sm text-gray-700 mb-2">National ID</label>
-                  <div className="relative">
-                    <Hash
-                      className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-                      size={20}
-                    />
-                    <input
-                      type="text"
-                      name="nID"
-                      value={formData.nID}
-                      onChange={handleChange}
-                      required
-                      aria-label="National ID"
-                      className={inputClass}
-                      placeholder="National ID"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-700 mb-2">Address</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 text-gray-400" size={20} />
-                  <textarea
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                    required
-                    rows={2}
-                    aria-label="Address"
-                    className={textareaClass}
-                    placeholder="Enter your address"
                   />
                 </div>
               </div>

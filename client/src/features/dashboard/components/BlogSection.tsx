@@ -30,7 +30,7 @@ interface Blog {
   content: string;
   likes: number;
   owner: {
-    username: string;
+    name: string;
     email: string;
   };
 }
@@ -69,7 +69,6 @@ export default function BlogSection() {
       await api.post('/blogs', {
         title,
         content,
-        owner: localStorage.getItem('userId'),
       });
       setTitle('');
       setContent('');
@@ -207,10 +206,10 @@ export default function BlogSection() {
               <div className="flex items-center justify-between w-full">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-700 font-bold text-xs border border-green-200 shadow-sm">
-                    {blog.owner?.username?.charAt(0).toUpperCase() || 'U'}
+                    {blog.owner?.name?.charAt(0).toUpperCase() || 'U'}
                   </div>
                   <div className="flex flex-col">
-                    <span className="text-xs font-bold text-gray-800">{blog.owner?.username}</span>
+                    <span className="text-xs font-bold text-gray-800">{blog.owner?.name}</span>
                     <span className="text-[10px] text-gray-400 uppercase tracking-wider font-semibold">Contributor</span>
                   </div>
                 </div>

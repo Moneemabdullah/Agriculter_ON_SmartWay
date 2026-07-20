@@ -157,6 +157,8 @@ function ProfileMenu() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('role');
     window.dispatchEvent(new Event('auth-changed'));
     window.location.href = '/';
   };

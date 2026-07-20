@@ -50,6 +50,14 @@ const AdminSidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
     } catch (e) { console.error(e); }
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('role');
+    window.location.href = '/';
+  };
+
   return (
     <aside className="bg-slate-900 text-slate-100 h-screen w-72 flex flex-col">
       <div className="flex items-center justify-between h-20 border-b border-slate-800 px-4">
@@ -106,7 +114,7 @@ const AdminSidebar: React.FC<SidebarProps> = ({ active, onChange }) => {
       </nav>
 
       <div className="p-4 border-t border-slate-800">
-        <button className="flex items-center gap-2 p-2 text-slate-300 hover:bg-slate-800 rounded-lg w-full">
+        <button onClick={handleLogout} className="flex items-center gap-2 p-2 text-slate-300 hover:bg-slate-800 rounded-lg w-full">
           <LogOut size={16} /> Logout
         </button>
       </div>

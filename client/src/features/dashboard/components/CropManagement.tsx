@@ -9,7 +9,7 @@ import api from "@/api/axios";
 interface ICrop {
   _id: string;
   name: string;
-  caregory: string;
+  category: string;
   season: string;
   showingPeriod?: { startMonth: number; endMonth: number };
   harvestPeriod?: { startMonth: number; endMonth: number };
@@ -31,7 +31,7 @@ export function CropManagement() {
   const [isViewOnly, setIsViewOnly] = useState(false);
   const [selectedCrop, setSelectedCrop] = useState<ICrop | null>(null);
   const [form, setForm] = useState<any>({
-    name: '', caregory: '', season: '',
+    name: '', category: '', season: '',
     showingStart: 1, showingEnd: 12,
     harvestStart: 1, harvestEnd: 12,
   });
@@ -52,7 +52,7 @@ export function CropManagement() {
 
   const openCreate = () => {
     setSelectedCrop(null);
-    setForm({ name: '', caregory: '', season: '', showingStart: 1, showingEnd: 12, harvestStart: 1, harvestEnd: 12 });
+    setForm({ name: '', category: '', season: '', showingStart: 1, showingEnd: 12, harvestStart: 1, harvestEnd: 12 });
     setIsViewOnly(false);
     setIsModalOpen(true);
   };
@@ -61,7 +61,7 @@ export function CropManagement() {
     setSelectedCrop(crop);
     setForm({
       name: crop.name || '',
-      caregory: (crop as any).caregory || '',
+      category: crop.category || '',
       season: crop.season || '',
       showingStart: crop.showingPeriod?.startMonth || 1,
       showingEnd: crop.showingPeriod?.endMonth || 12,
@@ -76,7 +76,7 @@ export function CropManagement() {
     setSelectedCrop(crop);
     setForm({
       name: crop.name || '',
-      caregory: (crop as any).caregory || '',
+      category: crop.category || '',
       season: crop.season || '',
       showingStart: crop.showingPeriod?.startMonth || 1,
       showingEnd: crop.showingPeriod?.endMonth || 12,
@@ -102,7 +102,7 @@ export function CropManagement() {
     try {
       const payload: any = {
         name: form.name,
-        caregory: form.caregory,
+        category: form.category,
         season: form.season,
         showingPeriod: { startMonth: Number(form.showingStart), endMonth: Number(form.showingEnd) },
         harvestPeriod: { startMonth: Number(form.harvestStart), endMonth: Number(form.harvestEnd) },
@@ -178,7 +178,7 @@ export function CropManagement() {
               <CardContent className="space-y-3 pt-2">
                 <div className="flex items-center text-sm text-gray-600">
                   <Tag className="h-4 w-4 mr-2 text-gray-400" />
-                  {(crop as any).caregory || 'Uncategorized'}
+                  {crop.category || 'Uncategorized'}
                 </div>
                 <div className="flex items-center text-sm text-gray-600">
                   <Calendar className="h-4 w-4 mr-2 text-gray-400" />
@@ -230,7 +230,7 @@ export function CropManagement() {
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-500 ml-1">Category</label>
-                    <Input disabled={isViewOnly} required value={form.caregory} onChange={(e) => setForm({...form, caregory: e.target.value})} placeholder="e.g. Vegetables" />
+                    <Input disabled={isViewOnly} required value={form.category} onChange={(e) => setForm({...form, category: e.target.value})} placeholder="e.g. Vegetables" />
                   </div>
                 </div>
                 <div className="space-y-1.5">
