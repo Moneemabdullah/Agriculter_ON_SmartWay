@@ -3,6 +3,7 @@ import { AppError } from "../../utils/appError.utils";
 import logger from "../../utils/logger.utils";
 import { FirmModel } from "../Firm/firm.models";
 import * as sensorService from "./sensor.service";
+import { UserContext } from "./sensor.service";
 
 const resolveFirmId = async (userId: string, preferredFirmId?: string): Promise<string> => {
     if (preferredFirmId) return preferredFirmId;
@@ -10,6 +11,13 @@ const resolveFirmId = async (userId: string, preferredFirmId?: string): Promise<
     if (!firm) throw new AppError("No firm found for this user. Create a firm first.", 400);
     return firm._id.toString();
 };
+
+function getUserContext(req: Request): UserContext {
+    return {
+        userId: req.userId!,
+        role: (req.user?.role ?? "farmer") as "admin" | "farmer" | "viewer",
+    };
+}
 
 export const addSensorcontroller = async (
     req: Request,
@@ -67,6 +75,19 @@ export const getSensorsByOwnerController = async (
             (req.params.firmId as string | undefined);
 
         if (explicitFirmId) {
+            const userContext = getUserContext(req);
+
+            if (userContext.role !== "admin" && explicitFirmId !== req.userId) {
+                const targetFirm = await FirmModel.findById(explicitFirmId).lean();
+                if (!targetFirm || targetFirm.owner.toString() !== req.userId) {
+                    res.status(403).json({
+                        status: "fail",
+                        message: "You are not authorized to access these sensors",
+                    });
+                    return;
+                }
+            }
+
             const sensors = await sensorService.getSensorsByFirmService(explicitFirmId);
             res.status(200).json({
                 success: true,
@@ -111,7 +132,17 @@ export const getSensorByIdController = async (
         const sensorId = req.params.sensorId as string | undefined;
         if (!sensorId) throw new AppError("Sensor ID is required", 400);
 
-        const sensor = await sensorService.getSensorByIdService(sensorId);
+        const userContext = getUserContext(req);
+        const sensor = await sensorService.getSensorByIdService(sensorId, userContext);
+
+        if (!sensor) {
+            res.status(404).json({
+                status: "fail",
+                message: "Sensor not found",
+            });
+            return;
+        }
+
         res.status(200).json({
             success: true,
             message: "Sensor retrieved successfully",
@@ -132,7 +163,17 @@ export const deleteSensorByIdController = async (
         const sensorId = req.params.sensorId as string | undefined;
         if (!sensorId) throw new AppError("Sensor ID is required", 400);
 
-        const deletedSensor = await sensorService.deleteSensorByIdService(sensorId);
+        const userContext = getUserContext(req);
+        const deletedSensor = await sensorService.deleteSensorByIdService(sensorId, userContext);
+
+        if (!deletedSensor) {
+            res.status(404).json({
+                status: "fail",
+                message: "Sensor not found",
+            });
+            return;
+        }
+
         res.status(200).json({
             success: true,
             message: "Sensor deleted successfully",
