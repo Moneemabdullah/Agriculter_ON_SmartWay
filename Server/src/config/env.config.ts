@@ -8,6 +8,7 @@ const config = {
     port: process.env.PORT || 3000,
     dbUri: process.env.CONNECTION_STRING || "mongodb://localhost:27017/agri-db",
     jwtSecret: process.env.JWT_SECRET,
+    corsOrigins: process.env.CORS_ORIGINS || "http://localhost:5173",
     cloudinary: {
         cloudName: process.env.CLOUDINARY_CLOUD_NAME || "",
         apiKey: process.env.CLOUDINARY_API_KEY || "",

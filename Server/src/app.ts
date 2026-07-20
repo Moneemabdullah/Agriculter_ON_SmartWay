@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
 import path from "path";
 import connectDb from "./config/db.config";
+import config from "./config/env.config";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
 import { mainRouter } from "./Route";
 import logger, { sanitizeLogBody } from "./utils/logger.utils";
@@ -9,7 +10,30 @@ import logger, { sanitizeLogBody } from "./utils/logger.utils";
 const app = express();
 app.use(express.json());
 
-app.use(cors());
+const allowedOrigins = config.corsOrigins
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
+app.use(
+    cors({
+        origin: (origin, callback) => {
+            if (!origin) return callback(null, true);
+            if (
+                allowedOrigins.includes(origin) ||
+                allowedOrigins.includes("*")
+            ) {
+                callback(null, true);
+            } else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+        allowedHeaders: ["Content-Type", "Authorization"],
+        maxAge: 86400,
+    })
+);
 
 app.use(async (req: Request, _res: Response, next: NextFunction) => {
     await connectDb();
