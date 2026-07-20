@@ -1,13 +1,16 @@
 import cors from "cors";
 import express, { Request, Response, NextFunction } from "express";
+import helmet from "helmet";
 import path from "path";
 import connectDb from "./config/db.config";
 import config from "./config/env.config";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
+import { globalRateLimiter } from "./middlewares/rateLimit.middleware";
 import { mainRouter } from "./Route";
 import logger, { sanitizeLogBody } from "./utils/logger.utils";
 
 const app = express();
+app.use(helmet());
 app.use(express.json());
 
 const allowedOrigins = config.corsOrigins
@@ -34,6 +37,8 @@ app.use(
         maxAge: 86400,
     })
 );
+
+app.use(globalRateLimiter);
 
 app.use(async (req: Request, _res: Response, next: NextFunction) => {
     await connectDb();
