@@ -6,11 +6,11 @@ import UserModel from "../models/User/user.models";
 
 interface AuthJwtPayload extends JwtPayload {
     userId: string;
-    role?: "admin" | "farmer";
+    role?: "admin" | "farmer" | "viewer";
 }
 
 const auth =
-    (...roles: ("admin" | "farmer")[]) =>
+    (...roles: ("admin" | "farmer" | "viewer")[]) =>
     async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const authHeader = req.headers.authorization;
@@ -21,7 +21,7 @@ const auth =
                 });
                 return;
             }
-            // logger.info("Authorization header found: " + authHeader);
+
             if (!authHeader.startsWith("Bearer ")) {
                 res.status(401).json({
                     message: "Invalid authorization format",
@@ -43,13 +43,25 @@ const auth =
                 config.jwtSecret as string
             ) as unknown as AuthJwtPayload;
 
-            if (!decoded.role) {
-                const user = await UserModel.findById(decoded.userId)
-                    .select("role")
-                    .lean<{ role?: "admin" | "farmer" }>();
+            const user = await UserModel.findById(decoded.userId)
+                .select("role isBanned")
+                .lean<{ role?: "admin" | "farmer" | "viewer"; isBanned?: boolean }>();
 
-                decoded.role = user?.role ?? "farmer";
+            if (!user) {
+                res.status(401).json({
+                    message: "User not found",
+                });
+                return;
             }
+
+            if (user.isBanned) {
+                res.status(403).json({
+                    message: "Your account has been banned",
+                });
+                return;
+            }
+
+            decoded.role = decoded.role ?? user.role ?? "farmer";
 
             req.user = decoded;
             req.userId = decoded.userId;
@@ -60,10 +72,6 @@ const auth =
                 });
                 return;
             }
-
-            // logger.info(
-            //     `User ${decoded.userId} authenticated with role ${decoded.role}`
-            // );
 
             next();
         } catch (error) {
