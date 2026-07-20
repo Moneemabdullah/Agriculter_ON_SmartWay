@@ -4,7 +4,7 @@ import path from "path";
 import connectDb from "./config/db.config";
 import { errorHandler } from "./middlewares/errorHandler.middleware";
 import { mainRouter } from "./Route";
-import logger from "./utils/logger.utils";
+import logger, { sanitizeLogBody } from "./utils/logger.utils";
 
 const app = express();
 app.use(express.json());
@@ -19,7 +19,7 @@ app.use(async (req: Request, _res: Response, next: NextFunction) => {
 const loggerMiddleware = (req: Request, res: Response, next: NextFunction) => {
     logger.info(
         `${req.method} ${req.path} ${
-            req.body ? "- Body: " + JSON.stringify(req.body) : ""
+            req.body ? "- Body: " + JSON.stringify(sanitizeLogBody(req.body)) : ""
         }`
     );
     next();

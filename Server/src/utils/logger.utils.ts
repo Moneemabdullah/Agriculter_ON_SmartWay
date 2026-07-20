@@ -34,4 +34,43 @@ const logger = winston.createLogger({
     transports,
 });
 
+const SENSITIVE_FIELDS = [
+    "password",
+    "newPassword",
+    "currentPassword",
+    "oldPassword",
+    "token",
+    "accessToken",
+    "refreshToken",
+    "authorization",
+    "secret",
+    "apiKey",
+    "deviceKey",
+];
+
+const SENSITIVE_PATTERN = new RegExp(
+    `^(${SENSITIVE_FIELDS.join("|")})$`,
+    "i"
+);
+
+export function sanitizeLogBody(body: unknown): unknown {
+    if (!body || typeof body !== "object") return body;
+
+    if (Array.isArray(body)) {
+        return body.map(sanitizeLogBody);
+    }
+
+    const sanitized: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(body)) {
+        if (SENSITIVE_PATTERN.test(key)) {
+            sanitized[key] = "[REDACTED]";
+        } else if (typeof value === "object" && value !== null) {
+            sanitized[key] = sanitizeLogBody(value);
+        } else {
+            sanitized[key] = value;
+        }
+    }
+    return sanitized;
+}
+
 export default logger;
