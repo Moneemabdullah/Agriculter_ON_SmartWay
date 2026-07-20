@@ -8,22 +8,18 @@ const SALT_ROUNDS = 10;
 
 /* ===================== SIGN UP ===================== */
 export const signUpService = async (user: CreateUser): Promise<PublicUser> => {
-    // 🔐 hash password
     const hashedPassword = await bcrypt.hash(user.password, SALT_ROUNDS);
 
-    // 🧠 default role
-    const role = user.role ?? "farmer";
-
-    // 💾 save to DB
     const createdUser = await UserModel.create({
-        ...user,
-        role,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
         password: hashedPassword,
+        role: "farmer",
     });
 
-    // 🧼 remove sensitive fields
     const userObj = createdUser.toObject();
-    const { _id, ...safeUser } = userObj;
+    const { _id, password: _pw, ...safeUser } = userObj;
 
     return {
         ...safeUser,

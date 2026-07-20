@@ -3,7 +3,7 @@ import { JwtPayload } from "jsonwebtoken";
 
 interface AuthJwtPayload extends JwtPayload {
     userId: string;
-    role?: "admin" | "farmer";
+    role?: "admin" | "farmer" | "viewer";
 }
 
 declare module "express-serve-static-core" {

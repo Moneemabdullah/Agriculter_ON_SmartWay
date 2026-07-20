@@ -16,5 +16,5 @@ export interface User {
     };
 }
 
-export type CreateUser = Omit<User, "id">;
+export type CreateUser = Omit<User, "id" | "role"> & { role?: User["role"] };
 export type PublicUser = Omit<User, "password">;

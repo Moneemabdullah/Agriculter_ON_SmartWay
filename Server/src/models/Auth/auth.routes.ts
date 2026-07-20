@@ -1,6 +1,8 @@
 import { Router } from "express";
 import auth from "../../middlewares/auth.middleware";
 import { uploadMiddleware } from "../../middlewares/upload.middleware";
+import { validate } from "../../middlewares/validate.middleware";
+import { signupSchema, signinSchema } from "../../validations/auth.validation";
 import {
     changePasswordController,
     meController,
@@ -10,10 +12,15 @@ import {
 
 const router = Router();
 
-router.post("/signup", uploadMiddleware.single("image"), (req, res, next) => {
-    signUpController(req, res, next);
-});
-router.post("/signin", (req, res, next) => {
+router.post(
+    "/signup",
+    uploadMiddleware.single("image"),
+    validate(signupSchema),
+    (req, res, next) => {
+        signUpController(req, res, next);
+    }
+);
+router.post("/signin", validate(signinSchema), (req, res, next) => {
     signInController(req, res, next);
 });
 router.get("/me", auth(), (req, res, next) => {

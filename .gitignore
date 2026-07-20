@@ -6,6 +6,6 @@ logs/
 .marscode/
 .vercel
 .env*.local
-
+planning/
 # Local Netlify folder
 .netlify
