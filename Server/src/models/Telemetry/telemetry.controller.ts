@@ -4,7 +4,9 @@ import {
 } from "./telemetry.aggregation";
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../../utils/appError.utils";
-import { insertTelemetry, TelemetryPayload } from "./telemetry.service";
+import { insertTelemetry } from "./telemetry.service";
+import { telemetryPayloadSchema } from "../../validations/telemetry.validation";
+import { SensorModel } from "../Sensor/sensor.models";
 
 export const ingestTelemetry = async (
     req: Request,
@@ -12,17 +14,47 @@ export const ingestTelemetry = async (
     next: NextFunction
 ) => {
     try {
-        const body = req.body as TelemetryPayload | TelemetryPayload[];
-
-        if (!body || (Array.isArray(body) && body.length === 0)) {
-            throw new AppError("Telemetry data is required", 400);
+        const parsed = telemetryPayloadSchema.safeParse(req.body);
+        if (!parsed.success) {
+            res.status(400).json({
+                status: "fail",
+                message: "Invalid telemetry payload",
+                errors: parsed.error.issues.map((e) => ({
+                    field: e.path.join("."),
+                    message: e.message,
+                })),
+            });
+            return;
         }
 
-        const data = await insertTelemetry(body);
+        const payload = parsed.data;
+        const records = Array.isArray(payload) ? payload : [payload];
+
+        const sensorIds = [...new Set(records.map((r) => r.sensorId))];
+        const existingSensors = await SensorModel.find({
+            sensorId: { $in: sensorIds },
+        }).select("sensorId");
+        const existingSensorIds = new Set(
+            existingSensors.map((s) => s.sensorId)
+        );
+
+        const unknownSensors = sensorIds.filter(
+            (id) => !existingSensorIds.has(id)
+        );
+        if (unknownSensors.length > 0) {
+            res.status(400).json({
+                status: "fail",
+                message: "Telemetry references unknown sensors",
+                unknownSensors,
+            });
+            return;
+        }
+
+        const data = await insertTelemetry(records);
 
         res.status(201).json({
             success: true,
-            data,
+            data: { inserted: data.length },
         });
     } catch (error) {
         next(error);

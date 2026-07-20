@@ -4,10 +4,11 @@ import {
     getDayAverageForWeekController,
     getHourAverageForDayController,
 } from "./telemetry.controller";
+import { telemetryRateLimiter } from "../../middlewares/rateLimit.middleware";
 
 const router = Router();
 
-router.post("/ingest", (req, res, next) => {
+router.post("/ingest", telemetryRateLimiter, (req, res, next) => {
     ingestTelemetry(req, res, next);
 });
 
