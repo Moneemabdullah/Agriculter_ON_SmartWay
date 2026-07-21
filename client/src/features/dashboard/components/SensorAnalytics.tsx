@@ -124,14 +124,15 @@ export default function SensorAnalytics() {
 
   const latest = hourlyData.length ? hourlyData[hourlyData.length - 1] : null;
 
-  const weeklyAvg = weeklyData.length ? weeklyData.reduce((acc, cur) => {
-    if (typeof cur.temperature === 'number') acc.temperature += cur.temperature;
-    if (typeof cur.humidity === 'number') acc.humidity += cur.humidity;
-    if (typeof cur.soilMoisture === 'number') acc.soilMoisture += cur.soilMoisture;
-    return acc;
-  }, { temperature: 0, humidity: 0, soilMoisture: 0 }) : { temperature: 0, humidity: 0, soilMoisture: 0 };
+  const hasWeeklyData = weeklyData.length > 0;
 
-  const weeklyCount = weeklyData.filter(d => typeof d.temperature === 'number').length || 1;
+  const weeklyAvg = hasWeeklyData ? weeklyData.reduce((acc, cur) => {
+    if (typeof cur.temperature === 'number') { acc.temperature += cur.temperature; acc.tempCount++; }
+    if (typeof cur.humidity === 'number') { acc.humidity += cur.humidity; acc.humCount++; }
+    if (typeof cur.soilMoisture === 'number') { acc.soilMoisture += cur.soilMoisture; acc.soilCount++; }
+    return acc;
+  }, { temperature: 0, humidity: 0, soilMoisture: 0, tempCount: 0, humCount: 0, soilCount: 0 })
+  : null;
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 p-6">
@@ -207,6 +208,7 @@ export default function SensorAnalytics() {
 
                       <Line type="monotone" dataKey="temperature" stroke="#ef4444" name="Temp (°C)" />
                       <Line type="monotone" dataKey="humidity" stroke="#3b82f6" name="Humidity (%)" />
+                      <Line type="monotone" dataKey="soilMoisture" stroke="#10b981" name="Soil (%)" />
                     </LineChart>
                   </ResponsiveContainer>
                 ) : (
@@ -253,15 +255,27 @@ export default function SensorAnalytics() {
           <div className="flex gap-6">
             <div>
               <div className="text-xs text-gray-500">7-day Avg Temp</div>
-              <div className="text-lg font-semibold">{(weeklyAvg.temperature / weeklyCount).toFixed(1)} °C</div>
+              <div className="text-lg font-semibold">
+                {weeklyAvg && weeklyAvg.tempCount > 0
+                  ? `${(weeklyAvg.temperature / weeklyAvg.tempCount).toFixed(1)} °C`
+                  : '—'}
+              </div>
             </div>
             <div>
               <div className="text-xs text-gray-500">7-day Avg Humidity</div>
-              <div className="text-lg font-semibold">{(weeklyAvg.humidity / weeklyCount).toFixed(1)} %</div>
+              <div className="text-lg font-semibold">
+                {weeklyAvg && weeklyAvg.humCount > 0
+                  ? `${(weeklyAvg.humidity / weeklyAvg.humCount).toFixed(1)} %`
+                  : '—'}
+              </div>
             </div>
             <div>
               <div className="text-xs text-gray-500">7-day Avg Soil</div>
-              <div className="text-lg font-semibold">{(weeklyAvg.soilMoisture / weeklyCount).toFixed(1)} %</div>
+              <div className="text-lg font-semibold">
+                {weeklyAvg && weeklyAvg.soilCount > 0
+                  ? `${(weeklyAvg.soilMoisture / weeklyAvg.soilCount).toFixed(1)} %`
+                  : '—'}
+              </div>
             </div>
           </div>
         </CardContent>
