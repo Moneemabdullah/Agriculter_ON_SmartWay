@@ -46,7 +46,7 @@ export default function BlogSection() {
   const fetchBlogs = async () => {
     try {
       const res = await api.get('/blogs');
-      setBlogs(res.data);
+      setBlogs(res.data?.data || []);
     } catch (err) {
       console.error("Failed to fetch blogs");
     }
