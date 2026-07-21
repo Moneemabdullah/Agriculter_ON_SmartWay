@@ -55,6 +55,8 @@ export default function FirmManagement() {
   const [query, setQuery] = useState('');
   const [showMap, setShowMap] = useState(false);
   const mapRef = useRef<HTMLDivElement>(null);
+  const currentUserId = localStorage.getItem('userId');
+  const userRole = localStorage.getItem('role');
 
   // --- API Calls ---
   const fetchCrops = async () => {
@@ -93,11 +95,17 @@ export default function FirmManagement() {
     fetchFirms();
   }, []);
 
-  // --- Helper ---
+  // --- Helpers ---
   const getDisplayName = (val: any) => {
     if (!val) return 'Unassigned';
     if (typeof val === 'string') return val;
     return val.name || val.email || 'Unknown User';
+  };
+
+  const canManageFirm = (firm: IFirm) => {
+    if (userRole === 'admin') return true;
+    const ownerId = typeof firm.owner === 'string' ? firm.owner : firm.owner?._id;
+    return ownerId === currentUserId;
   };
 
   const openCreate = () => {
@@ -264,7 +272,7 @@ export default function FirmManagement() {
                 <div className="space-y-2.5">
                   <div className="flex items-center text-sm text-gray-600">
                     <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-                    {firm.location?.latitude.toFixed(4)}, {firm.location?.longitude.toFixed(4)}
+                    {firm.location?.latitude?.toFixed(4) ?? '—'}, {firm.location?.longitude?.toFixed(4) ?? '—'}
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
                     <Calendar className="h-4 w-4 mr-2 text-gray-400" />
@@ -281,14 +289,16 @@ export default function FirmManagement() {
                 <Button variant="ghost" size="sm" className="flex-1 text-gray-600 hover:text-green-600 hover:bg-green-50" onClick={() => openView(firm)}>
                   <Eye className="mr-2 h-4 w-4" /> View Details
                 </Button>
-                <div className="flex gap-1">
-                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-blue-600" onClick={() => openEdit(firm)}>
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-600" onClick={() => handleDelete(firm._id)}>
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
+                {canManageFirm(firm) && (
+                  <div className="flex gap-1">
+                    <Button variant="ghost" size="sm" className="text-gray-400 hover:text-blue-600" onClick={() => openEdit(firm)}>
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-600" onClick={() => handleDelete(firm._id)}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
               </CardFooter>
             </Card>
           ))}
