@@ -2,7 +2,7 @@ import { Router } from "express";
 import auth from "../../middlewares/auth.middleware";
 import { uploadMiddleware } from "../../middlewares/upload.middleware";
 import { validate } from "../../middlewares/validate.middleware";
-import { signupSchema, signinSchema } from "../../validations/auth.validation";
+import { signupSchema, signinSchema, changePasswordSchema } from "../../validations/auth.validation";
 import {
     changePasswordController,
     meController,
@@ -26,7 +26,7 @@ router.post("/signin", validate(signinSchema), (req, res, next) => {
 router.get("/me", auth(), (req, res, next) => {
     meController(req, res, next);
 });
-router.post("/change-password", auth(), (req, res, next) => {
+router.post("/change-password", auth(), validate(changePasswordSchema), (req, res, next) => {
     changePasswordController(req, res, next);
 });
 

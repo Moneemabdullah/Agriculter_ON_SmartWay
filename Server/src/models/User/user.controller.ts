@@ -7,6 +7,7 @@ import {
 
 import { NextFunction, Request, Response } from "express";
 import logger from "../../utils/logger.utils";
+import { AppError } from "../../utils/appError.utils";
 import { User } from "./User.types";
 
 //* Update user profile photo
@@ -19,7 +20,6 @@ export const updateProfilePhotoController = async (
         const userId = req.userId;
 
         logger.info("Profile photo update attempt for user:", userId);
-        logger.info("File info:", req.file);
 
         if (!userId) {
             res.status(401).json({
@@ -66,7 +66,7 @@ export const updateProfilePhotoController = async (
             data: result,
         });
     } catch (error) {
-        logger.error("Error updating profile photo:", error);
+        logger.error("Error updating profile photo:", (error as Error).message);
         next(error);
     }
 };
@@ -99,6 +99,9 @@ export const getUserById = async (
     try {
         const id = req.params.id;
         const result: User = (await getUserByIdService(id as string)) as User;
+        if (!result) {
+            throw AppError.notFound("User not found");
+        }
         res.status(200).json({
             success: true,
             message: "User retrieved successfully",
@@ -125,12 +128,16 @@ export const updateUserByIdcontroller = async (
             updateData.photo = req.file.path; // Cloudinary URL
         }
 
-        logger.info("Update Data:", updateData);
+        logger.info("Updating user:", id);
 
         const result: User = (await updatedUserByIdService(
             id as string,
             updateData
         )) as User;
+
+        if (!result) {
+            throw AppError.notFound("User not found");
+        }
 
         res.status(200).json({
             success: true,
@@ -153,6 +160,9 @@ export const deleteUserById = async (
         const result: User = (await deleteUserByIdService(
             id as string
         )) as User;
+        if (!result) {
+            throw AppError.notFound("User not found");
+        }
         res.status(200).json({
             success: true,
             message: "User deleted successfully",

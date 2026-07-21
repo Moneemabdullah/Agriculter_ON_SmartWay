@@ -1,6 +1,8 @@
 import { Router } from "express";
 import auth from "../../middlewares/auth.middleware";
 import { uploadMiddleware } from "../../middlewares/upload.middleware";
+import { validate } from "../../middlewares/validate.middleware";
+import { updateUserSchema } from "../../validations/user.validation";
 import {
     banUserById,
     deleteUserById,
@@ -32,6 +34,7 @@ router.put(
     "/:id",
     auth("farmer"),
     uploadMiddleware.single("photo"),
+    validate(updateUserSchema),
     (req, res, next) => {
         updateUserByIdcontroller(req, res, next);
     }

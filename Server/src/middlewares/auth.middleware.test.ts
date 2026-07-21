@@ -72,7 +72,9 @@ describe("auth middleware", () => {
 
         expect(res.status).toHaveBeenCalledWith(403);
         expect(res.json).toHaveBeenCalledWith({
+            success: false,
             message: "Your account has been banned",
+            error: { code: "FORBIDDEN" },
         });
         expect(next).not.toHaveBeenCalled();
     });

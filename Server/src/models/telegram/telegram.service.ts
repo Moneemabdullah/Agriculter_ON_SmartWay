@@ -14,20 +14,26 @@ const isConfigured = (): boolean => {
 
 export const sendTelegramAlert = async (message: string) => {
     if (!isConfigured()) return;
-
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-
-    await axios.post(url, {
-        chat_id: CHAT_ID,
-        text: message,
-        parse_mode: "Markdown",
-    });
+    try {
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+        await axios.post(url, {
+            chat_id: CHAT_ID,
+            text: message,
+            parse_mode: "Markdown",
+        });
+    } catch (error) {
+        logger.warn("Failed to send Telegram alert:", (error as Error).message);
+    }
 };
 
 export const getFirmUpdate = async () => {
     if (!isConfigured()) return null;
-
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
-    const response = await axios.get(url);
-    return response.data;
+    try {
+        const url = `https://api.telegram.org/bot${BOT_TOKEN}/getUpdates`;
+        const response = await axios.get(url);
+        return response.data;
+    } catch (error) {
+        logger.warn("Failed to fetch Telegram updates:", (error as Error).message);
+        return null;
+    }
 };

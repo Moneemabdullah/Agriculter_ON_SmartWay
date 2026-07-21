@@ -73,6 +73,15 @@ app.get("/", (_req, res) => {
 //* all routes
 app.use("/api/v1", mainRouter);
 
+//* Catch-all 404 for undefined API routes
+app.all("/api/*", (req: Request, res: Response) => {
+    res.status(404).json({
+        success: false,
+        message: `Route ${req.method} ${req.originalUrl} not found`,
+        error: { code: "NOT_FOUND" },
+    });
+});
+
 //* Global error handler (must be last)
 app.use(errorHandler);
 

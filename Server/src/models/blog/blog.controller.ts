@@ -14,7 +14,7 @@ const postBlog = async (req: Request, res: Response, next: NextFunction) => {
         const blogData = req.body;
         blogData.owner = req.userId;
         const newBlog = await postBlogService(blogData);
-        res.status(201).json(newBlog);
+        res.status(201).json({ success: true, message: "Blog created successfully", data: newBlog });
     } catch (error) {
         next(error);
     }
@@ -25,7 +25,7 @@ const getBlogsByOwner = async (req: Request, res: Response, next: NextFunction) 
         const userId = req.userId;
         if (!userId) throw new AppError("Unauthorized", 401);
         const blogs = await getBlogServiceByOwner(userId);
-        res.status(200).json(blogs);
+        res.status(200).json({ success: true, message: "Blogs retrieved successfully", data: blogs });
     } catch (error) {
         next(error);
     }
@@ -34,7 +34,7 @@ const getBlogsByOwner = async (req: Request, res: Response, next: NextFunction) 
 const getAllBlogs = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const blogs = await getAllBlogsService();
-        res.status(200).json(blogs);
+        res.status(200).json({ success: true, message: "Blogs retrieved successfully", data: blogs });
     } catch (error) {
         next(error);
     }
@@ -42,14 +42,14 @@ const getAllBlogs = async (req: Request, res: Response, next: NextFunction) => {
 
 const updateBlogById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const blogId = req.params.blogId;
+        const blogId = String(req.params.blogId);
         const updateData = req.body;
         if (!blogId) throw new AppError("Blog ID is required", 400);
         const updatedBlog = await updateBlogServiceById(
             blogId,
             updateData
         );
-        res.status(200).json(updatedBlog);
+        res.status(200).json({ success: true, message: "Blog updated successfully", data: updatedBlog });
     } catch (error) {
         next(error);
     }
@@ -57,10 +57,13 @@ const updateBlogById = async (req: Request, res: Response, next: NextFunction) =
 
 const deleteBlogById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const blogId = req.params.blogId;
+        const blogId = String(req.params.blogId);
         if (!blogId) throw new AppError("Blog ID is required", 400);
         const deletedBlog = await deleteBlogServiceById(blogId);
-        res.status(200).json(deletedBlog);
+        if (!deletedBlog) {
+            throw AppError.notFound("Blog not found");
+        }
+        res.status(200).json({ success: true, message: "Blog deleted successfully", data: deletedBlog });
     } catch (error) {
         next(error);
     }
@@ -68,10 +71,10 @@ const deleteBlogById = async (req: Request, res: Response, next: NextFunction) =
 
 const likeBlogById = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const blogId = req.params.blogId;
+        const blogId = String(req.params.blogId);
         if (!blogId) throw new AppError("Blog ID is required", 400);
         const likedBlog = await likeBlogServiceById(blogId);
-        res.status(200).json(likedBlog);
+        res.status(200).json({ success: true, message: "Blog liked successfully", data: likedBlog });
     } catch (error) {
         next(error);
     }

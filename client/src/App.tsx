@@ -10,6 +10,7 @@ import Dashboard from "@/features/dashboard/pages/Dashboard";
 import ProtectedRoute from "@/features/dashboard/components/ProtectedRoute";
 import AdminPanel from "@/features/admin/pages/AdminPanel";
 import TestPage from "@/components/TestPage";
+import NotFound from "@/features/landing/pages/NotFound";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
 
         {/* Admin route */}
         <Route path="/admin" element={<ProtectedRoute requiredRole="admin"><AdminPanel /></ProtectedRoute>} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

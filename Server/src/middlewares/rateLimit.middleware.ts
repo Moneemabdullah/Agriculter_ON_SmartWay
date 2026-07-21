@@ -6,8 +6,9 @@ export const globalRateLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: {
-    status: "fail",
+    success: false,
     message: "Too many requests. Please try again later.",
+    error: { code: "TOO_MANY_REQUESTS" },
   },
 });
 
@@ -17,7 +18,8 @@ export const telemetryRateLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: {
-    status: "fail",
+    success: false,
     message: "Telemetry rate limit exceeded.",
+    error: { code: "TOO_MANY_REQUESTS" },
   },
 });

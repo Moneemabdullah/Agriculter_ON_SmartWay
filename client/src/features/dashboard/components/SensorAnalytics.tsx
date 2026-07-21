@@ -14,6 +14,7 @@ import {
   Area,
 } from 'recharts';
 import api from "@/api/axios";
+import { toast } from "sonner";
 
 interface HourAvg {
   _id: string | Date;
@@ -49,7 +50,8 @@ export default function SensorAnalytics() {
         }
       } catch (e) {
         // ignore; user can manually enter sensor id
-        console.warn('Failed to load firms/sensors', e);
+        console.warn('Failed to load firms/sensors');
+        toast.error('Failed to load sensor list');
       }
     };
 

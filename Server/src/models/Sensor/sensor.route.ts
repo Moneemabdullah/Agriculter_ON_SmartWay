@@ -7,11 +7,13 @@ import {
     getSensorsByOwnerController,
 } from "./sensor.controller";
 import auth from "../../middlewares/auth.middleware";
+import { validate } from "../../middlewares/validate.middleware";
+import { createSensorSchema } from "../../validations/sensor.validation";
 
 const router = express.Router();
 
 // create sensor
-router.post("/", auth("farmer"), addSensorcontroller);
+router.post("/", auth("farmer"), validate(createSensorSchema), addSensorcontroller);
 
 // get sensors for current user
 router.get("/", auth(), getSensorsByOwnerController);

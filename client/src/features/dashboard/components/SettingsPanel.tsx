@@ -28,6 +28,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { toast } from "sonner";
 
 export function SettingsPanel() {
   const [sensors, setSensors] = useState<Array<{_id:string, sensorId:string}>>([]);
@@ -60,7 +61,7 @@ export function SettingsPanel() {
     if (file) {
       // Basic validation
       if (file.size > 2 * 1024 * 1024) {
-        alert("File is too large. Max 2MB.");
+        toast.error("File is too large. Max 2MB.");
         return;
       }
       const reader = new FileReader();
@@ -75,7 +76,7 @@ export function SettingsPanel() {
 
   const handleSaveProfilePhoto = async () => {
     if (!photoFile) {
-      alert("Please select a photo first");
+      toast.error("Please select a photo first");
       return;
     }
 
@@ -86,7 +87,7 @@ export function SettingsPanel() {
       // Don't set Content-Type header - let axios/browser set it automatically with boundary
       const response = await api.patch('/users/profile/photo', formData);
 
-      alert('Profile photo updated successfully!');
+      toast.success('Profile photo updated successfully!');
       setProfileImage(null);
       setPhotoFile(null);
       
@@ -94,20 +95,20 @@ export function SettingsPanel() {
       window.dispatchEvent(new Event('profile-updated'));
     } catch (err: any) {
       console.error('Error uploading photo:', err);
-      alert(err?.response?.data?.message || 'Failed to update profile photo');
+      toast.error(err?.response?.data?.message || 'Failed to update profile photo');
     }
   };
 
   const handleAddSensor = async () => {
-    if (!newSensorId) return alert('Sensor id is required');
+    if (!newSensorId) return toast.error('Sensor id is required');
     try {
       await api.post('/sensors', { sensorId: newSensorId });
       setNewSensorId('');
       fetchSensors();
       window.dispatchEvent(new Event('sensors-updated'));
-      alert('Sensor added');
+      toast.success('Sensor added');
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to add sensor');
+      toast.error(err?.response?.data?.message || 'Failed to add sensor');
     }
   };
 
@@ -117,9 +118,9 @@ export function SettingsPanel() {
       await api.delete(`/sensors/id/${sensorId}`);
       fetchSensors();
       window.dispatchEvent(new Event('sensors-updated'));
-      alert('Sensor deleted');
+      toast.success('Sensor deleted');
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to delete sensor');
+      toast.error(err?.response?.data?.message || 'Failed to delete sensor');
     }
   };
 
@@ -127,9 +128,9 @@ export function SettingsPanel() {
     try {
       const res = await api.get(`/sensors/id/${sensorId}`);
       const s = res.data?.data;
-      alert(JSON.stringify(s, null, 2));
+      toast.success('Sensor details loaded', { description: s ? `ID: ${s.sensorId}, Status: ${s.status || 'N/A'}` : 'No data' });
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to fetch sensor details');
+      toast.error(err?.response?.data?.message || 'Failed to fetch sensor details');
     }
   };
 

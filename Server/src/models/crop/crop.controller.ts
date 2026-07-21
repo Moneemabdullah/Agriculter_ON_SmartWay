@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../../utils/appError.utils";
-import logger from "../../utils/logger.utils";
 import * as cropservice from "./crop.service";
 
 export const addCropController = async (
@@ -14,7 +13,6 @@ export const addCropController = async (
             throw new AppError("Crop data is required", 400);
         }
 
-        logger.info("Crop Data:", cropData);
         const newCrop = await cropservice.addCrop(cropData);
         res.status(201).json({
             success: true,
@@ -55,6 +53,9 @@ export const getCropByNameController = async (
         }
 
         const crop = await cropservice.getCropByName(name as string);
+        if (!crop) {
+            throw AppError.notFound("Crop not found");
+        }
         res.status(200).json({
             success: true,
             message: "Crop retrieved successfully",
@@ -77,6 +78,9 @@ export const deleteCropByIdController = async (
         }
 
         const deletedCrop = await cropservice.deleteCropById(id as string);
+        if (!deletedCrop) {
+            throw AppError.notFound("Crop not found");
+        }
         res.status(200).json({
             success: true,
             message: "Crop deleted successfully",
@@ -107,6 +111,9 @@ export const updateCropByIdController = async (
             id as string,
             updateData
         );
+        if (!updatedCrop) {
+            throw AppError.notFound("Crop not found");
+        }
         res.status(200).json({
             success: true,
             message: "Crop updated successfully",

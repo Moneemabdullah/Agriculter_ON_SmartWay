@@ -15,15 +15,20 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401 || error.response?.status === 403) {
+    const status = error.response?.status;
+
+    if (status === 401 || status === 403) {
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("userName");
       localStorage.removeItem("role");
-      if (!window.location.pathname.startsWith("/")) {
+
+      const path = window.location.pathname;
+      if (!path.startsWith("/") || path === "/") {
         window.location.href = "/";
       }
     }
+
     return Promise.reject(error);
   }
 );

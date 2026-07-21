@@ -17,12 +17,15 @@ export const ingestTelemetry = async (
         const parsed = telemetryPayloadSchema.safeParse(req.body);
         if (!parsed.success) {
             res.status(400).json({
-                status: "fail",
+                success: false,
                 message: "Invalid telemetry payload",
-                errors: parsed.error.issues.map((e) => ({
-                    field: e.path.join("."),
-                    message: e.message,
-                })),
+                error: {
+                    code: "VALIDATION_ERROR",
+                    details: parsed.error.issues.map((e) => ({
+                        field: e.path.join("."),
+                        message: e.message,
+                    })),
+                },
             });
             return;
         }
@@ -43,9 +46,12 @@ export const ingestTelemetry = async (
         );
         if (unknownSensors.length > 0) {
             res.status(400).json({
-                status: "fail",
+                success: false,
                 message: "Telemetry references unknown sensors",
-                unknownSensors,
+                error: {
+                    code: "BAD_REQUEST",
+                    details: { unknownSensors },
+                },
             });
             return;
         }
@@ -54,6 +60,7 @@ export const ingestTelemetry = async (
 
         res.status(201).json({
             success: true,
+            message: "Telemetry ingested successfully",
             data: { inserted: data.length },
         });
     } catch (error) {
@@ -69,12 +76,13 @@ export const getHourAverageForDayController = async (
     try {
         const { sensorId, date } = req.params;
         if (!sensorId || !date) {
-            throw new AppError("sensorId and date are required", 400);
+            throw AppError.badRequest("sensorId and date are required");
         }
         const dateObj = new Date(date + "T00:00:00Z");
         const data = await getHourAverageForDay(sensorId as string, dateObj);
         res.status(200).json({
             success: true,
+            message: "Hourly average retrieved successfully",
             data,
         });
     } catch (error) {
@@ -90,11 +98,12 @@ export const getDayAverageForWeekController = async (
     try {
         const { sensorId } = req.params;
         if (!sensorId) {
-            throw new AppError("sensorId is required", 400);
+            throw AppError.badRequest("sensorId is required");
         }
         const data = await getDayAverageForWeek(sensorId as string);
         res.status(200).json({
             success: true,
+            message: "Daily average retrieved successfully",
             data,
         });
     } catch (error) {

@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 import config from "../config/env.config";
 import logger from "../utils/logger.utils";
 import UserModel from "../models/User/user.models";
+import { AppError } from "../utils/appError.utils";
 
 interface AuthJwtPayload extends JwtPayload {
     userId: string;
@@ -17,14 +18,18 @@ const auth =
 
             if (!authHeader || typeof authHeader !== "string") {
                 res.status(401).json({
+                    success: false,
                     message: "Authorization token missing",
+                    error: { code: "UNAUTHORIZED" },
                 });
                 return;
             }
 
             if (!authHeader.startsWith("Bearer ")) {
                 res.status(401).json({
+                    success: false,
                     message: "Invalid authorization format",
+                    error: { code: "UNAUTHORIZED" },
                 });
                 return;
             }
@@ -33,7 +38,9 @@ const auth =
 
             if (!token) {
                 res.status(401).json({
+                    success: false,
                     message: "Invalid authorization format",
+                    error: { code: "UNAUTHORIZED" },
                 });
                 return;
             }
@@ -49,14 +56,18 @@ const auth =
 
             if (!user) {
                 res.status(401).json({
+                    success: false,
                     message: "User not found",
+                    error: { code: "UNAUTHORIZED" },
                 });
                 return;
             }
 
             if (user.isBanned) {
                 res.status(403).json({
+                    success: false,
                     message: "Your account has been banned",
+                    error: { code: "FORBIDDEN" },
                 });
                 return;
             }
@@ -68,15 +79,21 @@ const auth =
 
             if (roles.length && !roles.includes(decoded.role)) {
                 res.status(403).json({
+                    success: false,
                     message: "Forbidden: insufficient permissions",
+                    error: { code: "FORBIDDEN" },
                 });
                 return;
             }
 
             next();
         } catch (error) {
-            logger.warn("JWT auth failed", error);
-            res.status(401).json({ message: "Invalid or expired token" });
+            logger.warn("JWT auth failed:", (error as Error).message);
+            res.status(401).json({
+                success: false,
+                message: "Invalid or expired token",
+                error: { code: "UNAUTHORIZED" },
+            });
         }
     };
 

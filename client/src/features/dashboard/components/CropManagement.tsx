@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Plus, Edit, Trash2, Eye, Search, Sprout, Calendar, Tag, X } from 'lucide-react';
 import api from "@/api/axios";
+import { toast } from "sonner";
 
 interface ICrop {
   _id: string;
@@ -93,7 +94,7 @@ export function CropManagement() {
       await api.delete(`/crops/${id}`);
       setCrops(crops.filter(c => c._id !== id));
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to delete crop');
+      toast.error(err?.response?.data?.message || 'Failed to delete crop');
     }
   };
 
@@ -115,7 +116,7 @@ export function CropManagement() {
       setIsModalOpen(false);
       fetchCrops();
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to save crop');
+      toast.error(err?.response?.data?.message || 'Failed to save crop');
     }
   };
 

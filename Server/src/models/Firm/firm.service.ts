@@ -1,19 +1,20 @@
 import { CropModel } from "../crop/crope.model";
 import { FirmModel } from "./firm.models";
 import { Ifirm, ISensor } from "./firm.type";
+import { AppError } from "../../utils/appError.utils";
 
 export const addFirmService = async (
     userId: string,
     firmData: Partial<Ifirm>
 ): Promise<Ifirm> => {
     if (!firmData.crops) {
-        throw new Error("Crop is required");
+        throw AppError.badRequest("Crop is required");
     }
 
     // Validate crop existence
     const cropExists = await CropModel.findById(firmData.crops);
     if (!cropExists) {
-        throw new Error("Crop not found");
+        throw AppError.notFound("Crop not found");
     }
 
     const newFirm = new FirmModel({
@@ -95,7 +96,7 @@ export const addSensorToFirmService = async (
 ): Promise<Ifirm | null> => {
     const firm = await FirmModel.findById(firmId);
     if (!firm) {
-        throw new Error("Firm not found");
+        throw AppError.notFound("Firm not found");
     }
 
     // Check if sensor already exists
@@ -103,7 +104,7 @@ export const addSensorToFirmService = async (
         (s: ISensor) => s.sensorId === sensorId
     );
     if (sensorExists) {
-        throw new Error("Sensor already linked to this farm");
+        throw AppError.conflict("Sensor already linked to this farm");
     }
 
     return await FirmModel.findByIdAndUpdate(

@@ -15,7 +15,7 @@ export const insertTelemetry = async (
 
     const data = await TelemetryModel.insertMany(payloads);
 
-    await Promise.all(payloads.map((item) => processAlerts(item)));
+    await Promise.allSettled(payloads.map((item) => processAlerts(item)));
 
     return data;
 };

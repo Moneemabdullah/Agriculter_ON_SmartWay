@@ -1,11 +1,15 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { Toaster } from "@/components/ui/sonner";
+import "./index.css";
+import App from "./App";
 
-import './index.css'
-import App from './App'
-
-createRoot(document.getElementById('root') as HTMLElement).render(
+createRoot(document.getElementById("root") as HTMLElement).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <ErrorBoundary>
+      <App />
+      <Toaster />
+    </ErrorBoundary>
+  </StrictMode>
+);

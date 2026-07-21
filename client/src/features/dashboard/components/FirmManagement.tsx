@@ -17,6 +17,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 
 // --- Interfaces ---
 interface ICrop {
@@ -140,7 +141,7 @@ export default function FirmManagement() {
       // Refetch the list after deletion
       await fetchFirms();
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to delete firm');
+      toast.error(err?.response?.data?.message || 'Failed to delete firm');
     }
   };
 
@@ -163,7 +164,7 @@ export default function FirmManagement() {
       await fetchFirms();
       setIsModalOpen(false);
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Operation failed');
+      toast.error(err?.response?.data?.message || 'Operation failed');
     }
   };
 
@@ -176,7 +177,7 @@ export default function FirmManagement() {
       setSelectedFirm(res.data?.data);
       setNewSensorId('');
     } catch (err: any) {
-      alert(err?.response?.data?.message || 'Failed to link sensor');
+      toast.error(err?.response?.data?.message || 'Failed to link sensor');
     }
   };
 

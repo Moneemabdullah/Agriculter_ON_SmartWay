@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from "../../config/env.config";
+import { AppError } from "../../utils/appError.utils";
 import UserModel from "../User/user.models";
 import { CreateUser, PublicUser, User } from "../User/User.types";
 
@@ -30,7 +31,7 @@ export const signUpService = async (user: CreateUser): Promise<PublicUser> => {
 /* ===================== SIGN IN ===================== */
 export const signInService = async (identifier: string, password: string) => {
     if (!identifier || !password) {
-        throw new Error("Identifier and password are required");
+        throw AppError.badRequest("Identifier and password are required");
     }
 
     // allow login by phone OR email
@@ -39,13 +40,13 @@ export const signInService = async (identifier: string, password: string) => {
     });
 
     if (!user) {
-        throw new Error("User not found");
+        throw AppError.notFound("User not found");
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-        throw new Error("Invalid password");
+        throw AppError.unauthorized("Invalid password");
     }
 
     const token = jwt.sign(
@@ -79,12 +80,12 @@ export const changePasswordService = async (
 ) => {
     const user = await UserModel.findOne({ email });
     if (!user) {
-        throw new Error("User not found");
+        throw AppError.notFound("User not found");
     }
 
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
-        throw new Error("Invalid current password");
+        throw AppError.unauthorized("Invalid current password");
     }
 
     const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);

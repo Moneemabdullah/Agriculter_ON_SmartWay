@@ -1,6 +1,8 @@
 import express from "express";
 import auth from "../../middlewares/auth.middleware";
 import { uploadMiddleware } from "../../middlewares/upload.middleware";
+import { validate } from "../../middlewares/validate.middleware";
+import { createFirmSchema, updateFirmSchema, addSensorToFirmSchema } from "../../validations/firm.validation";
 import {
     addFirmController,
     addSensorToFirmController,
@@ -17,6 +19,7 @@ Router.post(
     "/",
     auth("farmer"),
     uploadMiddleware.array("photos"),
+    validate(createFirmSchema),
     addFirmController
 );
 
@@ -31,6 +34,7 @@ Router.patch(
     "/:id",
     auth(),
     uploadMiddleware.array("photos"),
+    validate(updateFirmSchema),
     updateFirmController
 );
 
@@ -38,6 +42,6 @@ Router.patch(
 Router.delete("/:id", auth(), deleteFirmController);
 
 // Add sensor to firm
-Router.post("/:id/sensors", auth(), addSensorToFirmController);
+Router.post("/:id/sensors", auth(), validate(addSensorToFirmSchema), addSensorToFirmController);
 
 export const FirmRouter = Router;

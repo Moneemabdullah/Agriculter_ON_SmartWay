@@ -9,6 +9,7 @@ import {
   ShieldCheck,
   ArrowLeft
 } from 'lucide-react';
+import { toast } from "sonner";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ export default function ContactPage() {
     e.preventDefault();
     // Handle form submission logic here
     console.log('Form submitted:', formData);
-    alert('Thank you for reaching out to FarmHub Support!');
+    toast.success('Thank you for reaching out to FarmHub Support!');
   };
 
   return (

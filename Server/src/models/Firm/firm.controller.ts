@@ -24,17 +24,6 @@ const isOwnerOrAdmin = (
     return ownerIdStr === reqUserIdStr;
 };
 
-const wrapAndForwardError = (error: unknown, next: NextFunction) => {
-    if (error instanceof AppError) return next(error);
-    const message = (error as Error)?.message || "Internal Server Error";
-    const isClientError =
-        (error as any)?.name === "ValidationError" ||
-        (error as any)?.name === "CastError" ||
-        (error as any)?.code === 11000;
-    const statusCode = isClientError ? 400 : 500;
-    return next(new AppError(message, statusCode));
-};
-
 export const addFirmController = async (
     req: Request,
     res: Response,
@@ -73,7 +62,7 @@ export const addFirmController = async (
             data: newFirm,
         });
     } catch (error) {
-        wrapAndForwardError(error, next);
+        next(error);
     }
 };
 
@@ -93,7 +82,7 @@ export const getAllFirmsController = async (
             data: firms,
         });
     } catch (error) {
-        wrapAndForwardError(error, next);
+        next(error);
     }
 };
 
@@ -116,7 +105,7 @@ export const getFirmByIdController = async (
             data: firm,
         });
     } catch (error) {
-        wrapAndForwardError(error, next);
+        next(error);
     }
 };
 
@@ -152,7 +141,7 @@ export const updateFirmController = async (
             data: updatedFirm,
         });
     } catch (error) {
-        wrapAndForwardError(error, next);
+        next(error);
     }
 };
 
@@ -181,7 +170,7 @@ export const deleteFirmController = async (
             data: deletedFirm,
         });
     } catch (error) {
-        wrapAndForwardError(error, next);
+        next(error);
     }
 };
 
@@ -219,6 +208,6 @@ export const addSensorToFirmController = async (
             data: updatedFirm,
         });
     } catch (error) {
-        wrapAndForwardError(error, next);
+        next(error);
     }
 };

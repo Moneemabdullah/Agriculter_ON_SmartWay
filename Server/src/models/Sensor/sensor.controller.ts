@@ -13,8 +13,11 @@ const resolveFirmId = async (userId: string, preferredFirmId?: string): Promise<
 };
 
 function getUserContext(req: Request): UserContext {
+    if (!req.userId) {
+        throw AppError.unauthorized("Authentication required");
+    }
     return {
-        userId: req.userId!,
+        userId: req.userId,
         role: (req.user?.role ?? "farmer") as "admin" | "farmer" | "viewer",
     };
 }
@@ -41,8 +44,7 @@ export const addSensorcontroller = async (
             data: newSensor,
         });
     } catch (error) {
-        if (error instanceof AppError) return next(error);
-        next(new AppError((error as Error)?.message || "Error adding sensor", 400));
+        next(error);
     }
 };
 
@@ -59,8 +61,7 @@ export const getAllSensorsController = async (
             data: sensors,
         });
     } catch (error) {
-        if (error instanceof AppError) return next(error);
-        next(new AppError((error as Error)?.message || "Error retrieving sensors", 400));
+        next(error);
     }
 };
 
@@ -118,8 +119,7 @@ export const getSensorsByOwnerController = async (
             data: sensors,
         });
     } catch (error) {
-        if (error instanceof AppError) return next(error);
-        next(new AppError((error as Error)?.message || "Error retrieving sensors", 400));
+        next(error);
     }
 };
 
@@ -149,8 +149,7 @@ export const getSensorByIdController = async (
             data: sensor,
         });
     } catch (error) {
-        if (error instanceof AppError) return next(error);
-        next(new AppError((error as Error)?.message || "Error retrieving sensor", 400));
+        next(error);
     }
 };
 
@@ -180,7 +179,6 @@ export const deleteSensorByIdController = async (
             data: deletedSensor,
         });
     } catch (error) {
-        if (error instanceof AppError) return next(error);
-        next(new AppError((error as Error)?.message || "Error deleting sensor", 400));
+        next(error);
     }
 };
