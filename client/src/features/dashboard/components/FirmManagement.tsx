@@ -11,13 +11,24 @@ import {
     User,
     X
 } from 'lucide-react';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import api from "@/api/axios";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
+import 'leaflet/dist/leaflet.css';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import L from 'leaflet';
+
+// Fix Leaflet default marker icon paths for Vite bundling
+delete (L.Icon.Default.prototype as any)._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+});
 
 // --- Interfaces ---
 interface ICrop {
@@ -42,6 +53,41 @@ interface IFirm {
   createdAt?: string;
 }
 
+// --- Map click handler component ---
+function LocationMarker({ position, onPositionChange }: {
+  position: [number, number] | null;
+  onPositionChange: (lat: number, lng: number) => void;
+}) {
+  useMapEvents({
+    click(e) {
+      onPositionChange(e.latlng.lat, e.latlng.lng);
+    },
+  });
+
+  return position ? <Marker position={position} /> : null;
+}
+
+// --- Read-only map for view mode ---
+function ViewOnlyMap({ latitude, longitude }: { latitude: number; longitude: number }) {
+  return (
+    <div className="rounded-xl overflow-hidden border border-gray-200 shadow-sm">
+      <MapContainer
+        center={[latitude, longitude]}
+        zoom={14}
+        scrollWheelZoom={false}
+        dragging={false}
+        doubleClickZoom={false}
+        touchZoom={false}
+        zoomControl={false}
+        className="h-56 w-full"
+      >
+        <TileLayer attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+        <Marker position={[latitude, longitude]} />
+      </MapContainer>
+    </div>
+  );
+}
+
 export default function FirmManagement() {
   const [firms, setFirms] = useState<IFirm[]>([]);
   const [crops, setCrops] = useState<ICrop[]>([]);
@@ -54,7 +100,6 @@ export default function FirmManagement() {
   const [form, setForm] = useState({ latitude: '', longitude: '', cropId: '', plantationDate: '' });
   const [query, setQuery] = useState('');
   const [showMap, setShowMap] = useState(false);
-  const mapRef = useRef<HTMLDivElement>(null);
   const currentUserId = localStorage.getItem('userId');
   const userRole = localStorage.getItem('role');
 
@@ -146,7 +191,6 @@ export default function FirmManagement() {
     if (!confirm('Are you sure you want to delete this farm?')) return;
     try {
       await api.delete(`/firms/${id}`);
-      // Refetch the list after deletion
       await fetchFirms();
     } catch (err: any) {
       toast.error(err?.response?.data?.message || 'Failed to delete firm');
@@ -168,7 +212,6 @@ export default function FirmManagement() {
         await api.post('/firms', payload);
       }
 
-      // Always refetch after create/update to ensure persistence
       await fetchFirms();
       setIsModalOpen(false);
     } catch (err: any) {
@@ -180,29 +223,12 @@ export default function FirmManagement() {
     if (!selectedFirm || !newSensorId) return;
     try {
       const res = await api.post(`/firms/${selectedFirm._id}/sensors`, { sensorId: newSensorId });
-      // Refetch the full farm list after adding sensor
       await fetchFirms();
       setSelectedFirm(res.data?.data);
       setNewSensorId('');
     } catch (err: any) {
       toast.error(err?.response?.data?.message || 'Failed to link sensor');
     }
-  };
-
-  // Map click handler
-  const handleMapClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!mapRef.current) return;
-    
-    const rect = mapRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    // Convert pixel coordinates to lat/lng (simplified for demo)
-    // This is a basic conversion - for production, use a proper map library like Leaflet
-    const lat = (23.8103 + (1 - y / rect.height) * 0.5).toFixed(6);
-    const lng = (90.4125 + (x / rect.width) * 0.5).toFixed(6);
-    
-    setForm({ ...form, latitude: lat, longitude: lng });
   };
 
   const filtered = firms.filter((f) => {
@@ -212,6 +238,12 @@ export default function FirmManagement() {
       cropName.toLowerCase().includes(query.toLowerCase())
     );
   });
+
+  // Default center: Dhaka, Bangladesh (fallback)
+  const defaultCenter: [number, number] = [23.8103, 90.4125];
+  const mapCenter: [number, number] = form.latitude && form.longitude
+    ? [parseFloat(form.latitude), parseFloat(form.longitude)]
+    : defaultCenter;
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 p-6">
@@ -224,11 +256,11 @@ export default function FirmManagement() {
         <div className="flex items-center gap-3">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-            <Input 
-              value={query} 
-              onChange={(e) => setQuery(e.target.value)} 
-              placeholder="Search by crop..." 
-              className="pl-10 w-64 bg-white" 
+            <Input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search by crop..."
+              className="pl-10 w-64 bg-white"
             />
           </div>
           <Button onClick={openCreate} className="bg-green-600 hover:bg-green-700 text-white">
@@ -323,16 +355,16 @@ export default function FirmManagement() {
 
             <div className="max-h-[75vh] overflow-y-auto">
               <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                
-                {/* Map Section */}
+
+                {/* Map Section — Edit/Create mode */}
                 {!isViewOnly && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
                       <label className="text-xs font-bold text-gray-500 ml-1">Location Picker</label>
-                      <Button 
-                        type="button" 
-                        size="sm" 
-                        variant="outline" 
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
                         onClick={() => setShowMap(!showMap)}
                         className="text-xs"
                       >
@@ -340,94 +372,72 @@ export default function FirmManagement() {
                         {showMap ? 'Hide Map' : 'Show Map'}
                       </Button>
                     </div>
-                    
-                    {showMap && (
-                      <div 
-                        ref={mapRef}
-                        onClick={handleMapClick}
-                        className="relative w-full h-64 rounded-xl border-2 border-green-200 cursor-crosshair overflow-hidden shadow-inner"
-                        style={{
-                          background: 'linear-gradient(to bottom, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%)',
-                        }}
-                      >
-                        <div className="absolute inset-0" style={{
-                          backgroundImage: `
-                            linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
-                            linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px)
-                          `,
-                          backgroundSize: '40px 40px'
-                        }} />
-                        
-                        <div className="absolute inset-0">
-                          <div className="absolute top-1/4 left-0 right-0 h-1 bg-yellow-600/30"></div>
-                          <div className="absolute top-1/2 left-0 right-0 h-1.5 bg-gray-700/40"></div>
-                          <div className="absolute top-3/4 left-0 right-0 h-1 bg-yellow-600/30"></div>
-                          <div className="absolute left-1/4 top-0 bottom-0 w-1 bg-yellow-600/30"></div>
-                          <div className="absolute left-1/2 top-0 bottom-0 w-1.5 bg-gray-700/40"></div>
-                          <div className="absolute left-3/4 top-0 bottom-0 w-1 bg-yellow-600/30"></div>
-                        </div>
 
-                        <div className="absolute top-4 left-8 w-6 h-6 bg-green-700/40 rounded"></div>
-                        <div className="absolute top-12 right-12 w-8 h-8 bg-green-800/40 rounded-full"></div>
-                        <div className="absolute bottom-8 left-16 w-5 h-5 bg-amber-700/40 rounded-sm"></div>
-                        <div className="absolute bottom-16 right-20 w-7 h-7 bg-green-700/40 rounded-full"></div>
-                        
-                        <div className="absolute inset-0 flex items-center justify-center text-green-700 font-bold text-sm pointer-events-none bg-white/30 backdrop-blur-[1px]">
-                          🗺️ Click anywhere to set coordinates
+                    {showMap && (
+                      <div className="rounded-xl overflow-hidden border-2 border-green-200 shadow-inner">
+                        <MapContainer
+                          center={mapCenter}
+                          zoom={form.latitude && form.longitude ? 13 : 7}
+                          scrollWheelZoom={true}
+                          className="h-72 w-full"
+                        >
+                          <TileLayer
+                            attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a>'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                          />
+                          <LocationMarker
+                            position={form.latitude && form.longitude ? [parseFloat(form.latitude), parseFloat(form.longitude)] : null}
+                            onPositionChange={(lat, lng) => setForm({ ...form, latitude: lat.toFixed(6), longitude: lng.toFixed(6) })}
+                          />
+                        </MapContainer>
+                        <div className="bg-green-50 px-3 py-1.5 text-xs text-green-700 font-medium">
+                          Click anywhere on the map to set farm coordinates
                         </div>
-                        
-                        {form.latitude && form.longitude && (
-                          <div 
-                            className="absolute pointer-events-none z-10"
-                            style={{
-                              left: `${((parseFloat(form.longitude) - 90.4125) / 0.5) * 100}%`,
-                              top: `${(1 - (parseFloat(form.latitude) - 23.8103) / 0.5) * 100}%`,
-                              transform: 'translate(-50%, -100%)'
-                            }}
-                          >
-                            <div className="relative">
-                              <MapPin className="h-8 w-8 text-red-600 filter drop-shadow-lg" fill="#dc2626" />
-                              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-600/30 rounded-full blur-sm"></div>
-                            </div>
-                          </div>
-                        )}
                       </div>
                     )}
+                  </div>
+                )}
+
+                {/* Map Section — View mode */}
+                {isViewOnly && form.latitude && form.longitude && (
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-bold text-gray-500 ml-1">Farm Location</label>
+                    <ViewOnlyMap latitude={parseFloat(form.latitude)} longitude={parseFloat(form.longitude)} />
                   </div>
                 )}
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-500 ml-1">Latitude</label>
-                    <Input 
-                      disabled={isViewOnly} 
-                      required 
-                      type="number" 
+                    <Input
+                      disabled={isViewOnly}
+                      required
+                      type="number"
                       step="any"
-                      value={form.latitude} 
-                      onChange={(e) => setForm({ ...form, latitude: e.target.value })} 
+                      value={form.latitude}
+                      onChange={(e) => setForm({ ...form, latitude: e.target.value })}
                     />
                   </div>
                   <div className="space-y-1.5">
                     <label className="text-xs font-bold text-gray-500 ml-1">Longitude</label>
-                    <Input 
-                      disabled={isViewOnly} 
-                      required 
-                      type="number" 
+                    <Input
+                      disabled={isViewOnly}
+                      required
+                      type="number"
                       step="any"
-                      value={form.longitude} 
-                      onChange={(e) => setForm({ ...form, longitude: e.target.value })} 
+                      value={form.longitude}
+                      onChange={(e) => setForm({ ...form, longitude: e.target.value })}
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-gray-500 ml-1">Target Crop</label>
-                  <select 
-                    disabled={isViewOnly} 
-                    required 
-                    value={form.cropId} 
-                    onChange={(e) => setForm({ ...form, cropId: e.target.value })} 
+                  <select
+                    disabled={isViewOnly}
+                    required
+                    value={form.cropId}
+                    onChange={(e) => setForm({ ...form, cropId: e.target.value })}
                     className="w-full flex h-11 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-green-500 transition-all"
                   >
                     <option value="">Select a crop type...</option>
@@ -437,12 +447,12 @@ export default function FirmManagement() {
 
                 <div className="space-y-1.5">
                   <label className="text-xs font-bold text-gray-500 ml-1">Plantation Date</label>
-                  <Input 
-                    disabled={isViewOnly} 
-                    required 
-                    type="date" 
-                    value={form.plantationDate} 
-                    onChange={(e) => setForm({ ...form, plantationDate: e.target.value })} 
+                  <Input
+                    disabled={isViewOnly}
+                    required
+                    type="date"
+                    value={form.plantationDate}
+                    onChange={(e) => setForm({ ...form, plantationDate: e.target.value })}
                   />
                 </div>
 
@@ -461,7 +471,7 @@ export default function FirmManagement() {
                   <div className="pt-6 border-t border-gray-100">
                     <div className="flex items-center justify-between mb-4">
                       <h4 className="text-sm font-bold text-gray-900 flex items-center">
-                        <Activity className="h-4 w-4 mr-2 text-green-500" /> 
+                        <Activity className="h-4 w-4 mr-2 text-green-500" />
                         Connected Sensors
                       </h4>
                       <Badge variant="outline" className="text-xs uppercase font-bold tracking-widest text-gray-400">
@@ -477,7 +487,7 @@ export default function FirmManagement() {
                       >
                         <option value="">Select a sensor from available list...</option>
                         {availableSensors
-                          .filter(sensor => 
+                          .filter(sensor =>
                             !selectedFirm.sensors?.some(s => s.sensorId === sensor.sensorId)
                           )
                           .map((sensor) => (
@@ -487,9 +497,9 @@ export default function FirmManagement() {
                           ))
                         }
                       </select>
-                      <Button 
+                      <Button
                         onClick={handleAddSensor}
-                        size="sm" 
+                        size="sm"
                         disabled={!newSensorId}
                         className="bg-gray-900 hover:bg-black text-white h-10 px-4 shadow-md transition-all"
                       >
