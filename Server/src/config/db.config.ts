@@ -8,7 +8,7 @@ const connectDB = async () => {
     try {
         if (isConnected) {
             logger.info("===================================");
-            logger.info("Database is already connected 🎉 🎉");
+            logger.info("Database is connected 🎉 🎉");
             return;
         }
         await mongoose.connect(config.dbUri);

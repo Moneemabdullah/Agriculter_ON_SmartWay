@@ -1,3 +1,4 @@
+
 services:
   server:
     build:
@@ -7,15 +8,11 @@ services:
     env_file:
       - Server/.env
     environment:
-      - NODE_ENV=production
-      - PORT=3000
-      - CONNECTION_STRING=mongodb://mongo:27017/agri-db
-      - CORS_ORIGINS=http://localhost
+      NODE_ENV: production
+      PORT: 3000
+      CORS_ORIGINS: http://localhost
     ports:
       - "3000:3000"
-    depends_on:
-      mongo:
-        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/"]
@@ -38,25 +35,6 @@ services:
     restart: unless-stopped
     networks:
       - agri-net
-
-  mongo:
-    image: mongo:6
-    container_name: agri-mongo
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - agri-net
-
-volumes:
-  mongo-data:
 
 networks:
   agri-net:
