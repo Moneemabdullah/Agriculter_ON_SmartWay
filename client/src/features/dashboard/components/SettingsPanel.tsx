@@ -39,6 +39,12 @@ export function SettingsPanel() {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // Profile Text State
+  const [profileName, setProfileName] = useState('');
+  const [profileEmail, setProfileEmail] = useState('');
+  const [profileLocation, setProfileLocation] = useState('');
+  const [profileLoading, setProfileLoading] = useState(true);
+
   const fetchSensors = async () => {
     try {
       const res = await api.get('/sensors');
@@ -48,8 +54,27 @@ export function SettingsPanel() {
     }
   };
 
+  const fetchProfile = async () => {
+    try {
+      const userId = localStorage.getItem('userId');
+      if (!userId) return;
+      const res = await api.get(`/users/${userId}`);
+      const user = res.data?.data;
+      if (user) {
+        setProfileName(user.name || '');
+        setProfileEmail(user.email || '');
+        setProfileLocation(user.address?.village || user.address?.city || '');
+      }
+    } catch (err) {
+      console.warn('Failed to load profile');
+    } finally {
+      setProfileLoading(false);
+    }
+  };
+
   useEffect(() => {
     fetchSensors();
+    fetchProfile();
     const onUpdate = () => fetchSensors();
     window.addEventListener('sensors-updated', onUpdate);
     return () => window.removeEventListener('sensors-updated', onUpdate);
@@ -74,28 +99,46 @@ export function SettingsPanel() {
     }
   };
 
-  const handleSaveProfilePhoto = async () => {
-    if (!photoFile) {
-      toast.error("Please select a photo first");
-      return;
-    }
-
+  const handleSaveProfile = async () => {
     try {
-      const formData = new FormData();
-      formData.append('photo', photoFile);
+      const userId = localStorage.getItem('userId');
+      if (!userId) {
+        toast.error('User not found');
+        return;
+      }
 
-      // Don't set Content-Type header - let axios/browser set it automatically with boundary
-      const response = await api.patch('/users/profile/photo', formData);
+      const payload: Record<string, any> = {};
+      if (profileName.trim()) payload.name = profileName.trim();
+      if (profileEmail.trim()) payload.email = profileEmail.trim();
+      if (profileLocation.trim()) {
+        payload.address = { city: profileLocation.trim() };
+      }
 
-      toast.success('Profile photo updated successfully!');
-      setProfileImage(null);
+      if (Object.keys(payload).length === 0 && !photoFile) {
+        toast.error('No changes to save');
+        return;
+      }
+
+      // Upload photo first if selected
+      if (photoFile) {
+        const formData = new FormData();
+        formData.append('photo', photoFile);
+        await api.patch('/users/profile/photo', formData);
+        window.dispatchEvent(new Event('profile-updated'));
+      }
+
+      // Save text fields
+      if (Object.keys(payload).length > 0) {
+        await api.put(`/users/profile`, payload);
+      }
+
+      toast.success('Profile updated successfully!');
       setPhotoFile(null);
-      
-      // Dispatch event to refresh header
+      setProfileImage(null);
       window.dispatchEvent(new Event('profile-updated'));
     } catch (err: any) {
-      console.error('Error uploading photo:', err);
-      toast.error(err?.response?.data?.message || 'Failed to update profile photo');
+      console.error('Error updating profile:', err);
+      toast.error(err?.response?.data?.message || 'Failed to update profile');
     }
   };
 
@@ -113,15 +156,21 @@ export function SettingsPanel() {
   };
 
   const handleDeleteSensor = async (sensorId: string) => {
-    if (!confirm(`Delete sensor ${sensorId}?`)) return;
-    try {
-      await api.delete(`/sensors/id/${sensorId}`);
-      fetchSensors();
-      window.dispatchEvent(new Event('sensors-updated'));
-      toast.success('Sensor deleted');
-    } catch (err: any) {
-      toast.error(err?.response?.data?.message || 'Failed to delete sensor');
-    }
+    toast.warning(`Delete sensor ${sensorId}?`, {
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          try {
+            await api.delete(`/sensors/id/${sensorId}`);
+            fetchSensors();
+            window.dispatchEvent(new Event('sensors-updated'));
+            toast.success('Sensor deleted');
+          } catch (err: any) {
+            toast.error(err?.response?.data?.message || 'Failed to delete sensor');
+          }
+        },
+      },
+    });
   };
 
   const handleViewSensor = async (sensorId: string) => {
@@ -221,17 +270,17 @@ export function SettingsPanel() {
 
                 <div className="grid gap-2">
                   <Label htmlFor="name">Full Name</Label>
-                  <Input id="name" defaultValue="Abdullah Al Moneem" className="bg-gray-50/50" />
+                  <Input id="name" value={profileName} onChange={(e) => setProfileName(e.target.value)} disabled={profileLoading} className="bg-gray-50/50" />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email Address</Label>
-                  <Input id="email" type="email" defaultValue="abdullah@smartagri.com" className="bg-gray-50/50" />
+                  <Input id="email" type="email" value={profileEmail} onChange={(e) => setProfileEmail(e.target.value)} disabled={profileLoading} className="bg-gray-50/50" />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="location">Primary Farm Location</Label>
-                  <Input id="location" defaultValue="Dhaka, Bangladesh" className="bg-gray-50/50" />
+                  <Input id="location" value={profileLocation} onChange={(e) => setProfileLocation(e.target.value)} disabled={profileLoading} className="bg-gray-50/50" />
                 </div>
-                <Button className="w-full bg-green-600 hover:bg-green-700" onClick={handleSaveProfilePhoto}>
+                <Button className="w-full bg-green-600 hover:bg-green-700" onClick={handleSaveProfile} disabled={profileLoading}>
                   <Save className="mr-2" size={16} /> Save Changes
                 </Button>
               </CardContent>

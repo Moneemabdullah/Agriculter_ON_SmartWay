@@ -149,6 +149,50 @@ export const updateUserByIdcontroller = async (
     }
 };
 
+//* Update own profile (self-service)
+export const updateMyProfile = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const userId = req.userId;
+
+        if (!userId) {
+            res.status(401).json({
+                success: false,
+                message: "Unauthorized - User ID not found",
+            });
+            return;
+        }
+
+        const updateData: Partial<User> = { ...req.body };
+
+        if (req.file) {
+            updateData.photo = req.file.path;
+        }
+
+        logger.info("Self-service profile update for user:", userId);
+
+        const result: User = (await updatedUserByIdService(
+            userId,
+            updateData
+        )) as User;
+
+        if (!result) {
+            throw AppError.notFound("User not found");
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Profile updated successfully",
+            data: result,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 //* Delete user by id
 export const deleteUserById = async (
     req: Request,

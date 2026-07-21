@@ -8,6 +8,7 @@ import {
     deleteUserById,
     getAllUsers,
     getUserById,
+    updateMyProfile,
     updateProfilePhotoController,
     updateUserByIdcontroller,
 } from "./user.controller";
@@ -21,6 +22,16 @@ router.patch(
     uploadMiddleware.single("photo"),
     (req, res, next) => {
         updateProfilePhotoController(req, res, next);
+    }
+);
+
+// Update own profile (self-service) - MUST come before /:id routes
+router.put(
+    "/profile",
+    auth(),
+    validate(updateUserSchema),
+    (req, res, next) => {
+        updateMyProfile(req, res, next);
     }
 );
 
