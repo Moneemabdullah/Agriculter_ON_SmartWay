@@ -112,6 +112,12 @@ export function AnalyticsCharts() {
         const res = await fetch(
           `https://api.openweathermap.org/data/2.5/forecast?q=${CITY}&units=metric&appid=${API_KEY}`
         );
+
+        if (!res.ok) {
+          console.warn(`OpenWeather forecast returned ${res.status}`);
+          return;
+        }
+
         const data = await res.json();
 
         if (data && data.list) {

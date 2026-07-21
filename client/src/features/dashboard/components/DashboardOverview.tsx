@@ -13,14 +13,26 @@ export function DashboardOverview() {
         const API_KEY = (import.meta as any).env?.VITE_OPEN_WEATHER
         const CITY = 'Comilla'
 
+        if (!API_KEY) {
+          console.warn('VITE_OPEN_WEATHER not set')
+          return
+        }
+
         const res = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${CITY}&appid=${API_KEY}&units=metric`
         )
 
+        if (!res.ok) {
+          console.warn(`Weather API returned ${res.status}`)
+          return
+        }
+
         const data = await res.json()
 
-        setTemperature(data.main.temp)
-        setHumidity(data.main.humidity)
+        if (data?.main) {
+          setTemperature(data.main.temp)
+          setHumidity(data.main.humidity)
+        }
       } catch (error) {
         console.error('Weather fetch failed:', error)
       }
