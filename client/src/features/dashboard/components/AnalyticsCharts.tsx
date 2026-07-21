@@ -103,7 +103,7 @@ export function AnalyticsCharts() {
         }
 
         // 2) Fallback: OpenWeather forecast (may only cover ~5 days forward). We'll still map to the last 7 labels and fill missing days with nulls.
-        const API_KEY = (import.meta as any).env?.VITE_OPEN_WEATHER;
+        const API_KEY = import.meta.env.VITE_OPEN_WEATHER;
         if (!API_KEY) {
           console.warn('No OpenWeather API key provided; cannot fetch fallback forecast');
           return;
