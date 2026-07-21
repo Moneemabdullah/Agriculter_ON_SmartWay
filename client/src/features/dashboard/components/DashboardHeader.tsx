@@ -194,12 +194,20 @@ function ProfileMenu() {
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem onSelect={() => navigate('/dashboard')}>
+        <DropdownMenuItem onSelect={() => {
+          const userId = localStorage.getItem('userId');
+          localStorage.setItem('dashboardActiveTab', 'dashboard');
+          navigate(`/dashboard/${userId}`);
+        }}>
           <User className="mr-2 h-4 w-4" />
           Dashboard
         </DropdownMenuItem>
 
-        <DropdownMenuItem onSelect={() => navigate('/settings')}>
+        <DropdownMenuItem onSelect={() => {
+          const userId = localStorage.getItem('userId');
+          localStorage.setItem('dashboardActiveTab', 'settings');
+          navigate(`/dashboard/${userId}`);
+        }}>
           <Settings className="mr-2 h-4 w-4" />
           Settings
         </DropdownMenuItem>
