@@ -6,7 +6,6 @@ import { IrrigationControl } from "../components/IrrigationControl";
 import { CropManagement } from "../components/CropManagement";
 import SensorAnalytics from "../components/SensorAnalytics";
 import { AlertsPanel } from "../components/AlertsPanel";
-import { TeamManagement } from "../components/TeamManagement";
 import { PaymentsPanel } from "../components/PaymentsPanel";
 import { SettingsPanel } from "../components/SettingsPanel";
 import FirmManagement from "../components/FirmManagement";
@@ -47,8 +46,6 @@ export default function Dashboard() {
         return <SensorAnalytics />;
       case 'alerts':
         return <AlertsPanel />;
-      case 'team':
-        return <TeamManagement />;
       case 'payments':
         return <PaymentsPanel />;
       case 'settings':

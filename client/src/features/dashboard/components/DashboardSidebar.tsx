@@ -8,7 +8,6 @@ import {
   CreditCard,
   FileText,
   Bell,
-  Users,
   X,
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -29,7 +28,6 @@ const navigation = [
   { id: 'blogs', label: 'Blogs', icon: FileText },
   { id: 'sensor-analytics', label: 'Sensor Analytics', icon: BarChart3 },
   { id: 'alerts', label: 'Alerts', icon: Bell },
-  { id: 'team', label: 'Team', icon: Users },
   { id: 'payments', label: 'Payments', icon: CreditCard },
   { id: 'settings', label: 'Settings', icon: Settings },
 ];
