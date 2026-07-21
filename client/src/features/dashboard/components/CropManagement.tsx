@@ -121,6 +121,7 @@ export function CropManagement() {
   };
 
   const [query, setQuery] = useState('');
+  const userRole = localStorage.getItem('role');
   const filtered = crops.filter(c => c.name.toLowerCase().includes(query.toLowerCase()));
 
   return (
@@ -198,9 +199,11 @@ export function CropManagement() {
                   <Button variant="ghost" size="sm" className="text-gray-400 hover:text-blue-600" onClick={() => openEdit(crop)}>
                     <Edit className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-600" onClick={() => handleDelete(crop._id)}>
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  {userRole === 'admin' && (
+                    <Button variant="ghost" size="sm" className="text-gray-400 hover:text-red-600" onClick={() => handleDelete(crop._id)}>
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  )}
                 </div>
               </CardFooter>
             </Card>

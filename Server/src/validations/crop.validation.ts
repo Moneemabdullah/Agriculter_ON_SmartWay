@@ -21,7 +21,7 @@ export const createCropSchema = z.object({
     humidityRange: rangeSchema,
     soilType: z.string().min(1, "Soil type is required"),
     soilmoistureRange: rangeSchema,
-  }),
+  }).optional(),
 });
 
 export const updateCropSchema = createCropSchema.partial();

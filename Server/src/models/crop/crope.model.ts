@@ -17,17 +17,17 @@ export const CropSchema = new Schema<Crop>(
         },
         idealConditions: {
             temperatureRange: {
-                min: { type: Number, required: true },
-                max: { type: Number, required: true },
+                min: { type: Number },
+                max: { type: Number },
             },
             humidityRange: {
-                min: { type: Number, required: true },
-                max: { type: Number, required: true },
+                min: { type: Number },
+                max: { type: Number },
             },
-            soilType: { type: String, required: true },
+            soilType: { type: String },
             soilmoistureRange: {
-                min: { type: Number, required: true },
-                max: { type: Number, required: true },
+                min: { type: Number },
+                max: { type: Number },
             },
         },
     },

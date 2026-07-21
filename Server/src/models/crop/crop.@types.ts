@@ -10,7 +10,7 @@ export interface Crop {
         startMonth: number;
         endMonth: number;
     };
-    idealConditions: {
+    idealConditions?: {
         temperatureRange: {
             min: number;
             max: number;
