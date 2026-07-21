@@ -23,6 +23,7 @@ import {
   MessageSquare
 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 interface Blog {
   _id: string;
@@ -37,11 +38,12 @@ interface Blog {
 
 export default function BlogSection() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [searchTerm, setSearchTerm] = useState(''); // Search state
+  const [searchTerm, setSearchTerm] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const userRole = localStorage.getItem('role');
 
   const fetchBlogs = async () => {
     try {
@@ -63,31 +65,43 @@ export default function BlogSection() {
   );
 
   const createBlog = async () => {
-    if (!title || !content) return alert('Title & content required');
+    if (!title || !content) {
+      toast.error('Title and content are required');
+      return;
+    }
     setLoading(true);
     try {
-      await api.post('/blogs', {
-        title,
-        content,
-      });
+      await api.post('/blogs', { title, content });
       setTitle('');
       setContent('');
       setIsModalOpen(false);
+      toast.success('Blog post published');
       fetchBlogs();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message || 'Failed to create post');
     } finally {
       setLoading(false);
     }
   };
 
   const likeBlog = async (id: string) => {
-    await api.post(`/blogs/${id}/like`);
-    fetchBlogs();
+    try {
+      await api.post(`/blogs/${id}/like`);
+      fetchBlogs();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message || 'Failed to like post');
+    }
   };
 
   const deleteBlog = async (id: string) => {
     if (!confirm('Delete this agronomy update?')) return;
-    await api.delete(`/blogs/${id}`);
-    fetchBlogs();
+    try {
+      await api.delete(`/blogs/${id}`);
+      toast.success('Post deleted');
+      fetchBlogs();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message || 'Failed to delete post');
+    }
   };
 
   return (
@@ -182,14 +196,16 @@ export default function BlogSection() {
                 <Badge variant="secondary" className="bg-green-50 text-green-700 border-none font-medium">
                   Agronomy
                 </Badge>
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
-                  className="text-gray-300 hover:text-red-500 p-0 h-6 w-6 transition-colors"
-                  onClick={() => deleteBlog(blog._id)}
-                >
-                  <Trash2 size={14} />
-                </Button>
+                {userRole === 'admin' && (
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="text-gray-300 hover:text-red-500 p-0 h-6 w-6 transition-colors"
+                    onClick={() => deleteBlog(blog._id)}
+                  >
+                    <Trash2 size={14} />
+                  </Button>
+                )}
               </div>
               <CardTitle className="text-lg font-bold text-gray-900 line-clamp-1 group-hover:text-green-700 transition-colors">
                 {blog.title}
