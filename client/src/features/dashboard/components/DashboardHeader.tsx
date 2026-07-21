@@ -1,4 +1,4 @@
-import { Bell, LogOut, Menu, Settings, User } from 'lucide-react';
+import { Bell, LogOut, Menu, Settings, Shield, User } from 'lucide-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -110,6 +110,7 @@ function ProfileMenu() {
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
   const [userName, setUserName] = React.useState<string | null>(null);
   const [avatar, setAvatar] = React.useState<string | null>(null);
+  const [userRole, setUserRole] = React.useState<string | null>(null);
   const navigate = useNavigate();
 
   const fetchUserProfile = React.useCallback(async () => {
@@ -129,7 +130,6 @@ function ProfileMenu() {
 
       if (res.data?.success) {
         setUserName(res.data.data.name || res.data.data.email || 'User');
-        // Set avatar from user profile if available
         if (res.data.data.photo) {
           setAvatar(res.data.data.photo);
         }
@@ -137,6 +137,8 @@ function ProfileMenu() {
     } catch (err) {
       console.warn('Could not fetch user', err);
     }
+
+    setUserRole(localStorage.getItem('role'));
   }, []);
 
   React.useEffect(() => {
@@ -202,6 +204,13 @@ function ProfileMenu() {
           <User className="mr-2 h-4 w-4" />
           Dashboard
         </DropdownMenuItem>
+
+        {userRole === 'admin' && (
+          <DropdownMenuItem onSelect={() => navigate('/admin')}>
+            <Shield className="mr-2 h-4 w-4" />
+            Admin Panel
+          </DropdownMenuItem>
+        )}
 
         <DropdownMenuItem onSelect={() => {
           const userId = localStorage.getItem('userId');
