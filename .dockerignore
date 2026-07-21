@@ -10,5 +10,6 @@ build
 *.md
 planning/
 logs/
+testsprite_tests/
 .DS_Store
 coverage/

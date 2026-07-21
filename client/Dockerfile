@@ -1,4 +1,4 @@
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
@@ -16,8 +16,8 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY client/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/client/dist /usr/share/nginx/html
 
-RUN addgroup -g 1001 -S nodejs && adduser -S nodeuser -u 1001
-USER nodeuser
+RUN mkdir -p /var/cache/nginx/client_temp && \
+    chown -R nginx:nginx /var/cache/nginx /var/log/nginx /etc/nginx
 
 EXPOSE 80
 

@@ -1,4 +1,4 @@
-FROM node:18-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
@@ -11,7 +11,7 @@ COPY Server/tsconfig.json ./Server/
 COPY Server/src ./Server/src
 RUN cd Server && npm run build
 
-FROM node:18-alpine AS runner
+FROM node:22-alpine AS runner
 
 WORKDIR /app
 
@@ -25,12 +25,14 @@ RUN npm ci --omit=dev
 COPY --from=builder /app/Server/dist ./Server/dist
 
 RUN addgroup -g 1001 -S nodejs && adduser -S nodeuser -u 1001
+
+WORKDIR /app/Server
+RUN mkdir -p logs && chown nodeuser:nodejs logs
+
 USER nodeuser
 
 ENV NODE_ENV=production
 ENV PORT=3000
-
-WORKDIR /app/Server
 
 EXPOSE 3000
 
