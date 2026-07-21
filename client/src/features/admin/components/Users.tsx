@@ -8,6 +8,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { toast } from "sonner";
 
 interface IUser {
   _id: string;
@@ -47,22 +48,29 @@ const UsersPage: React.FC = () => {
 
   // --- Admin Action Handlers ---
   const handleDelete = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      try {
-        await api.delete(`/users/${id}`);
-        setUsers(users.filter(u => u._id !== id));
-      } catch (err) {
-        alert("Failed to delete user");
-      }
-    }
+    toast.warning("Are you sure you want to delete this user?", {
+      action: {
+        label: "Delete",
+        onClick: async () => {
+          try {
+            await api.delete(`/users/${id}`);
+            setUsers(users.filter(u => u._id !== id));
+            toast.success("User deleted");
+          } catch (err) {
+            toast.error("Failed to delete user");
+          }
+        },
+      },
+    });
   };
 
   const handleBan = async (id: string) => {
     try {
       await api.patch(`/users/ban/${id}`);
-      fetchUsers(); // Refresh list to see updated status
+      fetchUsers();
+      toast.success("User status updated");
     } catch (err) {
-      alert("Failed to update user status");
+      toast.error("Failed to update user status");
     }
   };
 

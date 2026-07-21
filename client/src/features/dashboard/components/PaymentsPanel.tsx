@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CreditCard, Download, Check, AlertCircle } from 'lucide-react';
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -79,9 +80,9 @@ export function PaymentsPanel() {
   }, [transactions]);
 
   const handlePayment = (amount: number, description: string) => {
-    // Mock SSLCommerz integration
-    const message = `Redirecting to SSLCommerz for ${description} payment of ${formatCurrency(amount)}...\n\nNote: This is a demo.`;
-    alert(message);
+    toast.info(`Redirecting to SSLCommerz for ${description} payment of ${formatCurrency(amount)}...`, {
+      description: "This is a demo.",
+    });
   };
 
   const handleQuickPaymentSubmit = (e: FormEvent) => {
